@@ -1,0 +1,6 @@
+framework module Pods_ADStoreTests {
+  umbrella header "Pods-ADStoreTests-umbrella.h"
+
+  export *
+  module * { export * }
+}

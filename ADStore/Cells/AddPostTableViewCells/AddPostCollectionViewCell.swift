@@ -12,6 +12,8 @@ class AddPostCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var imageView: UIImageView!
     
+    @IBOutlet weak var imageFrame: UIImageView!
+    @IBOutlet weak var imageNumberLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
     }

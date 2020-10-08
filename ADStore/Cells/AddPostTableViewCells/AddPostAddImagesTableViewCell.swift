@@ -10,13 +10,14 @@ import UIKit
 
 class AddPostAddImagesTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
-    var imageCount: Int = 1
+    var imageCount: Int = 6
     var images = [UIImage]()
-
+    var labels = ["①", "②", "③", "④", "⑤", "⑥"]
     @IBOutlet weak var collectionView: UICollectionView!
     
-    var imageCell: UIImage!
+//    var imageCell: UIImage!
 
+    
     func collectionReloadData(){
         DispatchQueue.main.async(execute: {
             self.collectionView.reloadData()
@@ -36,59 +37,51 @@ class AddPostAddImagesTableViewCell: UITableViewCell, UICollectionViewDelegate, 
 
         // Configure the view for the selected state
     }
-
+     var viewController2 = AddPostViewController()
+    
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return images.count
-    }
-
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AddPostCollectionViewCell", for: indexPath) as! AddPostCollectionViewCell
-        if  images.count != 0 {
-            let item = images[indexPath.item]
-            cell.imageView.image = item as! UIImage
-//            cell.imageView.image = imageCell
-        
-            return cell
+        if images.count == 0 {
+            return imageCount
         } else {
-//            cell.imageView.image = imageCell
-            cell.imageView.image = UIImage(named: "bmw")
-            return cell
+            return images.count
         }
         
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AddPostCollectionViewCell", for: indexPath) as! AddPostCollectionViewCell
+        
+        if indexPath.row == 0 {
+            cell.imageFrame.image = UIImage(named: "add camera")
+            cell.imageNumberLabel.text = ""
+            cell.imageView.image = nil
+        } else {
+            
+            if images.count != 0 {
+                cell.imageNumberLabel.text = labels[(indexPath.item) - 1]
+                cell.imageFrame.image = nil
+                cell.imageView.image = images[indexPath.item]
+            } else {
+                cell.imageFrame.image = UIImage(named: "imagePlaceHolder")
+                   cell.imageNumberLabel.text = labels[(indexPath.row) - 1]
+                   cell.imageView.image = nil
+            }
+            
+        }
+ 
+        return cell
         
         
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let screenSize = UIScreen.main.bounds
         let itemWidth = (screenSize.width - 46) / 3
-        
-        return CGSize(width: 100, height: 100)
+        let itemHeight = (collectionView.frame.height - 10) / 2
+//        return CGSize(width: 100, height: 100)
+        return CGSize(width: itemWidth, height: itemWidth)
 
     }
+
     
-    /**
-    func addNewImage() {
-        let picker = UIImagePickerController()
-        picker.allowsEditing = false
-        picker.delegate = self
-        
-//        present(picker, animated: true)
-    }
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let pickedImage = info[.originalImage] as? UIImage {
-            //            imageView.image = pickedImage
-            //            imageView.contentMode = .scaleAspectFill
-//            imageViewTwo.image = pickedImage
-            images.append(pickedImage)
-            
-        }
-        picker.dismiss(animated: true, completion: nil)
-    }
-    
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        picker.dismiss(animated: true, completion: nil)
-    }
-    **/
 }

@@ -50,7 +50,12 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
         
     }
     
-    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        //Disable when click behind the + button
+        self.tabBar.items![2].isEnabled = false
+
+    }
     func setupMiddleButton() {
         let menuButton = UIButton(frame: CGRect(x: 0, y: 0, width: 75, height: 75))
         var menuButtonFrame = menuButton.frame
@@ -70,24 +75,13 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
     }
     @objc private func menuButtonAction(sender: UIButton) {
         let newVC = self.storyboard?.instantiateViewController(withIdentifier: "AddPostViewController") as! AddPostViewController
+        newVC.modalPresentationStyle = .overCurrentContext
+        self.present(newVC, animated: true, completion: nil)
         
-       self.present(newVC, animated: true, completion: nil)
         
-        
+
     }
-    //    present ViewController over tabBar when click on selected tabBar button
-    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
-        let vc = viewController is AddPostViewController
-        if vc {
-            let newVC = tabBarController.storyboard?.instantiateViewController(withIdentifier: "AddPostViewController") as! AddPostViewController
-            
-            self.tabBarController?.present(newVC, animated: true, completion: nil)
-            
-            return false
-        } else {
-            return true
-        }
-    }
+    
 }
 
 

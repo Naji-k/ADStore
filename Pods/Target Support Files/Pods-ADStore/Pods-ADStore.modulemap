@@ -1,0 +1,6 @@
+framework module Pods_ADStore {
+  umbrella header "Pods-ADStore-umbrella.h"
+
+  export *
+  module * { export * }
+}
