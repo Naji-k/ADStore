@@ -44,6 +44,8 @@
 		2BD047232516597500550A8B /* AdsListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BD047222516597500550A8B /* AdsListTableViewController.swift */; };
 		2BD04725251659B600550A8B /* AdsListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BD04724251659B600550A8B /* AdsListTableViewCell.swift */; };
 		2BD047272516C33D00550A8B /* AdsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BD047262516C33D00550A8B /* AdsViewController.swift */; };
+		2BDCF770252F66FA008BBD7E /* AddPostDescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BDCF76F252F66FA008BBD7E /* AddPostDescriptionTableViewCell.swift */; };
+		2BDCF773252F6AA0008BBD7E /* ToolbarPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BDCF772252F6AA0008BBD7E /* ToolbarPickerView.swift */; };
 		9B829BE588F593FCAAA8E3C0 /* Pods_ADStore_ADStoreUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A01A065614F8E527BCDC2272 /* Pods_ADStore_ADStoreUITests.framework */; };
 		D0874B8DBC575C7943FD5724 /* Pods_ADStoreTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCE2CDF6D6C517E137E3DC8 /* Pods_ADStoreTests.framework */; };
 		E8B366512218B576CCCCBD6A /* Pods_ADStore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BEE1818724A1710B7672A49 /* Pods_ADStore.framework */; };
@@ -112,6 +114,8 @@
 		2BD047222516597500550A8B /* AdsListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsListTableViewController.swift; sourceTree = "<group>"; };
 		2BD04724251659B600550A8B /* AdsListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsListTableViewCell.swift; sourceTree = "<group>"; };
 		2BD047262516C33D00550A8B /* AdsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsViewController.swift; sourceTree = "<group>"; };
+		2BDCF76F252F66FA008BBD7E /* AddPostDescriptionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPostDescriptionTableViewCell.swift; sourceTree = "<group>"; };
+		2BDCF772252F6AA0008BBD7E /* ToolbarPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarPickerView.swift; sourceTree = "<group>"; };
 		2D13CE1FE92B1DF6E1BBBD74 /* Pods-ADStore-ADStoreUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ADStore-ADStoreUITests.debug.xcconfig"; path = "Target Support Files/Pods-ADStore-ADStoreUITests/Pods-ADStore-ADStoreUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		3BEE1818724A1710B7672A49 /* Pods_ADStore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ADStore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D6CBC6FB2A9B42E38A705AC /* Pods-ADStore-ADStoreUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ADStore-ADStoreUITests.release.xcconfig"; path = "Target Support Files/Pods-ADStore-ADStoreUITests/Pods-ADStore-ADStoreUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -176,6 +180,7 @@
 		2B39B4F624EDCA8700D300B3 /* ADStore */ = {
 			isa = PBXGroup;
 			children = (
+				2BDCF771252F6A3B008BBD7E /* Helpers */,
 				2B4E456824FD293F00CCC5D4 /* Cells */,
 				2B4E456324FD128200CCC5D4 /* Models */,
 				2B39B52E24EDD15400D300B3 /* ViewControllers */,
@@ -241,7 +246,6 @@
 			children = (
 				2B4E456424FD12A500CCC5D4 /* Ads.swift */,
 				2B4E456624FD278300CCC5D4 /* RootClass.swift */,
-				2BC115FA252948040028A42B /* ImagePicker.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -275,6 +279,7 @@
 			children = (
 				2B759524251FAE310045E53F /* AddPostAddImagesTableViewCell.swift */,
 				2B759527251FAF410045E53F /* AddPostCollectionViewCell.swift */,
+				2BDCF76F252F66FA008BBD7E /* AddPostDescriptionTableViewCell.swift */,
 			);
 			path = AddPostTableViewCells;
 			sourceTree = "<group>";
@@ -297,6 +302,15 @@
 				2B7D571525194D0000DE13DE /* AdsDescTableViewCell.swift */,
 			);
 			path = AdsTableViewCells;
+			sourceTree = "<group>";
+		};
+		2BDCF771252F6A3B008BBD7E /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				2BC115FA252948040028A42B /* ImagePicker.swift */,
+				2BDCF772252F6AA0008BBD7E /* ToolbarPickerView.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		45054B023767E39B258F019E /* Pods */ = {
@@ -562,6 +576,7 @@
 			files = (
 				2B4E456524FD12A500CCC5D4 /* Ads.swift in Sources */,
 				2B7D571625194D0000DE13DE /* AdsDescTableViewCell.swift in Sources */,
+				2BDCF773252F6AA0008BBD7E /* ToolbarPickerView.swift in Sources */,
 				2BC115FB252948040028A42B /* ImagePicker.swift in Sources */,
 				2B39B53824EDD6BE00D300B3 /* ProfileViewController.swift in Sources */,
 				2B39B53024EDD17500D300B3 /* TabBarViewController.swift in Sources */,
@@ -586,6 +601,7 @@
 				2B759525251FAE310045E53F /* AddPostAddImagesTableViewCell.swift in Sources */,
 				2B3BD425252B5FF800F37A4C /* PodCollectionViewCell.swift in Sources */,
 				2B7D571425194CD600DE13DE /* AdsLocationTableViewCell.swift in Sources */,
+				2BDCF770252F66FA008BBD7E /* AddPostDescriptionTableViewCell.swift in Sources */,
 				2B7D571225194CB900DE13DE /* AdsUserTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

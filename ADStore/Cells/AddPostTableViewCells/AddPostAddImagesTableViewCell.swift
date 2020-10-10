@@ -14,8 +14,6 @@ class AddPostAddImagesTableViewCell: UITableViewCell, UICollectionViewDelegate, 
     var images = [UIImage]()
     var labels = ["①", "②", "③", "④", "⑤", "⑥"]
     @IBOutlet weak var collectionView: UICollectionView!
-    
-//    var imageCell: UIImage!
 
     
     func collectionReloadData(){

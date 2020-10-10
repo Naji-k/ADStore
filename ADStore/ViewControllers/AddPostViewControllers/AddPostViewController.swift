@@ -51,8 +51,8 @@ class AddPostViewController: UIViewController, ImagePickerDelegate, TLPhotosPick
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        tableView.estimatedRowHeight = UITableView.automaticDimension
-        tableView.rowHeight = UITableView.automaticDimension
+//        tableView.estimatedRowHeight = UITableView.automaticDimension
+//        tableView.rowHeight = UITableView.automaticDimension
         print("imagesArray: \(imageArray.count)")
         
     }
@@ -99,31 +99,52 @@ class AddPostViewController: UIViewController, ImagePickerDelegate, TLPhotosPick
 
 extension AddPostViewController: UITableViewDelegate, UITableViewDataSource {
 //    MARK: tableView Delegate
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "AddPostAddImagesTableViewCell") as! AddPostAddImagesTableViewCell
-        
-        
-        cell.images = imageArray
-        //        cell.imageCell = imageViewTwo.image ?? UIImage(named: "user")
-        
+        let cell = UITableViewCell()
+        switch indexPath.section {
+        case 0:
+            let cell0 = tableView.dequeueReusableCell(withIdentifier: "AddPostAddImagesTableViewCell") as! AddPostAddImagesTableViewCell
+            cell0.images = imageArray
+            //        cell.imageCell = imageViewTwo.image ?? UIImage(named: "user")
+            return cell0
+        case 1:
+            let cell1 = tableView.dequeueReusableCell(withIdentifier: "AddPostDescriptionTableViewCell") as! AddPostDescriptionTableViewCell
+            return cell1
+        default:
+            print("implemnt cells")
+        }
         return cell
     }
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 120
-    }
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        switch indexPath.row {
+        switch indexPath.section {
         case 0:
-            addImages()
+            return 150
         default:
-            print("click on tableView cell")
+            return
+            UITableView.automaticDimension
+            UITableView.automaticDimension
+
         }
-        addImages()
     }
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        switch indexPath.section {
+//        case 0:
+//            addImages()
+//        case 1:
+//
+//        default:
+//            print("click on tableView cell")
+//        }
+//        addImages()
+//    }
 }
 extension AddPostViewController: TLPhotosPickerLogDelegate {
 //    MARK: TLPhotosPickerDelegate
