@@ -41,6 +41,12 @@ extension AdsListTableViewController: UITableViewDelegate, UITableViewDataSource
         
         return cell
     }
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let item = items[indexPath.row]
+        let vc = storyboard?.instantiateViewController(withIdentifier: "AdsViewController") as! AdsViewController
+        
+        vc.item = item
+        self.present(vc, animated: true, completion: nil)
+    }
     
 }

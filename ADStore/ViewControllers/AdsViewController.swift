@@ -15,7 +15,7 @@ class AdsViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var msgTextField: UITextField!
     @IBOutlet weak var sendBtn: UIButton!
-    
+    var item: Ads?
     var images = ["bmw","bmw","bmw","bmw","bmw"]
     var frame = CGRect(x: 0, y: 0, width: 0, height: 0)
     
@@ -85,7 +85,7 @@ extension AdsViewController: UITableViewDataSource, UITableViewDelegate {
     
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 5
+        return 6
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -103,8 +103,11 @@ extension AdsViewController: UITableViewDataSource, UITableViewDelegate {
             //location
             return 1
         case 4:
-            //description
+            //condition and category
             return 1
+        case 5:
+            //description
+                return 1
             
         default:
             return 0
@@ -121,9 +124,9 @@ extension AdsViewController: UITableViewDataSource, UITableViewDelegate {
             return cell1
         case 1:
             let cell2 = tableView.dequeueReusableCell(withIdentifier: "AdsTitleTableViewCell") as! AdsTitleTableViewCell
-            cell2.adsTitle.text = "iphone 6s 16gb"
-            cell2.adsPrice.text = "100$"
-            cell2.adsDateOfPost.text = "09-09"
+            cell2.adsTitle.text = item?.adsTitle
+            cell2.adsPrice.text = item?.adsPrice
+            cell2.adsDateOfPost.text = item?.adsPrice
             cell2.adsLocation.text = "Hogeveen"
             
             return cell2
@@ -135,10 +138,16 @@ extension AdsViewController: UITableViewDataSource, UITableViewDelegate {
             return cell3
 
         case 3:
-            let cell4 = tableView.dequeueReusableCell(withIdentifier: "AdsDescTableViewCell") as! AdsDescTableViewCell
-            
+            let cell4 = tableView.dequeueReusableCell(withIdentifier: "AdsConditionTableViewCell") as! AdsConditionTableViewCell
+            cell4.adsCategoryLabel.text = item?.adsCategory
+            cell4.adsConditionLabel.text = item?.adsCondition
             return cell4
         case 4:
+            
+            let cell5 = tableView.dequeueReusableCell(withIdentifier: "AdsDescTableViewCell") as! AdsDescTableViewCell
+            
+            return cell5
+        case 5:
             let cell5 = tableView.dequeueReusableCell(withIdentifier: "AdsUserTableViewCell") as! AdsUserTableViewCell
             
             return cell5

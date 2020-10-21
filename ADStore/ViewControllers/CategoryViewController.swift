@@ -9,10 +9,21 @@
 import UIKit
 
 class CategoryViewController: UIViewController {
-    
-//    var items: [CategoryLocal] = []
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+
     var url = "http://localhost:4000/category"
-    var jsonItems: [Category] = []
+//    var jsonItems: [Category] = []
+//    var memes: [Category] {
+//
+//
+//        let object = UIApplication.shared.delegate
+//        let appDelegate = object as! AppDelegate
+//        return appDelegate.memes
+//        }
+    var memes: [Category] {
+        
+        return appDelegate.getData() // access data
+    }
 
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -44,11 +55,12 @@ class CategoryViewController: UIViewController {
             do {
                 let post = try decoder.decode([Category].self, from: data)
                 print("data\(data.count)")
-                self.jsonItems = post
+//                self.jsonItems = post
                 DispatchQueue.main.async {
+                    self.appDelegate.passData(post)
                     self.collectionView.reloadData()
                 }
-                print("json count: \(self.jsonItems.count)")
+                print("json count: \(self.memes.count)")
             } catch _ as NSError {
                 print("error")
                 return
@@ -66,12 +78,12 @@ extension CategoryViewController: UICollectionViewDelegate, UICollectionViewData
         return CGSize(width: itemWidth, height: itemWidth)
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return jsonItems.count
+        return memes.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: CategoryCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "CategoryCollectionViewCell", for: indexPath) as! CategoryCollectionViewCell
-        let item = jsonItems[indexPath.item]
+        let item = memes[indexPath.item]
         cell.label.text = item.name
         cell.imageView.image = UIImage(named: item.image!)
         
@@ -81,7 +93,7 @@ extension CategoryViewController: UICollectionViewDelegate, UICollectionViewData
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let itemVC = storyboard?.instantiateViewController(withIdentifier: "SubCategoryListVC") as! SubCategoryListVC
         
-        guard let item = jsonItems[indexPath.item].subCategory else {
+        guard let item = memes[indexPath.item].subCategory else {
             print("No subCategory")
             return
         }

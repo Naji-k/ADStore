@@ -16,6 +16,7 @@ struct Ads: Codable {
 //    let user: User?
     let adsPrice: String?
     let adsCondition: String?
+    let adsCategory: String?
     let adsImages: String?
     
     enum CodingKeys: String, CodingKey {
@@ -26,6 +27,7 @@ struct Ads: Codable {
 //        case user = "user"
         case adsPrice = "adsPrice"
         case adsCondition = "adsCondition"
+        case adsCategory = "adsCategory"
         case adsImages = "adsImages"
     }
     init(from decoder: Decoder) throws {
@@ -37,6 +39,7 @@ struct Ads: Codable {
         adsImages = try values.decodeIfPresent(String.self, forKey: .adsImages)
         adsPrice = try values.decodeIfPresent(String.self, forKey: .adsPrice)
         adsTitle = try values.decodeIfPresent(String.self, forKey: .adsTitle)
+        adsCategory = try values.decodeIfPresent(String.self, forKey: .adsCategory)
     }
 }
 

@@ -54,6 +54,7 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
         super.viewDidAppear(true)
         //Disable when click behind the + button
         self.tabBar.items![2].isEnabled = false
+        self.navigationController?.isNavigationBarHidden = false
 
     }
     func setupMiddleButton() {
@@ -74,12 +75,13 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
         view.layoutIfNeeded()
     }
     @objc private func menuButtonAction(sender: UIButton) {
-        let newVC = self.storyboard?.instantiateViewController(withIdentifier: "AddPostViewController") as! AddPostViewController
-        newVC.modalPresentationStyle = .overCurrentContext
-        self.present(newVC, animated: true, completion: nil)
+        guard let newVC = self.storyboard?.instantiateViewController(withIdentifier: "TableViewController") else {return}
+//        let newVC = self.storyboard?.instantiateViewController(withIdentifier: "TableViewController") as! TableViewController
+        let navController = UINavigationController(rootViewController: newVC)
+        navController.modalPresentationStyle = .overCurrentContext
+        navController.modalTransitionStyle = .coverVertical
+        self.present(navController, animated: true, completion: nil)
         
-        
-
     }
     
 }
