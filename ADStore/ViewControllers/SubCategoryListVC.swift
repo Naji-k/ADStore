@@ -39,7 +39,7 @@ class SubCategoryListVC: UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         if needCallBack == true {
-            callback?(selected!)
+            callback?(selected ?? "" )
         }
         
         print(callback)
