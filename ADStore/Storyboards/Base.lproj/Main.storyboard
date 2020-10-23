@@ -550,6 +550,7 @@
                         <outlet property="conditionTextField" destination="12o-4A-QUh" id="XES-yJ-q5W"/>
                         <outlet property="countingLabel" destination="gtj-Sb-YbJ" id="eVg-Ha-VlE"/>
                         <outlet property="descriptionTextView" destination="rBe-Si-Yhg" id="6mm-2P-zM3"/>
+                        <outlet property="price" destination="7dy-HU-ZLL" id="N97-GT-Hmb"/>
                         <outlet property="titleTextField" destination="INI-zr-abM" id="2Hm-vv-B3N"/>
                     </connections>
                 </tableViewController>

@@ -21,8 +21,7 @@ class CategoryViewController: UIViewController {
 //        return appDelegate.memes
 //        }
     var memes: [Category] {
-        
-        return appDelegate.getData() // access data
+        return appDelegate.getCategoryData() // access data
     }
 
     @IBOutlet weak var collectionView: UICollectionView!
@@ -57,7 +56,7 @@ class CategoryViewController: UIViewController {
                 print("data\(data.count)")
 //                self.jsonItems = post
                 DispatchQueue.main.async {
-                    self.appDelegate.passData(post)
+                    self.appDelegate.passCategoryData(post)
                     self.collectionView.reloadData()
                 }
                 print("json count: \(self.memes.count)")

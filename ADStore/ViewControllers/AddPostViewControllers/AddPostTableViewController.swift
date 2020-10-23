@@ -17,7 +17,6 @@ class AddPostTableViewController: UITableViewController, TLPhotosPickerViewContr
     var imageArray = [UIImage]()
     var imageCount: Int = 6
 
-    let images = ["bmw","bmw","bmw","bmw","bmw","bmw","bmw","bmw","bmw","bmw"]
     var labels = ["①", "②", "③", "④", "⑤", "⑥"]
 
     @IBOutlet weak var collectionView: UICollectionView!
@@ -28,9 +27,10 @@ class AddPostTableViewController: UITableViewController, TLPhotosPickerViewContr
     @IBOutlet weak var categoryTextField: UITextField!
     @IBOutlet weak var countingLabel: UILabel!
     @IBOutlet weak var descriptionTextView: UITextView!
+    @IBOutlet weak var price: UITextField!
     
     fileprivate let pickerView = ToolbarPickerView()
-    fileprivate let titles = ["0", "1", "2", "3"]
+    fileprivate let conditionsArray = ["New", "Used-Like New", "Used"]
 
     @objc func cancel() {
         print("cancel")
@@ -56,8 +56,9 @@ class AddPostTableViewController: UITableViewController, TLPhotosPickerViewContr
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-//         self.navigationItem.rightBarButtonItem = self.editButtonItem
         self.navigationItem.leftBarButtonItem = UIBarButtonItem.init(title: "Cancel", style: .plain, target: self, action: #selector(cancel))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(title: "Done", style: .plain, target: self, action: #selector(makeViaAPIRequest))
+        
         drawTextView()
         
         print("imageArray: \(imageArray.count)")
@@ -186,6 +187,48 @@ class AddPostTableViewController: UITableViewController, TLPhotosPickerViewContr
         // Pass the selected object to the new view controller.
     }
     */
+    //MARK: - PostURLSession
+    @objc func makeViaAPIRequest () {
+        let newAds = Ads(adsTitle: titleTextField.text!, adsDes: descriptionTextView.text, adsDate: "22-02-2020", adsPrice: price.text! + " $", adsCondition: conditionTextField.text!, adsCategory: categoryTextField.text!, adsImages: "bmw")
+        
+        let postRequest = APIRequest(endpoint: "Ads")
+        postRequest.save(newAds, completion: { result in
+            switch result {
+            case .success(let newAds):
+                print("\(newAds)was been send")
+            case.failure(let error):
+                print("\(error.localizedDescription) occurred")
+            }
+        })
+    }
+    
+    @objc func makeAPost() {
+//                let session = URLSession.shared
+        let session = URLSession(configuration: .ephemeral)
+        let createRequest = PostRouter.create(Ads(adsTitle: titleTextField.text!, adsDes: descriptionTextView.text!, adsDate: "22-10-2020", adsPrice: price.text!, adsCondition: conditionTextField.text!, adsCategory: categoryTextField.text!, adsImages: "bmw")).asURLRequest()
+        
+        let putTask = session.dataTask(with: createRequest) { data, response, error in
+            // handler just shows us what we updated on json-server
+            
+            guard let data = data, let response = response as? HTTPURLResponse,
+                response.statusCode == 201 else {
+                    print("error \(error?.localizedDescription)")
+                    return
+            }
+            
+            let decoder = JSONDecoder()
+            do {
+                let post = try decoder.decode([Ads].self, from: data)
+                // decoded data is just the Post we updated on json-server
+                print(post)
+            } catch let decodeError as NSError {
+                print("Decoder error: \(decodeError.localizedDescription)\n")
+                return
+            }
+        }
+        putTask.resume()
+        
+    }
 
 }
 // MARK: - Collection view data source
@@ -344,13 +387,13 @@ extension AddPostTableViewController: UIPickerViewDelegate, UIPickerViewDataSour
         return 1
     }
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return titles.count
+        return conditionsArray.count
     }
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return self.titles[row]
+        return self.conditionsArray[row]
     }
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        self.conditionTextField.text = self.titles[row]
+        self.conditionTextField.text = self.conditionsArray[row]
     }
 }
 extension AddPostTableViewController: ToolbarPickerViewDelegate {

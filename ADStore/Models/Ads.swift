@@ -8,8 +8,8 @@
 
 import Foundation
 
-struct Ads: Codable {
-    let adsId: Int?
+public struct Ads: Codable {
+//    let id: Int?
     let adsTitle: String?
     let adsDes: String?
     let adsDate: String?
@@ -20,7 +20,6 @@ struct Ads: Codable {
     let adsImages: String?
     
     enum CodingKeys: String, CodingKey {
-        case adsId = "adsId"
         case adsTitle = "adsTitle"
         case adsDes = "adsDes"
         case adsDate = "adsDate"
@@ -30,17 +29,39 @@ struct Ads: Codable {
         case adsCategory = "adsCategory"
         case adsImages = "adsImages"
     }
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         adsCondition = try values.decodeIfPresent(String.self, forKey: .adsCondition)
         adsDate = try values.decodeIfPresent(String.self, forKey: .adsDate)
         adsDes = try values.decodeIfPresent(String.self, forKey: .adsDes)
-        adsId = try values.decodeIfPresent(Int.self, forKey: .adsId)
         adsImages = try values.decodeIfPresent(String.self, forKey: .adsImages)
         adsPrice = try values.decodeIfPresent(String.self, forKey: .adsPrice)
         adsTitle = try values.decodeIfPresent(String.self, forKey: .adsTitle)
         adsCategory = try values.decodeIfPresent(String.self, forKey: .adsCategory)
     }
+    init(adsTitle: String, adsDes: String, adsDate: String, adsPrice: String, adsCondition: String, adsCategory: String, adsImages: String) {
+        self.adsTitle = adsTitle
+        self.adsDes = adsDes
+        self.adsDate = adsDate
+//        self.t user: User?
+        self.adsPrice = adsPrice
+        self.adsCondition = adsCondition
+        self.adsCategory = adsCategory
+        self.adsImages = adsImages
+        
+    }
+//      public init(adsTitle: String, adsDes: String, adsDate: String, adsPrice: String, adsCondition: String, adsCategory: String, adsImages: String) {
+//            
+//            self.adsTitle = adsTitle
+//            self.adsDes = adsDes
+//            self.adsDate = adsDate
+//    //        self.t user: User?
+//            self.adsPrice = adsPrice
+//            self.adsCondition = adsCondition
+//            self.adsCategory = adsCategory
+//            self.adsImages = adsImages
+//            
+//        }
 }
 
 struct User: Codable {

@@ -15,15 +15,25 @@ class CategoryListViewController: UIViewController {
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     let userDefault = UserDefaults.standard
     var memes: [Category] {
-        return appDelegate.getData() // access data
+        return appDelegate.getCategoryData() // access data
     }
-    var selected: String?
+    var selected: String? = nil
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        print("didApear")
+        if selected?.isEmpty ?? false  {
+            dismiss(animated: true, completion: nil)
+        } else {
+            
+        }
+        
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -57,8 +67,24 @@ extension CategoryListViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selected = memes[indexPath.row].name ?? ""
-        self.selected = selected
-        self.dismiss(animated: true, completion: nil)
+//        let selected = memes[indexPath.row].name ?? ""
+//        self.selected = selected
+//        self.dismiss(animated: true, completion: nil)
+        //should go to subCategory list
+//       let itemVC = storyboard?.instantiateViewController(withIdentifier: "SubCategoryListVC") as! SubCategoryListVC
+        
+        let newVC = UIStoryboard.init(name: "Home", bundle: .none).instantiateViewController(withIdentifier: "SubCategoryListVC") as! SubCategoryListVC
+        
+        guard let item = memes[indexPath.item].subCategory else {
+            print("No subCategory")
+            return
+        }
+        newVC.items = item
+        newVC.needCallBack = true
+        newVC.callback = { newValue in
+            self.selected = newValue
+        }
+        self.present(newVC, animated: true, completion: nil)
+        
     }
 }

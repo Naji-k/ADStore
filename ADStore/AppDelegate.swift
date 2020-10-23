@@ -13,12 +13,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-    private var data : [Category] = [Category]()
-    func getData () ->[Category] {
-        return data
+    private var categoryData : [Category] = [Category]()
+    private var adsData : [Ads] = [Ads]()
+    func getCategoryData () ->[Category] {
+        return categoryData
     }
-    func passData (_ data: [Category]) {
-        self.data = data
+    func passCategoryData (_ data: [Category]) {
+        self.categoryData = data
+    }
+    func getAdsData () ->[Ads] {
+        return adsData
+    }
+    func passAdsData (_ data: [Ads]) {
+        self.adsData = data
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {

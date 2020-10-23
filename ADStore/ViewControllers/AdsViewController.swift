@@ -126,7 +126,7 @@ extension AdsViewController: UITableViewDataSource, UITableViewDelegate {
             let cell2 = tableView.dequeueReusableCell(withIdentifier: "AdsTitleTableViewCell") as! AdsTitleTableViewCell
             cell2.adsTitle.text = item?.adsTitle
             cell2.adsPrice.text = item?.adsPrice
-            cell2.adsDateOfPost.text = item?.adsPrice
+            cell2.adsDateOfPost.text = item?.adsDate
             cell2.adsLocation.text = "Hogeveen"
             
             return cell2
@@ -145,6 +145,15 @@ extension AdsViewController: UITableViewDataSource, UITableViewDelegate {
         case 4:
             
             let cell5 = tableView.dequeueReusableCell(withIdentifier: "AdsDescTableViewCell") as! AdsDescTableViewCell
+            cell5.cellDelegate = self
+            cell5.descTextView.text = """
+            Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda. naji naji naji I am trying to expand
+            Ask sd hard nsd the show d
+            Add bass
+            Add had
+            Add jade
+            Add jade
+"""
             
             return cell5
         case 5:

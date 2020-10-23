@@ -38,9 +38,12 @@
 		2B7D571225194CB900DE13DE /* AdsUserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7D571125194CB900DE13DE /* AdsUserTableViewCell.swift */; };
 		2B7D571425194CD600DE13DE /* AdsLocationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7D571325194CD600DE13DE /* AdsLocationTableViewCell.swift */; };
 		2B7D571625194D0000DE13DE /* AdsDescTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7D571525194D0000DE13DE /* AdsDescTableViewCell.swift */; };
+		2B84884B2541DAEB0087D975 /* RestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B84884A2541DAEB0087D975 /* RestManager.swift */; };
 		2B894AD72535C0CA00EEA29F /* CategoryListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B894AD62535C0CA00EEA29F /* CategoryListViewController.swift */; };
 		2B894AD92535C1BE00EEA29F /* CategoryListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B894AD82535C1BE00EEA29F /* CategoryListTableViewCell.swift */; };
 		2B9AEB2225350D9B00556E47 /* TableView2ndCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B9AEB2125350D9B00556E47 /* TableView2ndCell.swift */; };
+		2BBB42102541E0C900060DE5 /* RestRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BBB420F2541E0C900060DE5 /* RestRouter.swift */; };
+		2BBB42122541F64700060DE5 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BBB42112541F64700060DE5 /* APIRequest.swift */; };
 		2BC115FB252948040028A42B /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC115FA252948040028A42B /* ImagePicker.swift */; };
 		2BC76465253277D2008A4F85 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC76464253277D2008A4F85 /* TableViewCell.swift */; };
 		2BC7646725327855008A4F85 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC7646625327855008A4F85 /* CollectionViewCell.swift */; };
@@ -115,9 +118,12 @@
 		2B7D571125194CB900DE13DE /* AdsUserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsUserTableViewCell.swift; sourceTree = "<group>"; };
 		2B7D571325194CD600DE13DE /* AdsLocationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsLocationTableViewCell.swift; sourceTree = "<group>"; };
 		2B7D571525194D0000DE13DE /* AdsDescTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsDescTableViewCell.swift; sourceTree = "<group>"; };
+		2B84884A2541DAEB0087D975 /* RestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestManager.swift; sourceTree = "<group>"; };
 		2B894AD62535C0CA00EEA29F /* CategoryListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListViewController.swift; sourceTree = "<group>"; };
 		2B894AD82535C1BE00EEA29F /* CategoryListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListTableViewCell.swift; sourceTree = "<group>"; };
 		2B9AEB2125350D9B00556E47 /* TableView2ndCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableView2ndCell.swift; sourceTree = "<group>"; };
+		2BBB420F2541E0C900060DE5 /* RestRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestRouter.swift; sourceTree = "<group>"; };
+		2BBB42112541F64700060DE5 /* APIRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
 		2BC115FA252948040028A42B /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		2BC76464253277D2008A4F85 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		2BC7646625327855008A4F85 /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
@@ -330,6 +336,9 @@
 			children = (
 				2BC115FA252948040028A42B /* ImagePicker.swift */,
 				2BDCF772252F6AA0008BBD7E /* ToolbarPickerView.swift */,
+				2B84884A2541DAEB0087D975 /* RestManager.swift */,
+				2BBB420F2541E0C900060DE5 /* RestRouter.swift */,
+				2BBB42112541F64700060DE5 /* APIRequest.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -618,9 +627,12 @@
 				2B460D02250D6C9F0064569A /* SubCategoryTableViewCell.swift in Sources */,
 				2B7D571025194B9E00DE13DE /* AdsTitleTableViewCell.swift in Sources */,
 				2B39B53424EDD59000D300B3 /* FavoritesViewController.swift in Sources */,
+				2B84884B2541DAEB0087D975 /* RestManager.swift in Sources */,
+				2BBB42102541E0C900060DE5 /* RestRouter.swift in Sources */,
 				2B699112251549B200880A34 /* AddPostViewController.swift in Sources */,
 				2BD04725251659B600550A8B /* AdsListTableViewCell.swift in Sources */,
 				2B39B4F824EDCA8700D300B3 /* AppDelegate.swift in Sources */,
+				2BBB42122541F64700060DE5 /* APIRequest.swift in Sources */,
 				2B4E456724FD278300CCC5D4 /* RootClass.swift in Sources */,
 				2B460D00250D6AE60064569A /* SubCategoryListVC.swift in Sources */,
 				2BD047272516C33D00550A8B /* AdsViewController.swift in Sources */,
