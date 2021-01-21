@@ -31,6 +31,11 @@
 		2B4E456A24FD296A00CCC5D4 /* CategoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B4E456924FD296A00CCC5D4 /* CategoryCollectionViewCell.swift */; };
 		2B5F25E7251C9C0400D6AEAD /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B5F25E6251C9C0400D6AEAD /* MapKit.framework */; };
 		2B699112251549B200880A34 /* AddPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B699111251549B200880A34 /* AddPostViewController.swift */; };
+		2B7057FD254B7B2900C0890E /* Switcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7057FC254B7B2900C0890E /* Switcher.swift */; };
+		2B7057FF254B80F700C0890E /* LogIn.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B7057FE254B80F700C0890E /* LogIn.storyboard */; };
+		2B705802254B81A000C0890E /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B705801254B81A000C0890E /* LogInViewController.swift */; };
+		2B705804254BA49500C0890E /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B705803254BA49500C0890E /* SignUpViewController.swift */; };
+		2B705806254BA5A300C0890E /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B705805254BA5A300C0890E /* Utilities.swift */; };
 		2B759525251FAE310045E53F /* AddPostAddImagesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B759524251FAE310045E53F /* AddPostAddImagesTableViewCell.swift */; };
 		2B759528251FAF410045E53F /* AddPostCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B759527251FAF410045E53F /* AddPostCollectionViewCell.swift */; };
 		2B7D570E25194B5E00DE13DE /* AdsImagesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7D570D25194B5E00DE13DE /* AdsImagesTableViewCell.swift */; };
@@ -42,6 +47,7 @@
 		2B894AD72535C0CA00EEA29F /* CategoryListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B894AD62535C0CA00EEA29F /* CategoryListViewController.swift */; };
 		2B894AD92535C1BE00EEA29F /* CategoryListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B894AD82535C1BE00EEA29F /* CategoryListTableViewCell.swift */; };
 		2B9AEB2225350D9B00556E47 /* TableView2ndCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B9AEB2125350D9B00556E47 /* TableView2ndCell.swift */; };
+		2BB929A225B5F1E20011CB1B /* UITextField-extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB929A125B5F1E20011CB1B /* UITextField-extension.swift */; };
 		2BBB42102541E0C900060DE5 /* RestRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BBB420F2541E0C900060DE5 /* RestRouter.swift */; };
 		2BBB42122541F64700060DE5 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BBB42112541F64700060DE5 /* APIRequest.swift */; };
 		2BC115FB252948040028A42B /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC115FA252948040028A42B /* ImagePicker.swift */; };
@@ -111,6 +117,11 @@
 		2B4E456924FD296A00CCC5D4 /* CategoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCollectionViewCell.swift; sourceTree = "<group>"; };
 		2B5F25E6251C9C0400D6AEAD /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		2B699111251549B200880A34 /* AddPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPostViewController.swift; sourceTree = "<group>"; };
+		2B7057FC254B7B2900C0890E /* Switcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Switcher.swift; sourceTree = "<group>"; };
+		2B7057FE254B80F700C0890E /* LogIn.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LogIn.storyboard; sourceTree = "<group>"; };
+		2B705801254B81A000C0890E /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
+		2B705803254BA49500C0890E /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		2B705805254BA5A300C0890E /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		2B759524251FAE310045E53F /* AddPostAddImagesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPostAddImagesTableViewCell.swift; sourceTree = "<group>"; };
 		2B759527251FAF410045E53F /* AddPostCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPostCollectionViewCell.swift; sourceTree = "<group>"; };
 		2B7D570D25194B5E00DE13DE /* AdsImagesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsImagesTableViewCell.swift; sourceTree = "<group>"; };
@@ -122,6 +133,7 @@
 		2B894AD62535C0CA00EEA29F /* CategoryListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListViewController.swift; sourceTree = "<group>"; };
 		2B894AD82535C1BE00EEA29F /* CategoryListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListTableViewCell.swift; sourceTree = "<group>"; };
 		2B9AEB2125350D9B00556E47 /* TableView2ndCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableView2ndCell.swift; sourceTree = "<group>"; };
+		2BB929A125B5F1E20011CB1B /* UITextField-extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField-extension.swift"; sourceTree = "<group>"; };
 		2BBB420F2541E0C900060DE5 /* RestRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestRouter.swift; sourceTree = "<group>"; };
 		2BBB42112541F64700060DE5 /* APIRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
 		2BC115FA252948040028A42B /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
@@ -239,6 +251,7 @@
 				2B39B4FB24EDCA8700D300B3 /* Main.storyboard */,
 				2B39B53524EDD5E600D300B3 /* Profile.storyboard */,
 				2B39B52A24EDD07600D300B3 /* Messages.storyboard */,
+				2B7057FE254B80F700C0890E /* LogIn.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -246,6 +259,7 @@
 		2B39B52E24EDD15400D300B3 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				2B705800254B810800C0890E /* LogIn */,
 				2B759526251FAE8E0045E53F /* AddPostViewControllers */,
 				2B39B52C24EDD0FD00D300B3 /* MessagesViewController.swift */,
 				2B3BD41E252B52EF00F37A4C /* PodViewController.swift */,
@@ -295,6 +309,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		2B705800254B810800C0890E /* LogIn */ = {
+			isa = PBXGroup;
+			children = (
+				2B705801254B81A000C0890E /* LogInViewController.swift */,
+				2B705803254BA49500C0890E /* SignUpViewController.swift */,
+			);
+			path = LogIn;
+			sourceTree = "<group>";
+		};
 		2B759523251FAD250045E53F /* AddPostTableViewCells */ = {
 			isa = PBXGroup;
 			children = (
@@ -337,8 +360,11 @@
 				2BC115FA252948040028A42B /* ImagePicker.swift */,
 				2BDCF772252F6AA0008BBD7E /* ToolbarPickerView.swift */,
 				2B84884A2541DAEB0087D975 /* RestManager.swift */,
+				2B705805254BA5A300C0890E /* Utilities.swift */,
 				2BBB420F2541E0C900060DE5 /* RestRouter.swift */,
 				2BBB42112541F64700060DE5 /* APIRequest.swift */,
+				2B7057FC254B7B2900C0890E /* Switcher.swift */,
+				2BB929A125B5F1E20011CB1B /* UITextField-extension.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -470,6 +496,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2B7057FF254B80F700C0890E /* LogIn.storyboard in Resources */,
 				2B39B50224EDCA8800D300B3 /* LaunchScreen.storyboard in Resources */,
 				2B39B4FF24EDCA8800D300B3 /* Assets.xcassets in Resources */,
 				2B39B53224EDD57900D300B3 /* Favorites.storyboard in Resources */,
@@ -608,12 +635,14 @@
 				2B7D571625194D0000DE13DE /* AdsDescTableViewCell.swift in Sources */,
 				2BDCF773252F6AA0008BBD7E /* ToolbarPickerView.swift in Sources */,
 				2BC115FB252948040028A42B /* ImagePicker.swift in Sources */,
+				2BB929A225B5F1E20011CB1B /* UITextField-extension.swift in Sources */,
 				2B894AD72535C0CA00EEA29F /* CategoryListViewController.swift in Sources */,
 				2B39B53824EDD6BE00D300B3 /* ProfileViewController.swift in Sources */,
 				2B39B53024EDD17500D300B3 /* TabBarViewController.swift in Sources */,
 				2BD0471F251639D300550A8B /* AdsCollectionViewController.swift in Sources */,
 				2B9AEB2225350D9B00556E47 /* TableView2ndCell.swift in Sources */,
 				2B7D570E25194B5E00DE13DE /* AdsImagesTableViewCell.swift in Sources */,
+				2B7057FD254B7B2900C0890E /* Switcher.swift in Sources */,
 				2BD047212516529B00550A8B /* AdssCollectionViewCell.swift in Sources */,
 				2B39B52D24EDD0FD00D300B3 /* MessagesViewController.swift in Sources */,
 				2BE6F048253FACB500A6E5FD /* AdsConditionTableViewCell.swift in Sources */,
@@ -624,6 +653,7 @@
 				2BC7646725327855008A4F85 /* CollectionViewCell.swift in Sources */,
 				2B39B4FA24EDCA8700D300B3 /* CategoryViewController.swift in Sources */,
 				2BC76465253277D2008A4F85 /* TableViewCell.swift in Sources */,
+				2B705802254B81A000C0890E /* LogInViewController.swift in Sources */,
 				2B460D02250D6C9F0064569A /* SubCategoryTableViewCell.swift in Sources */,
 				2B7D571025194B9E00DE13DE /* AdsTitleTableViewCell.swift in Sources */,
 				2B39B53424EDD59000D300B3 /* FavoritesViewController.swift in Sources */,
@@ -636,8 +666,10 @@
 				2B4E456724FD278300CCC5D4 /* RootClass.swift in Sources */,
 				2B460D00250D6AE60064569A /* SubCategoryListVC.swift in Sources */,
 				2BD047272516C33D00550A8B /* AdsViewController.swift in Sources */,
+				2B705806254BA5A300C0890E /* Utilities.swift in Sources */,
 				2B759525251FAE310045E53F /* AddPostAddImagesTableViewCell.swift in Sources */,
 				2BC7646925327A38008A4F85 /* AddPostTableViewController.swift in Sources */,
+				2B705804254BA49500C0890E /* SignUpViewController.swift in Sources */,
 				2B3BD425252B5FF800F37A4C /* PodCollectionViewCell.swift in Sources */,
 				2B7D571425194CD600DE13DE /* AdsLocationTableViewCell.swift in Sources */,
 				2B894AD92535C1BE00EEA29F /* CategoryListTableViewCell.swift in Sources */,

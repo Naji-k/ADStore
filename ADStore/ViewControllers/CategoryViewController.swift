@@ -37,9 +37,15 @@ class CategoryViewController: UIViewController {
         items.append(CategoryLocal(id: 3, catName: "Fashion & Beauty", catImage: "icon", subCat: [SubCategory(subName: "Rent", subImage: "icon", id: 0)]))
  */
         fetchCategory()
+        //tested logout button
+        navigationItem.leftBarButtonItem = UIBarButtonItem.init(title: "Log out", style: .plain, target: self, action: #selector(logOut))
     }
 
+    @objc func logOut() {
+        UserDefaults.standard.set(false, forKey: "status")
+        Switcher.updateRootVC()
 
+    }
     func fetchCategory () {
         
         let urlRequest = URLRequest(url: URL(string: url)!)
