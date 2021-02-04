@@ -20,9 +20,10 @@ class SubCategoryListVC: UIViewController {
         
         return appDelegate.getAdsData() // access data
     }
-    var matched = [Ads]()
+//    var matched = [Ads]()
     
-    var url = "http://localhost:3000/Ads"
+//    var url = "http://localhost:3000/Ads"
+    var url = "http://192.168.1.208:3000/Ads"
     
     
     override func viewDidLoad() {
@@ -33,8 +34,7 @@ class SubCategoryListVC: UIViewController {
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        matched = []
-        print(" matched = []")
+        
     }
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
@@ -42,10 +42,10 @@ class SubCategoryListVC: UIViewController {
             callback?(selected ?? "" )
         }
         
-        print(callback)
+//        print(callback)
     }
     
-    func fetchAds () {
+    func fetchAds() {
         let urlRequest = URLRequest(url: URL(string: url)!)
         let task = URLSession.shared.dataTask(with: urlRequest) {(data, response, error) in
             guard let data = data, let response = response as? HTTPURLResponse,
@@ -60,7 +60,7 @@ class SubCategoryListVC: UIViewController {
                 DispatchQueue.main.async {
                     self.appDelegate.passAdsData(post)
                 }
-                print("json count: \(self.memes.count)")
+                print("Ads count: \(self.memes.count)")
             } catch _ as NSError {
                 print("error")
                 return
@@ -97,12 +97,14 @@ extension SubCategoryListVC: UITableViewDelegate, UITableViewDataSource {
         } else {
       
         let newVC = storyboard?.instantiateViewController(withIdentifier: "AdsListTableViewController") as! AdsListTableViewController
-        memes.forEach { (ads) in
-            if (ads.adsCategory == item) {
-                matched.append(ads)
-            }
-        }
-        newVC.items = matched
+            let test = memes.filter({($0.adsCategory?.contains(item))!})
+//
+//        memes.forEach { (ads) in
+//            if (ads.adsCategory == item) {
+//                matched.append(ads)
+//            }
+//        }
+            newVC.items = test
         navigationController?.pushViewController(newVC, animated: true)
         
         }

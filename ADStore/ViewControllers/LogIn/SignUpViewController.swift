@@ -51,8 +51,7 @@ class SignUpViewController: UIViewController {
             
             // There's something wrong with the fields, show error message
             showError(error!)
-        }
-        else {
+        } else {
             
             // Create cleaned versions of the data
             let firstName = firstNameTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)

@@ -7,9 +7,10 @@
 //
 
 import Foundation
+import UIKit
 
 public struct Ads: Codable {
-//    let id: Int?
+    var id: Int?
     let adsTitle: String?
     let adsDes: String?
     let adsDate: String?
@@ -17,7 +18,7 @@ public struct Ads: Codable {
     let adsPrice: String?
     let adsCondition: String?
     let adsCategory: String?
-    let adsImages: String?
+    let adsImages: [String]?
     
     enum CodingKeys: String, CodingKey {
         case adsTitle = "adsTitle"
@@ -28,18 +29,22 @@ public struct Ads: Codable {
         case adsCondition = "adsCondition"
         case adsCategory = "adsCategory"
         case adsImages = "adsImages"
+        case id = "id"
     }
     public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         adsCondition = try values.decodeIfPresent(String.self, forKey: .adsCondition)
         adsDate = try values.decodeIfPresent(String.self, forKey: .adsDate)
         adsDes = try values.decodeIfPresent(String.self, forKey: .adsDes)
-        adsImages = try values.decodeIfPresent(String.self, forKey: .adsImages)
+        adsImages = try values.decodeIfPresent([String].self, forKey: .adsImages)
         adsPrice = try values.decodeIfPresent(String.self, forKey: .adsPrice)
         adsTitle = try values.decodeIfPresent(String.self, forKey: .adsTitle)
         adsCategory = try values.decodeIfPresent(String.self, forKey: .adsCategory)
+        id = try values.decodeIfPresent(Int.self, forKey: .id)
+        
     }
-    init(adsTitle: String, adsDes: String, adsDate: String, adsPrice: String, adsCondition: String, adsCategory: String, adsImages: String) {
+     init(adsTitle: String, adsDes: String, adsDate: String, adsPrice: String, adsCondition: String, adsCategory: String, adsImages: [String]) {
+        
         self.adsTitle = adsTitle
         self.adsDes = adsDes
         self.adsDate = adsDate
@@ -51,7 +56,7 @@ public struct Ads: Codable {
         
     }
 //      public init(adsTitle: String, adsDes: String, adsDate: String, adsPrice: String, adsCondition: String, adsCategory: String, adsImages: String) {
-//            
+//
 //            self.adsTitle = adsTitle
 //            self.adsDes = adsDes
 //            self.adsDate = adsDate

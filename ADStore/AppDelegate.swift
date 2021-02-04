@@ -27,7 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func passAdsData (_ data: [Ads]) {
         self.adsData = data
     }
-
+    var likedDataKeys: NSMutableArray = []
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         Switcher.updateRootVC()

@@ -16,6 +16,7 @@ class AddPostTableViewController: UITableViewController, TLPhotosPickerViewContr
     var selectedAssets = [TLPHAsset]()
     var imageArray = [UIImage]()
     var imageCount: Int = 6
+    let descriptionLimit = 10
 
     var labels = ["①", "②", "③", "④", "⑤", "⑥"]
 
@@ -30,7 +31,7 @@ class AddPostTableViewController: UITableViewController, TLPhotosPickerViewContr
     @IBOutlet weak var price: UITextField!
     
     fileprivate let pickerView = ToolbarPickerView()
-    fileprivate let conditionsArray = ["New", "Used-Like New", "Used"]
+    fileprivate let conditionsArray = ["-select-", "New", "Used-Like New", "Used"]
 
     @objc func cancel() {
         print("cancel")
@@ -40,8 +41,9 @@ class AddPostTableViewController: UITableViewController, TLPhotosPickerViewContr
     override func viewDidLoad() {
         super.viewDidLoad()
 //        userDefault.set(nil, forKey: "selectedCategory")
+        self.countingLabel.text = "\(descriptionLimit)"
         self.categoryTextField.addTarget(self, action: #selector(self.openListPickerVC(_:)), for: UIControl.Event.editingDidBegin)
-
+        self.descriptionTextView.delegate = self
         collectionView.dataSource = self
         collectionView.delegate = self
         self.conditionTextField.inputView = self.pickerView
@@ -57,19 +59,14 @@ class AddPostTableViewController: UITableViewController, TLPhotosPickerViewContr
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         self.navigationItem.leftBarButtonItem = UIBarButtonItem.init(title: "Cancel", style: .plain, target: self, action: #selector(cancel))
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(title: "Done", style: .plain, target: self, action: #selector(makeViaAPIRequest))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(title: "Done", style: .plain, target: self, action: #selector(uploadToServer))
         
         drawTextView()
-        
-        print("imageArray: \(imageArray.count)")
-
-
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.navigationController?.isNavigationBarHidden = false
         self.tableView.reloadData()
-
     }
     @objc func openListPickerVC(_ sender: UIButton) {
         print("categoryPressed")
@@ -188,8 +185,8 @@ class AddPostTableViewController: UITableViewController, TLPhotosPickerViewContr
     }
     */
     //MARK: - PostURLSession
-    @objc func makeViaAPIRequest () {
-        let newAds = Ads(adsTitle: titleTextField.text!, adsDes: descriptionTextView.text, adsDate: "22-02-2020", adsPrice: price.text! + " $", adsCondition: conditionTextField.text!, adsCategory: categoryTextField.text!, adsImages: "bmw")
+    @objc func makeViaAPIRequest (imagesPath: [String]) {
+        let newAds = Ads(adsTitle: titleTextField.text!, adsDes: descriptionTextView.text, adsDate: "22-02-2020", adsPrice: price.text! + " $", adsCondition: conditionTextField.text!, adsCategory: categoryTextField.text!, adsImages: imagesPath)
         
         let postRequest = APIRequest(endpoint: "Ads")
         postRequest.save(newAds, completion: { result in
@@ -201,7 +198,7 @@ class AddPostTableViewController: UITableViewController, TLPhotosPickerViewContr
             }
         })
     }
-    
+    /*
     @objc func makeAPost() {
 //                let session = URLSession.shared
         let session = URLSession(configuration: .ephemeral)
@@ -209,13 +206,11 @@ class AddPostTableViewController: UITableViewController, TLPhotosPickerViewContr
         
         let putTask = session.dataTask(with: createRequest) { data, response, error in
             // handler just shows us what we updated on json-server
-            
             guard let data = data, let response = response as? HTTPURLResponse,
                 response.statusCode == 201 else {
                     print("error \(error?.localizedDescription)")
                     return
             }
-            
             let decoder = JSONDecoder()
             do {
                 let post = try decoder.decode([Ads].self, from: data)
@@ -227,9 +222,117 @@ class AddPostTableViewController: UITableViewController, TLPhotosPickerViewContr
             }
         }
         putTask.resume()
-        
     }
+    */
+    
+    @objc func sendImage () {
+        uploadToServer()
 
+    }
+    
+  @objc private func uploadToServer() {
+        let alert = UIAlertController(title: "Loading", message: "Please wait...", preferredStyle: .alert)
+        present(alert, animated: true, completion: nil)
+ 
+        var imageStr: [String] = []
+        for a in 1..<self.imageArray.count {
+            let imageData: Data = self.imageArray[a].jpegData(compressionQuality: 0.1)!
+            imageStr.append(imageData.base64EncodedString())
+        }
+ 
+        guard let data = try? JSONSerialization.data(withJSONObject: imageStr, options: []) else {
+            return
+        }
+ 
+        let jsonImageString: String = String(data: data, encoding: String.Encoding.utf8) ?? ""
+        let urlString: String = "imageStr=" + jsonImageString
+ 
+        var request: URLRequest = URLRequest(url: URL(string: "http://192.168.1.208/host/image.php")!)
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "POST"
+        request.httpBody = urlString.data(using: .utf8)
+ 
+        NSURLConnection.sendAsynchronousRequest(request, queue: .main, completionHandler: { (request, data, error) in
+            guard let data = data else {
+                return
+            }
+ 
+            let responseString: String = String(data: data, encoding: .utf8)!
+            let imageArrayPath = responseString.split(separator: ",").map({String($0)})
+            print("responseString", responseString)
+            print("imageArrayPath", imageArrayPath)
+            self.makeViaAPIRequest(imagesPath: imageArrayPath)
+            
+ 
+            alert.dismiss(animated: true, completion: {
+                let messageAlert = UIAlertController(title: "Success", message: "your Ads added successfully", preferredStyle: .alert)
+                messageAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
+                    
+                }))
+                self.present(messageAlert, animated: true, completion: nil)
+            })
+        })
+    self.dismiss(animated: true, completion: nil)
+    }
+    
+    func send() {
+        //upload image to website and get the link.. https://catbox.moe/user/api.php
+        guard let image = imageArray.last else { return  }
+        
+        let filename = "avatar.png"
+        let boundary = UUID().uuidString
+        let fieldName = "reqtype"
+        let fieldValue = "fileupload"
+        
+        //        let fieldName2 = "other field name"
+        //        let fieldValue2 = "other field value"
+        
+        let config = URLSessionConfiguration.default
+        let session = URLSession(configuration: config)
+        // Set the URLRequest to POST and to the specified URL
+        var urlRequest = URLRequest(url: URL(string: "https://catbox.moe/user/api.php")!)
+
+        urlRequest.httpMethod = "POST"
+        // Set Content-Type Header to multipart/form-data, this is equivalent to submitting form data in a web browser
+        urlRequest.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+        var data = Data()
+        
+        // Add the field name and field value to the raw http request data
+        // put two dashes ("-") in front of boundary string to separate different field/values
+        data.append("\r\n--\(boundary)\r\n".data(using: .utf8)!)
+        data.append("Content-Disposition: form-data; name=\"\(fieldName)\"\r\n\r\n".data(using: .utf8)!)
+        data.append("\(fieldValue)".data(using: .utf8)!)
+        // If you want to add another field, uncomment this
+        // Copy and paste the following block if you want to add another field
+        //        data.append("\r\n--\(boundary)\r\n".data(using: .utf8)!)
+        //        data.append("Content-Disposition: form-data; name=\"\(fieldName2)\"\r\n\r\n".data(using: .utf8)!)
+        //        data.append("\(fieldValue2)".data(using: .utf8)!)
+        
+        // Add the image to the raw http request data
+        data.append("\r\n--\(boundary)\r\n".data(using: .utf8)!)
+        data.append("Content-Disposition: form-data; name=\"fileToUpload\"; filename=\"\(filename)\"\r\n".data(using: .utf8)!)
+        data.append("Content-Type: image/png\r\n\r\n".data(using: .utf8)!)
+        data.append(image.pngData()!)
+        // End the raw http request data, note that there is 2 extra dash ("-") at the end, this is to indicate the end of the data
+        // According to the HTTP 1.1 specification https://tools.ietf.org/html/rfc7230
+        data.append("\r\n--\(boundary)--\r\n".data(using: .utf8)!)
+        // Send a POST request to the URL, with the data we created earlier
+        session.uploadTask(with: urlRequest, from: data, completionHandler: { responseData, response, error in
+            // session upload task will use a background thread to run the data upload task, so that the main UI operation wont get frozen
+            // we will need to use back the main thread to change the UI
+            if(error != nil){
+                print("\(error!.localizedDescription)")
+            }
+            guard let responseData = responseData else {
+                print("no response data")
+                return
+            }
+            if let responseString = String(data: responseData, encoding: .utf8) {
+                print("uploaded to: \(responseString)")
+            }
+        }).resume()
+    }
+    
 }
 // MARK: - Collection view data source
 
@@ -305,7 +408,6 @@ extension AddPostTableViewController: TLPhotosPickerLogDelegate {
 //                }
 //            }
 //        })
-        print(imageArray.count)
         return true
         
     }
@@ -416,26 +518,31 @@ extension AddPostTableViewController: UITextViewDelegate {
     }
     func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.textColor == .lightGray {
-            descriptionTextView.text = ""
-            descriptionTextView.textColor = .black
+            textView.text = ""
+            textView.textColor = .black
         }
     }
     func textViewDidEndEditing(_ textView: UITextView) {
-        if descriptionTextView.text.isEmpty {
-            descriptionTextView.text = "Description"
-            descriptionTextView.textColor = .lightGray
+        if textView.text.isEmpty {
+            textView.text = "Description"
+            textView.textColor = .lightGray
         }
     }
-    //certain characters or grow up to certain height
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        return ((descriptionTextView.text.count) > 60  && descriptionTextView.frame.height > 100) ? false : true
-    }
+    
     //countingLabel limit
     func textViewDidChange(_ textView: UITextView) {
-        self.countingLabel.text = "\(60 - textView.text.count)"
+        if textView.text.count < descriptionLimit {
+            self.countingLabel.textColor = .black
+        } else {
+            self.countingLabel.textColor = .red
+        }
+        self.countingLabel.text = "\(descriptionLimit - textView.text.count)"
+        
     }
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        return descriptionTextView.text.count + (descriptionTextView.text.count - range.length) <= 60
-
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
+        let numberOfChars = newText.count
+        return numberOfChars <= descriptionLimit    // 10 Limit Value
     }
 }

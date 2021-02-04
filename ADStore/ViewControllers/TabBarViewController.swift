@@ -10,12 +10,14 @@ import UIKit
 
 class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
     
+    
     @IBOutlet weak var tabbar: AppTabBar!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.delegate = self
-         // Do any additional setup after loading the view.
+        // Do any additional setup after loading the view.
         /**
          let controller1 = CategoryViewController()
          controller1.tabBarItem = UITabBarItem(tabBarSystemItem: .featured, tag: 1)
@@ -27,7 +29,7 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
          
          let controller3 = AddPostViewController()
          controller3.tabBarItem = UITabBarItem(tabBarSystemItem: .downloads, tag: 3)
-        controller3.modalPresentationStyle = .overFullScreen
+         controller3.modalPresentationStyle = .overFullScreen
          let nav3 = UINavigationController(rootViewController: controller3)
          
          let controller4 = MessagesViewController()
@@ -39,14 +41,16 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
          let nav5 = UINavigationController(rootViewController: controller5)
          
          
-//         let tabBarController = UITabBarController()
-//         tabBarController.viewControllers = [controller1, controller2, controller3, controller4, controller5]
-        
+         //         let tabBarController = UITabBarController()
+         //         tabBarController.viewControllers = [controller1, controller2, controller3, controller4, controller5]
          
-                 viewControllers = [nav1, nav2, nav3]
-//         **/
+         
+         viewControllers = [nav1, nav2, nav3]
+         //         **/
+        DispatchQueue.main.async {
+        }
+        self.setupMiddleButton()
         
-        setupMiddleButton()
         
     }
     
@@ -55,19 +59,28 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
         //Disable when click behind the + button
         self.tabBar.items![2].isEnabled = false
         self.navigationController?.isNavigationBarHidden = false
-
+        
     }
     func setupMiddleButton() {
-        let menuButton = UIButton(frame: CGRect(x: 0, y: 0, width: 75, height: 75))
-        var menuButtonFrame = menuButton.frame
-        menuButtonFrame.origin.y = view.bounds.height - menuButtonFrame.height - 40
-        menuButtonFrame.origin.x = view.bounds.width/2 - menuButtonFrame.size.width/2
-        menuButton.frame = menuButtonFrame
+        let menuButton = UIButton(frame: CGRect(x: 0, y: 0, width: 50 , height: 50))
+        let screenHeight = UIScreen.main.bounds.size.height
+        print(screenHeight)
+        menuButton.frame.origin.y = tabbar.bounds.height/2 - menuButton.frame.height / 1.5
+        menuButton.frame.origin.x = tabbar.bounds.width/2 - menuButton.frame.width / 2
+        
+        //        if screenHeight > 736 {
+        //            menuButton.frame.origin.y = view.bounds.height - tabbar.frame.size.height -  menuButton.frame.height
+        //        } else {
+        //            menuButton.frame.origin.y = view.bounds.height - tabbar.frame.size.height -  menuButton.frame.height / 2
+        //
+        //        }
+        //
+        //        menuButton.frame.origin.x = view.bounds.width/2 - menuButton.frame.size.width/2
+        menuButton.frame = menuButton.frame
         
         menuButton.backgroundColor = UIColor.red
-        menuButton.layer.cornerRadius = menuButtonFrame.height/2
-        view.addSubview(menuButton)
-        
+        menuButton.layer.cornerRadius = menuButton.frame.height/2
+        tabbar.insertSubview(menuButton, at: 0)
         menuButton.setImage(UIImage(named: "add"), for: .normal)
         
         menuButton.addTarget(self, action: #selector(menuButtonAction(sender:)), for: .touchUpInside)
@@ -76,16 +89,23 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
     }
     @objc private func menuButtonAction(sender: UIButton) {
         guard let newVC = self.storyboard?.instantiateViewController(withIdentifier: "TableViewController") else {return}
-//        let newVC = self.storyboard?.instantiateViewController(withIdentifier: "TableViewController") as! TableViewController
+        //        let newVC = self.storyboard?.instantiateViewController(withIdentifier: "TableViewController") as! TableViewController
         let navController = UINavigationController(rootViewController: newVC)
         navController.modalPresentationStyle = .overCurrentContext
         navController.modalTransitionStyle = .coverVertical
         self.present(navController, animated: true, completion: nil)
         
     }
+    // disable when click on tabBar Button to reload it 
+//    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+//        if tabBarController.selectedIndex == 1 {
+//            return viewController != tabBarController.selectedViewController
+//        } else {
+//        return true
+//        }
+//    }
     
 }
-
 
 @IBDesignable
 class AppTabBar: UITabBar {
@@ -132,23 +152,25 @@ class AppTabBar: UITabBar {
         return path.cgPath
     }
     
-        override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-            guard !clipsToBounds && !isHidden && alpha > 0 else { return nil }
-            for member in subviews.reversed() {
-                let subPoint = member.convert(point, from: self)
-                guard let result = member.hitTest(subPoint, with: event) else { continue }
-                return result
-            }
-            return nil
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        guard !clipsToBounds && !isHidden && alpha > 0 else { return nil }
+        for member in subviews.reversed() {
+            let subPoint = member.convert(point, from: self)
+            guard let result = member.hitTest(subPoint, with: event) else { continue }
+            return result
         }
-}
-
-extension UITabBar {
-    override open func sizeThatFits(_ size: CGSize) -> CGSize {
-        var sizeThatFits = super.sizeThatFits(size)
-        sizeThatFits.height = 70
-        return sizeThatFits
+        return nil
     }
 }
 
+//extension UITabBar {
+//    override open func sizeThatFits(_ size: CGSize) -> CGSize {
+//        var sizeThatFits = super.sizeThatFits(size)
+//        sizeThatFits.height = 50
+//        return sizeThatFits
+//    }
 //}
+
+//}
+
+

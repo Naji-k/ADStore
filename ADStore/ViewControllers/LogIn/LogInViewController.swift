@@ -22,6 +22,10 @@ class LogInViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //To auto hide keyboard when surrounding is pressed
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        self.view!.addGestureRecognizer(tap)
+        
         setUpElements()
 
 //        registerForKeyboardNotifications()
@@ -33,6 +37,10 @@ class LogInViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
+    @objc func dismissKeyboard() {
+        //Hides keyboard
+         view.endEditing(true)
+    }
     
     @objc func handleKeyboardWillShow(notification: NSNotification) {
         let keyboardDuration = (notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as AnyObject).doubleValue

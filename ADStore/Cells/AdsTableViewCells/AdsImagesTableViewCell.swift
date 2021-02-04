@@ -13,29 +13,17 @@ class AdsImagesTableViewCell: UITableViewCell, UIScrollViewDelegate {
     
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var pageController: UIPageControl!
+        
+    var count = 0
     
-    var images = ["bmw","bmw","bmw","bmw","bmw"]
-
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-print("ss")
 
-        var frame = CGRect(x: 0, y: 0, width: 0, height: 0)
-        
-        for i in 0..<images.count {
-            frame.origin.x = scrollView.frame.size.width * CGFloat(i)
-            frame.size = scrollView.frame.size
-            let imageView = UIImageView(frame: frame)
-            imageView.image = UIImage(named: images[i])
-            self.scrollView.addSubview(imageView)
-            
-        }
-        scrollView.contentSize = CGSize(width: scrollView.frame.size.width * CGFloat(images.count), height: scrollView.frame.size.height)
-        
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.delegate = self
-        scrollViewDidEndDecelerating(scrollView)
-        pageController.numberOfPages = images.count
+        scrollViewDidScroll(scrollView)
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -44,8 +32,17 @@ print("ss")
         // Configure the view for the selected state
     }
 
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        let page = scrollView.contentOffset.x/scrollView.frame.size.width
-        pageController.currentPage = Int(page)
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let pageWidth = scrollView.bounds.width
+        let pagFraction = scrollView.contentOffset.x / pageWidth
+        pageController.currentPage = Int(round(pagFraction))
+    }
+ 
+    @IBAction func pageControllerTapped(_ sender: UIPageControl) {
+        let page: Int? = sender.currentPage
+        var frame = self.scrollView.frame
+        frame.origin.x = frame.size.width * CGFloat(page ?? 0)
+        frame.origin.y = 0
+        self.scrollView.scrollRectToVisible(frame, animated: true)
     }
 }

@@ -59,6 +59,7 @@
 		2BD047232516597500550A8B /* AdsListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BD047222516597500550A8B /* AdsListTableViewController.swift */; };
 		2BD04725251659B600550A8B /* AdsListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BD04724251659B600550A8B /* AdsListTableViewCell.swift */; };
 		2BD047272516C33D00550A8B /* AdsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BD047262516C33D00550A8B /* AdsViewController.swift */; };
+		2BDC054025BE39D700F1794A /* UIImage-Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BDC053F25BE39D700F1794A /* UIImage-Helper.swift */; };
 		2BDCF770252F66FA008BBD7E /* AddPostDescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BDCF76F252F66FA008BBD7E /* AddPostDescriptionTableViewCell.swift */; };
 		2BDCF773252F6AA0008BBD7E /* ToolbarPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BDCF772252F6AA0008BBD7E /* ToolbarPickerView.swift */; };
 		2BE6F048253FACB500A6E5FD /* AdsConditionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE6F047253FACB500A6E5FD /* AdsConditionTableViewCell.swift */; };
@@ -145,6 +146,7 @@
 		2BD047222516597500550A8B /* AdsListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsListTableViewController.swift; sourceTree = "<group>"; };
 		2BD04724251659B600550A8B /* AdsListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsListTableViewCell.swift; sourceTree = "<group>"; };
 		2BD047262516C33D00550A8B /* AdsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsViewController.swift; sourceTree = "<group>"; };
+		2BDC053F25BE39D700F1794A /* UIImage-Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage-Helper.swift"; sourceTree = "<group>"; };
 		2BDCF76F252F66FA008BBD7E /* AddPostDescriptionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPostDescriptionTableViewCell.swift; sourceTree = "<group>"; };
 		2BDCF772252F6AA0008BBD7E /* ToolbarPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarPickerView.swift; sourceTree = "<group>"; };
 		2BE6F047253FACB500A6E5FD /* AdsConditionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsConditionTableViewCell.swift; sourceTree = "<group>"; };
@@ -361,6 +363,7 @@
 				2BDCF772252F6AA0008BBD7E /* ToolbarPickerView.swift */,
 				2B84884A2541DAEB0087D975 /* RestManager.swift */,
 				2B705805254BA5A300C0890E /* Utilities.swift */,
+				2BDC053F25BE39D700F1794A /* UIImage-Helper.swift */,
 				2BBB420F2541E0C900060DE5 /* RestRouter.swift */,
 				2BBB42112541F64700060DE5 /* APIRequest.swift */,
 				2B7057FC254B7B2900C0890E /* Switcher.swift */,
@@ -671,6 +674,7 @@
 				2BC7646925327A38008A4F85 /* AddPostTableViewController.swift in Sources */,
 				2B705804254BA49500C0890E /* SignUpViewController.swift in Sources */,
 				2B3BD425252B5FF800F37A4C /* PodCollectionViewCell.swift in Sources */,
+				2BDC054025BE39D700F1794A /* UIImage-Helper.swift in Sources */,
 				2B7D571425194CD600DE13DE /* AdsLocationTableViewCell.swift in Sources */,
 				2B894AD92535C1BE00EEA29F /* CategoryListTableViewCell.swift in Sources */,
 				2BDCF770252F66FA008BBD7E /* AddPostDescriptionTableViewCell.swift in Sources */,

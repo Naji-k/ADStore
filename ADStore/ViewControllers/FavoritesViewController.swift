@@ -9,22 +9,60 @@
 import UIKit
 
 class FavoritesViewController: UIViewController {
-
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    
+    var likedDataKeys: NSMutableArray {
+        let object = UIApplication.shared.delegate
+        let appDelegate = object as! AppDelegate
+        return appDelegate.likedDataKeys
+    }
+    var memes: [Ads] {
+        
+        return appDelegate.getAdsData() // access data
+    }
+    var items: [Ads] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        print(likedDataKeys)
+        
+        if likedDataKeys.count != 0 {
+            for i in likedDataKeys {
+                let ss = memes.filter({$0.id == i as? Int})
+                items.append(contentsOf: ss)
+                
+            }
+            let newVC = UIStoryboard.init(name: "Home", bundle: .none).instantiateViewController(withIdentifier: "AdsListTableViewController") as! AdsListTableViewController
+            newVC.items = items
+            //            newVC.modalPresentationStyle = .fullScreen
+            newVC.navigationItem.setHidesBackButton(true, animated: true)
+            navigationController?.pushViewController(newVC, animated: true)
+            
+        } else {
+            return
+        }
+        
+        print(items)
+        
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        items = []
     }
     
-
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }

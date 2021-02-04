@@ -11,7 +11,8 @@ import UIKit
 class CategoryViewController: UIViewController {
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
 
-    var url = "http://localhost:4000/category"
+//    var url = "http://localhost:4000/category"
+    var url = "http://192.168.1.208:4000/category"
 //    var jsonItems: [Category] = []
 //    var memes: [Category] {
 //
@@ -49,7 +50,7 @@ class CategoryViewController: UIViewController {
     func fetchCategory () {
         
         let urlRequest = URLRequest(url: URL(string: url)!)
-        let task = URLSession.shared.dataTask(with: urlRequest) {(data,response,error) in
+        let task = URLSession.shared.dataTask(with: urlRequest) {(data, response, error) in
         guard let data = data, let response = response as? HTTPURLResponse,
             response.statusCode == 200 else {
                 print("No data or statusCode not OK")
@@ -78,7 +79,7 @@ extension CategoryViewController: UICollectionViewDelegate, UICollectionViewData
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let screenSize = UIScreen.main.bounds
-        let itemWidth = (screenSize.width - 46) / 3
+        let itemWidth = (screenSize.width - 64) / 3
         
         return CGSize(width: itemWidth, height: itemWidth)
     }
