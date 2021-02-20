@@ -8,8 +8,27 @@
 
 import Foundation
 import UIKit
+import Firebase
 
 class Switcher {
+
+   static func fetchUserInfo() {
+        guard let uid = Auth.auth().currentUser?.uid else {
+            //for some reason uid = nil
+            return
+        }
+        Database.database().reference().child("users").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
+                if let dictionary = snapshot.value as? [String: AnyObject] {
+                    let user = User(dictionary: dictionary)
+                    DispatchQueue.main.async {
+                        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                        appDelegate.currentUser = user
+                        print(user)
+                }
+            }
+            
+        }, withCancel: nil)
+    }
     
     static func updateRootVC(){
         
@@ -21,7 +40,7 @@ class Switcher {
         
 
         if(status == true){
-
+            fetchUserInfo()
             rootVC = UIStoryboard.init(name: "Main", bundle:.main).instantiateViewController(withIdentifier: "TabBarViewController") as! TabBarViewController
         }else{
             rootVC = UIStoryboard(name: "LogIn", bundle: .none).instantiateViewController(withIdentifier: "LogInViewController") as! LogInViewController

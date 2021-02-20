@@ -35,7 +35,7 @@ class AddPostAddImagesTableViewCell: UITableViewCell, UICollectionViewDelegate, 
 
         // Configure the view for the selected state
     }
-     var viewController2 = AddPostViewController()
+//     var viewController2 = AddPostViewController()
     
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

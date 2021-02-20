@@ -46,11 +46,12 @@ extension UIImageView {
     }
     
     // UIImage(named: "placeholder") is Display image brfore download and load actual image.
-    func NKPlaceholderImage(image:UIImage?, imageView:UIImageView?,imgUrl:String,compate:@escaping (UIImage?) -> Void){
+    func NKPlaceholderImage(image:UIImage?, imageView:UIImageView?,imgUrl:String?,compate:@escaping (UIImage?) -> Void){
         
         if image != nil && imageView != nil {
             imageView!.image = image!
         }
+        guard let imgUrl = imgUrl else {return}
         
         var urlcatch = imgUrl.replacingOccurrences(of: "/", with: "#")
         let documentpath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]

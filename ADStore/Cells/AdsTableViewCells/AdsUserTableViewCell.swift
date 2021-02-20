@@ -14,13 +14,15 @@ protocol UserLinksDelegate {
 class AdsUserTableViewCell: UITableViewCell {
     
     @IBOutlet weak var userBtn: UIButton!
-    @IBOutlet weak var userName: UILabel!
+    @IBOutlet weak var createdDateLabel: UILabel!
+    @IBOutlet weak var userProfileImage: UIImageView!
     
     var delegate: UserLinksDelegate?
 
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        userBtn.imageView?.contentMode = .scaleAspectFit
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

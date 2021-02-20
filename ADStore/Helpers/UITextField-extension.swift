@@ -15,6 +15,16 @@ enum Direction {
     case Left
     case Right
 }
+    func addUnderline() {   //add underline to textField
+        let layer = CALayer()
+        layer.backgroundColor = UIColor.init(red: 48/255, green: 173/255, blue: 99/255, alpha: 1).cgColor
+        layer.frame = CGRect(x: 0.0, y: self.frame.size.height - 1.0, width: self.frame.size.width, height: 1.0)
+        self.clipsToBounds = true
+        self.borderStyle = .none
+        self.layer.addSublayer(layer)
+        self.setNeedsDisplay()
+        
+    }
 
 // add image to textfield
     func withImage(direction: Direction, image: UIImage, imageTintColor: UIColor, colorSeparator: UIColor, colorBorder: UIColor, mainViewColor: UIColor){
@@ -66,7 +76,7 @@ enum Direction {
         showHideButton?.setImage(UIImage(named: "eye"), for: .normal)
 
         showHideButton?.imageEdgeInsets = UIEdgeInsets(top: 0, left: -16, bottom: 0, right: 0)
-        showHideButton?.frame = CGRect(x: CGFloat(textField.frame.size.width - 25), y: CGFloat(5), width: CGFloat(25), height: CGFloat(25))
+        showHideButton?.frame = CGRect(x: CGFloat(textField.frame.size.width - 35), y: CGFloat(5), width: CGFloat(25), height: CGFloat(25))
         showHideButton?.addTarget(self, action: #selector(showPass(_:)), for: .touchUpInside)
         textField.rightViewMode = .always
         textField.rightView = showHideButton
@@ -81,4 +91,35 @@ enum Direction {
     //  var showHideButton: UIButton? = UIButton(type: .custom)
     //textfield.showHidePassword....
     
+    @IBInspectable var doneAccessory: Bool{ //add Done button on top of keyboard to hide it
+        get{
+            return self.doneAccessory
+        }
+        set (hasDone) {
+            if hasDone{
+                addDoneButtonOnKeyboard()
+            }
+        }
+    }
+    
+    func addDoneButtonOnKeyboard() {
+        let doneToolbar: UIToolbar = UIToolbar(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 50))
+        doneToolbar.barStyle = .default
+        
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let done: UIBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(self.doneButtonAction))
+        
+        let items = [flexSpace, done]
+        doneToolbar.items = items
+        doneToolbar.sizeToFit()
+        
+        self.inputAccessoryView = doneToolbar
+    }
+    
+    @objc func doneButtonAction() {
+        self.endEditing(true)
+        
+    }
+
+      
 }

@@ -6,7 +6,16 @@ target 'ADStore' do
   use_frameworks!
 
   # Pods for ADStore
-	pod "TLPhotoPicker"
+
+pod "TLPhotoPicker"
+pod 'Firebase/Core'
+pod 'Firebase/Auth'
+pod 'Firebase/Firestore'
+pod 'MessageKit'
+pod 'Firebase/Firestore'
+pod 'SDWebImage'
+pod 'Firebase/Database'
+pod 'Firebase/Storage'
 
   target 'ADStoreTests' do
     inherit! :search_paths

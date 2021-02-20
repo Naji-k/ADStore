@@ -12,6 +12,8 @@ import Photos
 
 
 class AddPostTableViewController: UITableViewController, TLPhotosPickerViewControllerDelegate, UITextFieldDelegate {
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+
     let userDefault = UserDefaults.standard
     var selectedAssets = [TLPHAsset]()
     var imageArray = [UIImage]()
@@ -19,7 +21,11 @@ class AddPostTableViewController: UITableViewController, TLPhotosPickerViewContr
     let descriptionLimit = 10
 
     var labels = ["①", "②", "③", "④", "⑤", "⑥"]
-
+    
+    var currentUser: User {
+        self.appDelegate.currentUser!
+    }
+    
     @IBOutlet weak var collectionView: UICollectionView!
 
     //Outlets
@@ -59,7 +65,7 @@ class AddPostTableViewController: UITableViewController, TLPhotosPickerViewContr
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         self.navigationItem.leftBarButtonItem = UIBarButtonItem.init(title: "Cancel", style: .plain, target: self, action: #selector(cancel))
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(title: "Done", style: .plain, target: self, action: #selector(uploadToServer))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(title: "Done", style: .plain, target: self, action: #selector(pressDoneBtn))
         
         drawTextView()
     }
@@ -86,7 +92,15 @@ class AddPostTableViewController: UITableViewController, TLPhotosPickerViewContr
         descriptionTextView.clipsToBounds = true
     }
 
-
+    func checkEmptyField (_ textFields : [UITextField]) -> String? {
+        var message: String?
+        for i in textFields {
+            if i.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" {
+                message =  "Please fill in all fields."
+            }
+        }
+        return message
+    }
     
     func addImages () {
         
@@ -129,64 +143,14 @@ class AddPostTableViewController: UITableViewController, TLPhotosPickerViewContr
             print("clicked")
         default:
             print("else")
+            view.endEditing(true)
         }
     }
     
-//    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//
-//            let cell = tableView.dequeueReusableCell(withIdentifier: <#T##String#>, for: <#T##IndexPath#>)
-//            return cell
-//
-//    }
-    
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
     //MARK: - PostURLSession
     @objc func makeViaAPIRequest (imagesPath: [String]) {
-        let newAds = Ads(adsTitle: titleTextField.text!, adsDes: descriptionTextView.text, adsDate: "22-02-2020", adsPrice: price.text! + " $", adsCondition: conditionTextField.text!, adsCategory: categoryTextField.text!, adsImages: imagesPath)
+        let newAds = Ads(adsTitle: titleTextField.text!, adsDes: descriptionTextView.text, adsDate: "22-02-2020", userId: currentUser.id!, adsPrice: price.text! + " $", adsCondition: conditionTextField.text!, adsCategory: categoryTextField.text!, adsImages: imagesPath)
         
         let postRequest = APIRequest(endpoint: "Ads")
         postRequest.save(newAds, completion: { result in
@@ -224,13 +188,27 @@ class AddPostTableViewController: UITableViewController, TLPhotosPickerViewContr
         putTask.resume()
     }
     */
-    
-    @objc func sendImage () {
-        uploadToServer()
-
+    func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
+            
+//            self.dismiss(animated: true, completion: nil)
+        }))
+        self.present(alert, animated: true, completion: nil)
     }
     
-  @objc private func uploadToServer() {
+    @objc func pressDoneBtn () {
+        //check if fields is empty..
+        let emptyFields = checkEmptyField([titleTextField, conditionTextField, categoryTextField, price])
+        if emptyFields != nil {
+            showAlert(title: "Error", message: emptyFields!)
+        } else {
+            uploadToServer()
+            
+        }
+    }
+    
+    private func uploadToServer() {
         let alert = UIAlertController(title: "Loading", message: "Please wait...", preferredStyle: .alert)
         present(alert, animated: true, completion: nil)
  
@@ -267,12 +245,13 @@ class AddPostTableViewController: UITableViewController, TLPhotosPickerViewContr
             alert.dismiss(animated: true, completion: {
                 let messageAlert = UIAlertController(title: "Success", message: "your Ads added successfully", preferredStyle: .alert)
                 messageAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-                    
+                    self.dismiss(animated: true, completion: nil)
+
                 }))
                 self.present(messageAlert, animated: true, completion: nil)
             })
         })
-    self.dismiss(animated: true, completion: nil)
+//    self.dismiss(animated: true, completion: nil)
     }
     
     func send() {

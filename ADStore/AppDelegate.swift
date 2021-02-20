@@ -7,14 +7,21 @@
 //
 
 import UIKit
+import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    private var _currentUser: User?
+    var currentUser: User? {
+        get { return _currentUser }
+        set { _currentUser = newValue}
+     }
+    
     private var categoryData : [Category] = [Category]()
     private var adsData : [Ads] = [Ads]()
+    
     func getCategoryData () ->[Category] {
         return categoryData
     }
@@ -30,6 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var likedDataKeys: NSMutableArray = []
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        FirebaseApp.configure()
         Switcher.updateRootVC()
         return true
     }

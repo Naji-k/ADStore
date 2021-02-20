@@ -9,21 +9,26 @@
 import UIKit
 import MapKit
 import CoreLocation
+import Firebase
 
 class AdsViewController: UIViewController {
 //    var isAdsFav = UserDefaults.standard.bool(forKey: "isAdsFav")
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
 
     var likedDataKeys: NSMutableArray {
         let object = UIApplication.shared.delegate
         let appDelegate = object as! AppDelegate
         return appDelegate.likedDataKeys
-        
     }
-    
+    var memes: [Ads] {
+        return appDelegate.getAdsData() // access data
+    }
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var msgTextField: UITextField!
     @IBOutlet weak var sendBtn: UIButton!
+    
+    var adsUser: User?
     
     var item: Ads?
     var frame = CGRect(x: 0, y: 0, width: 0, height: 0)
@@ -63,8 +68,12 @@ class AdsViewController: UIViewController {
             likeBtn.tintColor = .lightGray
         }
         navigationItem.rightBarButtonItem = likeBtn
-        
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: bottom, right: 0)
+        fetchUserInfo()
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.tableView.reloadData()
     }
     @objc func favoriteBtnPressed() {
 
@@ -82,6 +91,16 @@ class AdsViewController: UIViewController {
         }
         print(likedDataKeys.count)
         
+    }
+    
+    fileprivate func fetchUserInfo() {
+        guard let uid = item?.userId else { return }
+        Database.database().reference().child("users").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
+            if let dictionary = snapshot.value as? [String: AnyObject] {
+                let user = User(dictionary: dictionary)
+                self.adsUser = user
+            }
+        }, withCancel: nil)
     }
     
     func openMapButtonAction(latitude: Double,longitude: Double ) {
@@ -259,20 +278,44 @@ extension AdsViewController: UITableViewDataSource, UITableViewDelegate {
             
             let cell5 = tableView.dequeueReusableCell(withIdentifier: "AdsDescTableViewCell") as! AdsDescTableViewCell
             cell5.cellDelegate = self
-            cell5.descTextView.text = """
+            cell5.descTextView.text = item?.adsDes
+           /* """
             Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda. naji naji naji I am trying to expand
             Ask sd hard nsd the show d
             Add bass
             Add had
             Add jade
             Add jade
-            """
+            """ */
             
             return cell5
         case 5:
-            let cell5 = tableView.dequeueReusableCell(withIdentifier: "AdsUserTableViewCell") as! AdsUserTableViewCell
-            cell5.delegate = self
-            return cell5
+            let cell6 = tableView.dequeueReusableCell(withIdentifier: "AdsUserTableViewCell") as! AdsUserTableViewCell
+            
+            cell6.delegate = self
+            
+            if let createdDate = adsUser?.createdDate {
+                //get Date from NSNumber and calculate to get created from.. 1 months..
+                let time = TimeInterval(truncating: createdDate)
+                let diffComponents = Calendar.current.dateComponents([.day, .hour], from: Date(timeIntervalSince1970: time), to: Date())
+                let days = diffComponents.day
+                let hour = diffComponents.hour
+                cell6.createdDateLabel.text = "\(days?.description ?? "") days, \(hour?.description ?? "") hours"
+                
+            }
+            cell6.userBtn.titleLabel?.text = adsUser?.userFName
+            
+            
+            let imageView = UIImageView(image: UIImage(named: "person.circle.fill"))
+            imageView.NKPlaceholderImage(image: UIImage(named: "at"), imageView: imageView, imgUrl: adsUser?.profileImageUrl) { (image) in
+                imageView.image = image
+            }
+            cell6.userBtn.setTitle(adsUser?.userFName, for: .normal)
+            cell6.userProfileImage.NKPlaceholderImage(image: UIImage(named: "person.circle.fill"), imageView: cell6.userProfileImage, imgUrl: adsUser?.profileImageUrl) { (image) in
+                cell6.userProfileImage.image = image
+            }
+            
+            return cell6
         default:
             print("Default Selected")
             
@@ -296,12 +339,17 @@ extension AdsViewController: UITableViewDataSource, UITableViewDelegate {
     //            return
     //        }
     //    }
-    
 }
 //MARK: - click on user delegate..
 extension AdsViewController: UserLinksDelegate {
     func didTapOnUser(url: String) {
         print(url)
+        let newVC = storyboard?.instantiateViewController(withIdentifier: "AdsListTableViewController") as! AdsListTableViewController
+        let items = memes.filter({$0.userId == adsUser?.id })
+        newVC.items = items
+        newVC.navigationItem.title = adsUser?.userFName
+        navigationController?.pushViewController(newVC, animated: true)
+
     }
     
 }

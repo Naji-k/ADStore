@@ -14,7 +14,7 @@ public struct Ads: Codable {
     let adsTitle: String?
     let adsDes: String?
     let adsDate: String?
-//    let user: User?
+    let userId: String?
     let adsPrice: String?
     let adsCondition: String?
     let adsCategory: String?
@@ -24,7 +24,7 @@ public struct Ads: Codable {
         case adsTitle = "adsTitle"
         case adsDes = "adsDes"
         case adsDate = "adsDate"
-//        case user = "user"
+        case userId = "userId"
         case adsPrice = "adsPrice"
         case adsCondition = "adsCondition"
         case adsCategory = "adsCategory"
@@ -41,14 +41,15 @@ public struct Ads: Codable {
         adsTitle = try values.decodeIfPresent(String.self, forKey: .adsTitle)
         adsCategory = try values.decodeIfPresent(String.self, forKey: .adsCategory)
         id = try values.decodeIfPresent(Int.self, forKey: .id)
+        userId = try values.decodeIfPresent(String.self, forKey: .userId)
         
     }
-     init(adsTitle: String, adsDes: String, adsDate: String, adsPrice: String, adsCondition: String, adsCategory: String, adsImages: [String]) {
+    init(adsTitle: String, adsDes: String, adsDate: String, userId: String, adsPrice: String, adsCondition: String, adsCategory: String, adsImages: [String]) {
         
         self.adsTitle = adsTitle
         self.adsDes = adsDes
         self.adsDate = adsDate
-//        self.t user: User?
+        self.userId = userId
         self.adsPrice = adsPrice
         self.adsCondition = adsCondition
         self.adsCategory = adsCategory
@@ -69,12 +70,19 @@ public struct Ads: Codable {
 //        }
 }
 
-struct User: Codable {
-    let userName: String
-    let userNumber: Int
+class User: NSObject {
+    var id: String?
+    var userFName: String?
+    var userEmail: String?
+    var profileImageUrl: String?
+    var createdDate: NSNumber?
     
-    enum CodingKeys: String, CodingKey {
-        case userName = "userName"
-        case userNumber = "userNumber"
+    init(dictionary: [String: AnyObject]) {
+        self.id = dictionary["id"] as? String
+        self.userFName = dictionary["userFName"] as? String
+        self.userEmail = dictionary["userEmail"] as? String
+        self.profileImageUrl = dictionary["profileImageUrl"] as? String
+        self.createdDate = dictionary["createdDate"] as? NSNumber
     }
+    
 }

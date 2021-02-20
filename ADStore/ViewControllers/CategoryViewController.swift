@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class CategoryViewController: UIViewController {
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -14,22 +15,26 @@ class CategoryViewController: UIViewController {
 //    var url = "http://localhost:4000/category"
     var url = "http://192.168.1.208:4000/category"
 //    var jsonItems: [Category] = []
-//    var memes: [Category] {
-//
-//
-//        let object = UIApplication.shared.delegate
-//        let appDelegate = object as! AppDelegate
-//        return appDelegate.memes
-//        }
+
+    
+//    private var _currentUser: User?
+//    var currentUser: User? {
+//        get { return _currentUser }
+//        set { _currentUser = newValue}
+//    }
     var memes: [Category] {
         return appDelegate.getCategoryData() // access data
+    }
+    
+    var currentUser: User? {
+        self.appDelegate.currentUser
     }
 
     @IBOutlet weak var collectionView: UICollectionView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+//        fetchUserInfo()
 /*
     category localy
         items.append(CategoryLocal(id: 0, catName: "Vehicles", catImage: "icon", subCat:[SubCategory(subName: "Rent", subImage: "icon", id: 0), SubCategory(subName: "Sale", subImage: "icon", id: 1), SubCategory(subName: "parts", subImage: "icon", id: 1)]))
@@ -37,16 +42,39 @@ class CategoryViewController: UIViewController {
         items.append(CategoryLocal(id: 2, catName: "Mobile Phones & Accessories", catImage: "icon", subCat: [SubCategory(subName: "Rent", subImage: "icon", id: 0)]))
         items.append(CategoryLocal(id: 3, catName: "Fashion & Beauty", catImage: "icon", subCat: [SubCategory(subName: "Rent", subImage: "icon", id: 0)]))
  */
+        
         fetchCategory()
+        
         //tested logout button
-        navigationItem.leftBarButtonItem = UIBarButtonItem.init(title: "Log out", style: .plain, target: self, action: #selector(logOut))
+//        navigationItem.leftBarButtonItem = UIBarButtonItem.init(title: "Log out", style: .plain, target: self, action: #selector(logOut))
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationItem.title = currentUser?.userFName
     }
 
-    @objc func logOut() {
-        UserDefaults.standard.set(false, forKey: "status")
-        Switcher.updateRootVC()
-
+//    @objc func logOut() {
+//    }
+    /*
+    func fetchUserInfo() {
+        guard let uid = Auth.auth().currentUser?.uid else {
+            //for some reason uid = nil
+            return
+        }
+        Database.database().reference().child("users").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
+                if let dictionary = snapshot.value as? [String: AnyObject] {
+                    let user = User(dictionary: dictionary)
+                    self.currentUser = user
+                    DispatchQueue.main.async {
+                        self.appDelegate.currentUser = user
+                        print("delegate", self.appDelegate.currentUser)
+                        self.userDef.set(user, forKey: "user")
+                }
+            }
+            
+        }, withCancel: nil)
     }
+    */
     func fetchCategory () {
         
         let urlRequest = URLRequest(url: URL(string: url)!)

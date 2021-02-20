@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import FirebaseAuth
+import Firebase
 
 class LogInViewController: UIViewController {
 
@@ -21,17 +23,27 @@ class LogInViewController: UIViewController {
     @IBOutlet weak var loginButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         //To auto hide keyboard when surrounding is pressed
+        errorLabel.alpha = 0
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         self.view!.addGestureRecognizer(tap)
-        
-        setUpElements()
 
 //        registerForKeyboardNotifications()
         setupKeyboardObservers()
         // Do any additional setup after loading the view.
     }
+
+    override func viewDidLayoutSubviews() {
+        setUpElements()
+//        emailTextField.addUnderline()
+        
+    }
+    
+    func showError(_ message:String) {
+        errorLabel.text = message
+        errorLabel.alpha = 1
+    }
+    
     func setupKeyboardObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification , object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -81,11 +93,11 @@ class LogInViewController: UIViewController {
     
     func setUpElements() {
         // Hide the error label
-//        errorLabel.alpha = 1
+        errorLabel.alpha = 1
         
         // Style the elements
-        Utilities.styleTextField(emailTextField)
-        Utilities.styleTextField(passwordTextField)
+        emailTextField.addUnderline()
+        passwordTextField.addUnderline()
         Utilities.styleFilledButton(loginButton)
         // add images to textField
         if #available(iOS 13.0, *) {
@@ -165,13 +177,35 @@ class LogInViewController: UIViewController {
     }
 
     @IBAction func logInBtnPressed(_ sender: Any) {
-        UserDefaults.standard.set(true, forKey: "status")
-        Switcher.updateRootVC()
+        handleLogin()
+//        UserDefaults.standard.set(true, forKey: "status")
+//        Switcher.updateRootVC()
 
     }
     
     @IBAction func signUpTapped(_ sender: Any) {
         let vc = storyboard?.instantiateViewController(withIdentifier: "SignUpViewController") as! SignUpViewController
         self.present(vc, animated: true, completion: nil)
+    }
+    
+    func handleLogin() {
+        let email = emailTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+        let password = passwordTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        Auth.auth().signIn(withEmail: email, password: password) { (result, error) in
+            if let error = error {
+                // Couldn't sign in
+                self.showError(error.localizedDescription)
+            } else {
+                //                let vc = self.storyboard?.instantiateViewController(withIdentifier: "ChatLogViewController") as! ChatLogViewController
+//                self.messageController?.fetchUserAndSetupNavBarTitle()
+                //                self.dismiss(animated: true, completion: nil)
+                
+                //using Switcher
+                UserDefaults.standard.set(true, forKey: "status")
+                Switcher.updateRootVC()
+                
+            }
+        }
     }
 }

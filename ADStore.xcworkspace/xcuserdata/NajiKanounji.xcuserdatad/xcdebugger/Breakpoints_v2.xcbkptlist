@@ -7,16 +7,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "767EA43A-8A42-4CD0-9B64-DE80513DEA1C"
+            uuid = "C3ECDFCF-6F9F-44D2-80E0-BA3CC4FBF995"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ADStore/ViewControllers/AdsViewController.swift"
+            filePath = "ADStore/ViewControllers/ProfileVCs/NotificationTableVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "69"
-            endingLineNumber = "69"
-            landmarkName = "favoriteBtnPressed()"
+            startingLineNumber = "35"
+            endingLineNumber = "35"
+            landmarkName = "messagesSwitchTapped(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
