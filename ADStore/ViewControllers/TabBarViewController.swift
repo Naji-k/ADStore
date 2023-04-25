@@ -78,10 +78,10 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
         //        menuButton.frame.origin.x = view.bounds.width/2 - menuButton.frame.size.width/2
         menuButton.frame = menuButton.frame
         
-        menuButton.backgroundColor = UIColor.red
+      //  menuButton.backgroundColor = UIColor(named: "TintGreenColor")
         menuButton.layer.cornerRadius = menuButton.frame.height/2
         tabbar.insertSubview(menuButton, at: 0)
-        menuButton.setImage(UIImage(named: "add"), for: .normal)
+        menuButton.setImage(UIImage(named: "add-90"), for: .normal)
         
         menuButton.addTarget(self, action: #selector(menuButtonAction(sender:)), for: .touchUpInside)
         

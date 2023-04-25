@@ -19,6 +19,9 @@ public struct Ads: Codable {
     let adsCondition: String?
     let adsCategory: String?
     let adsImages: [String]?
+    let latitude: Double?
+    let longitude: Double?
+    let location: String?
     
     enum CodingKeys: String, CodingKey {
         case adsTitle = "adsTitle"
@@ -30,6 +33,9 @@ public struct Ads: Codable {
         case adsCategory = "adsCategory"
         case adsImages = "adsImages"
         case id = "id"
+        case latitude = "latitude"
+        case longitude = "longitude"
+        case location = "location"
     }
     public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
@@ -42,9 +48,12 @@ public struct Ads: Codable {
         adsCategory = try values.decodeIfPresent(String.self, forKey: .adsCategory)
         id = try values.decodeIfPresent(Int.self, forKey: .id)
         userId = try values.decodeIfPresent(String.self, forKey: .userId)
+        latitude = try values.decodeIfPresent(Double.self, forKey: .latitude)
+        longitude = try values.decodeIfPresent(Double.self, forKey: .longitude)
+        location = try values.decodeIfPresent(String.self, forKey: .location)
         
     }
-    init(adsTitle: String, adsDes: String, adsDate: String, userId: String, adsPrice: String, adsCondition: String, adsCategory: String, adsImages: [String]) {
+    init(adsTitle: String, adsDes: String, adsDate: String, userId: String, adsPrice: String, adsCondition: String, adsCategory: String, adsImages: [String], latitude: Double, longitude: Double, location: String) {
         
         self.adsTitle = adsTitle
         self.adsDes = adsDes
@@ -54,6 +63,9 @@ public struct Ads: Codable {
         self.adsCondition = adsCondition
         self.adsCategory = adsCategory
         self.adsImages = adsImages
+        self.latitude = latitude
+        self.longitude = longitude
+        self.location = location
         
     }
 //      public init(adsTitle: String, adsDes: String, adsDate: String, adsPrice: String, adsCondition: String, adsCategory: String, adsImages: String) {

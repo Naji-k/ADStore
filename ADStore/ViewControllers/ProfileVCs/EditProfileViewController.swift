@@ -31,7 +31,7 @@ class EditProfileViewController: UIViewController {
         nameLabel.delegate = self
         nameLabel.addTarget(self, action: #selector(textFieldDidChange(_:)),
         for: .editingChanged)
-        Utilities.customButtonColors(saveBtn, enableColor: UIColor(named: "TintGreenColor")!, disableColor: .lightGray, cornerRadius: 25, borderWidth: 1, tintColor: .white)
+        Utilities.customButtonColors(saveBtn, enableColor: UIColor(named: "Color.Tint.Green")!, disableColor: .lightGray, cornerRadius: 25, borderWidth: 1, tintColor: .white)
         self.saveBtn.isEnabled = false
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         self.view.addGestureRecognizer(tap)
@@ -173,21 +173,22 @@ class EditProfileViewController: UIViewController {
     }
     @IBAction func saveBtnPressed(_ sender: Any) {
         updateUserInfoOnFirebase()
-        fetchUserInfo()
+        appDelegate.currentUser = Utilities.fetchUserInfo()
+//        fetchUserInfo()
     }
     
-    fileprivate func fetchUserInfo() {
-        guard let uid = Auth.auth().currentUser?.uid else {
-            return
-        }
-        Database.database().reference().child("users").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
-            if let dictionary = snapshot.value as? [String: AnyObject] {
-                let user = User(dictionary: dictionary)
-                
-                self.appDelegate.currentUser = user
-            }
-        }, withCancel: nil)
-    }
+//    fileprivate func fetchUserInfo() {
+//        guard let uid = Auth.auth().currentUser?.uid else {
+//            return
+//        }
+//        Database.database().reference().child("users").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
+//            if let dictionary = snapshot.value as? [String: AnyObject] {
+//                let user = User(dictionary: dictionary)
+//
+//                self.appDelegate.currentUser = user
+//            }
+//        }, withCancel: nil)
+//    }
 }
 
 //MARK: - add/change profile picture

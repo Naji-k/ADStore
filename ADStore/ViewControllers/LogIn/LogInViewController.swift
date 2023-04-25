@@ -62,12 +62,12 @@ class LogInViewController: UIViewController {
                 self.view.frame.origin.y -= keyboardSize.height
             }
             let contentInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: keyboardSize.height , right: 0.0)
-//            scrollView.contentInset = contentInsets
-//            scrollView.scrollIndicatorInsets = contentInsets
+            //            scrollView.contentInset = contentInsets
+            //            scrollView.scrollIndicatorInsets = contentInsets
             
-                        UIView.animate(withDuration: keyboardDuration!, animations: {
-                            self.view.layoutIfNeeded()
-                        })
+            UIView.animate(withDuration: keyboardDuration!, animations: {
+                self.view.layoutIfNeeded()
+            })
             
         }
     }

@@ -12,24 +12,38 @@ import Firebase
 
 class Switcher {
 
-   static func fetchUserInfo() {
-        guard let uid = Auth.auth().currentUser?.uid else {
-            //for some reason uid = nil
-            return
-        }
-        Database.database().reference().child("users").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
+    static func fetchUserInfo() {
+        DispatchQueue.main.async {
+            guard let uid = Auth.auth().currentUser?.uid else {
+                //for some reason uid = nil
+                return
+            }
+            Database.database().reference().child("users").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
                 if let dictionary = snapshot.value as? [String: AnyObject] {
                     let user = User(dictionary: dictionary)
-                    DispatchQueue.main.async {
-                        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-                        appDelegate.currentUser = user
-                        print(user)
+                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                    appDelegate.currentUser = user
+                    print("from Switcher....: ", user)
                 }
-            }
-            
-        }, withCancel: nil)
+                
+            }, withCancel: nil)
+        }
+        
     }
-    
+    static func checkIfUserLogIn() {
+        var rootVC : UIViewController?
+
+        if Firebase.Auth.auth().currentUser?.uid == nil {
+            rootVC = UIStoryboard(name: "LogIn", bundle: .none).instantiateViewController(withIdentifier: "LogInViewController") as! LogInViewController
+        } else {
+            fetchUserInfo()
+            rootVC = UIStoryboard.init(name: "Main", bundle:.main).instantiateViewController(withIdentifier: "TabBarViewController") as! TabBarViewController
+
+        }
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.window?.rootViewController = rootVC
+
+    }
     static func updateRootVC(){
         
         let status = UserDefaults.standard.bool(forKey: "status")

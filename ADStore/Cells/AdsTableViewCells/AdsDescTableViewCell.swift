@@ -8,34 +8,41 @@
 
 import UIKit
 
-protocol ExpandingCellProtocol: class {
-    func updateHeightOfRow(_ cell: AdsDescTableViewCell, _ textView: UITextView)
-}
+
 
 class AdsDescTableViewCell: UITableViewCell {
 
     @IBOutlet weak var descriptionLable: UILabel!
     @IBOutlet weak var descTextView: UITextView!
-    weak var cellDelegate: ExpandingCellProtocol?
-
+    /// Custom setter so we can initialize the height of the text view
+    var textString: String {
+        get {
+            return descTextView?.text ?? ""
+        }
+        set {
+            if let textView = descTextView {
+                textView.text = newValue
+                textView.delegate?.textViewDidChange?(textView)
+            }
+        }
+    }
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        descTextView.delegate = self
+//        descTextView.delegate = self
+        descTextView.isScrollEnabled = false
+
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
-    }
-
-}
-extension AdsDescTableViewCell: UITextViewDelegate {
-    
-    func textViewDidChange(_ textView: UITextView) {
-        if let deletate = cellDelegate {
-            deletate.updateHeightOfRow(self, descTextView)
+        if selected {
+            descTextView.becomeFirstResponder()
+        } else {
+            descTextView.becomeFirstResponder()
         }
     }
+
 }

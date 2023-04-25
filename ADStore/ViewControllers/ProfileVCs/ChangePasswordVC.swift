@@ -21,16 +21,22 @@ class ChangePasswordVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        oldPassTextField.addUnderline()
-        newPassTextField.addUnderline()
-        confirmPassTextField.addUnderline()
-        Utilities.styleFilledButton(saveBtn)
         errorLabel.alpha = 0
         // Do any additional setup after loading the view.
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
+    }
+    override func viewDidLayoutSubviews() {
+        setupElement()
+    }
+    func setupElement() {
+        oldPassTextField.addUnderline()
+        newPassTextField.addUnderline()
+        confirmPassTextField.addUnderline()
+        Utilities.styleFilledButton(saveBtn)
+        
     }
     
     func showError(_ message:String) {

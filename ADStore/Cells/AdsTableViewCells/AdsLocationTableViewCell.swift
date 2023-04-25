@@ -44,5 +44,24 @@ class AdsLocationTableViewCell: UITableViewCell, MKMapViewDelegate {
         mapView.setRegion(region, animated: false)
 
     }
+    func loc(address: String) {
+        let geoCoder = CLGeocoder()
+        geoCoder.geocodeAddressString(address) { (placemarks, error) in
+            guard
+                let placemarks = placemarks,
+                let resault = placemarks.first?.location
+            else {
+                // handle no location found
+                return
+            }
+
+            // Use your location
+            let location = CLLocationCoordinate2D(latitude: resault.coordinate.latitude, longitude: resault.coordinate.longitude)
+            let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
+            let region = MKCoordinateRegion(center: location, span: span)
+            self.mapView.setRegion(region, animated: false)
+            
+        }
+    }
     
 }

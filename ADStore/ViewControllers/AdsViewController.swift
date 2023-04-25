@@ -36,17 +36,11 @@ class AdsViewController: UIViewController {
     let lat = 52.7286158
     let lng = 6.4901002
     
-    var bottom: CGFloat {
-        if UIScreen.main.bounds.size.height > 736 {
-            return 75
-        } else {
-            return 250
-        }
-    }
-    
+    //multiple expanding text views
+    var activeTextView: UITextView?
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        msgTextField.delegate = self
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = UITableView.automaticDimension
         // Do any additional setup after loading the view.
@@ -68,8 +62,7 @@ class AdsViewController: UIViewController {
             likeBtn.tintColor = .lightGray
         }
         navigationItem.rightBarButtonItem = likeBtn
-        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: bottom, right: 0)
-        fetchUserInfo()
+        self.adsUser = Utilities.fetchUserInfo()
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -93,15 +86,15 @@ class AdsViewController: UIViewController {
         
     }
     
-    fileprivate func fetchUserInfo() {
-        guard let uid = item?.userId else { return }
-        Database.database().reference().child("users").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
-            if let dictionary = snapshot.value as? [String: AnyObject] {
-                let user = User(dictionary: dictionary)
-                self.adsUser = user
-            }
-        }, withCancel: nil)
-    }
+//    fileprivate func fetchUserInfo() {
+//        guard let uid = item?.userId else { return }
+//        Database.database().reference().child("users").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
+//            if let dictionary = snapshot.value as? [String: AnyObject] {
+//                let user = User(dictionary: dictionary)
+//                self.adsUser = user
+//            }
+//        }, withCancel: nil)
+//    }
     
     func openMapButtonAction(latitude: Double,longitude: Double ) {
         
@@ -144,8 +137,10 @@ class AdsViewController: UIViewController {
     
     @IBAction func sendBtnPressed() {
         print(msgTextField.text)
-        msgTextField.text = ""
         msgTextField.resignFirstResponder()
+        let properties = ["text": msgTextField.text!]
+        sendMessageWithProperties(properties as [String: AnyObject])
+
     }
     
     
@@ -258,13 +253,13 @@ extension AdsViewController: UITableViewDataSource, UITableViewDelegate {
             cell2.adsTitle.text = item?.adsTitle
             cell2.adsPrice.text = item?.adsPrice
             cell2.adsDateOfPost.text = item?.adsDate
-            cell2.adsLocation.text = "Hogeveen"
+            cell2.adsLocation.text = item?.location
             
             return cell2
         case 2: //location
             let cell3 = tableView.dequeueReusableCell(withIdentifier: "AdsLocationTableViewCell") as! AdsLocationTableViewCell
-            cell3.showLocation2(location: CLLocation(latitude: lat, longitude: lng))
-            
+//            cell3.showLocation2(location: CLLocation(latitude: lat, longitude: lng))
+            cell3.loc(address: item?.location ?? "")
             
             return cell3
             
@@ -277,8 +272,10 @@ extension AdsViewController: UITableViewDataSource, UITableViewDelegate {
         case 4: //description
             
             let cell5 = tableView.dequeueReusableCell(withIdentifier: "AdsDescTableViewCell") as! AdsDescTableViewCell
-            cell5.cellDelegate = self
             cell5.descTextView.text = item?.adsDes
+            cell5.descTextView.tag = indexPath.row
+            cell5.descTextView.delegate = self
+            
            /* """
             Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda. naji naji naji I am trying to expand
             Ask sd hard nsd the show d
@@ -322,23 +319,6 @@ extension AdsViewController: UITableViewDataSource, UITableViewDelegate {
         }
         return cell
     }
-    //    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    //
-    //        switch indexPath.section {
-    //        case 0,1,2,3,4:
-    //            return UITableView.automaticDimension
-    //
-    //        default:
-    //            return 200
-    //        }
-    //    }
-    //    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    //        switch indexPath.section {
-    //
-    //        default:
-    //            return
-    //        }
-    //    }
 }
 //MARK: - click on user delegate..
 extension AdsViewController: UserLinksDelegate {
@@ -355,19 +335,47 @@ extension AdsViewController: UserLinksDelegate {
 }
 //MARK: -  expanding cell size while typing...
 
-extension AdsViewController: ExpandingCellProtocol {
-    func updateHeightOfRow(_ cell: AdsDescTableViewCell, _ textView: UITextView) {
+//extension containing method responsible for expanding text view
+extension AdsViewController: UITextViewDelegate {
+
+    func textViewDidEndEditing(_ textView: UITextView) {
+        _ = textView.text
+        //you can do something here when editing is ended
+    }
+
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange,
+                  replacementText text: String) -> Bool {
+        //if you hit "Enter" you resign first responder
+        //and don't put this character into text view text
+        if text == "\n" {
+            textView.resignFirstResponder()
+            return false
+        }
+        return true
+    }
+
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        activeTextView = textView
+    }
+
+    //this actually resize a text view
+    func textViewDidChange(_ textView: UITextView) {
+
         let size = textView.bounds.size
-        let newSize = tableView.sizeThatFits(CGSize(width: size.width, height: CGFloat.greatestFiniteMagnitude))
-        
+        let newSize = textView.sizeThatFits(CGSize(width: size.width,
+                                                   height: CGFloat.greatestFiniteMagnitude))
+
+        // Resize the cell only when cell's size is changed
         if size.height != newSize.height {
             UIView.setAnimationsEnabled(false)
-            tableView.beginUpdates()
-            tableView.endUpdates()
+            tableView?.beginUpdates()
+            tableView?.endUpdates()
             UIView.setAnimationsEnabled(true)
-            if let thisIndexPath = tableView.indexPath(for: cell) {
-                tableView.scrollToRow(at: thisIndexPath, at: .bottom, animated: true)
-            }
+
+            let thisIndexPath = NSIndexPath(row: textView.tag, section: 0)
+            tableView?.scrollToRow(at: thisIndexPath as IndexPath,
+                                   at: .bottom,
+                                              animated: false)
         }
     }
 }
@@ -376,5 +384,34 @@ extension AdsViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.sendBtnPressed()
         return true
+    }
+}
+//MARK: - send message to user
+extension AdsViewController {
+    fileprivate func sendMessageWithProperties(_ properties: [String: AnyObject]) {
+        let ref = Database.database().reference().child("message")
+        let childRef = ref.childByAutoId()
+        let toId = adsUser!.id!
+        let fromId = Auth.auth().currentUser!.uid
+        let timestamp = Int(Date().timeIntervalSince1970)
+        var values: [String: AnyObject] = ["toId": toId as AnyObject, "fromId": fromId as AnyObject, "timestamp": timestamp as AnyObject]
+        
+        //append properties dictionary into values somehow?
+        //key $0, value $1
+        properties.forEach({values[$0] = $1})
+        
+        childRef.updateChildValues(values) { (error, ref) in
+            if error != nil {
+                print(error ?? "")
+                return
+            }
+            self.msgTextField.text = nil
+            guard let messageId = childRef.key else { return }
+            
+            let userMessagesRef = Database.database().reference().child("user-messages").child(fromId).child(toId)
+            userMessagesRef.updateChildValues([messageId: 1])
+            let recipientUserMessagesRef = Database.database().reference().child("user-messages").child(toId).child(fromId)
+            recipientUserMessagesRef.updateChildValues([messageId: 1])
+        }
     }
 }

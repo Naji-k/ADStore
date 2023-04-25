@@ -7,8 +7,40 @@
 
 import Foundation
 import UIKit
+import Firebase
 
 class Utilities {
+   static func checkEmptyField (_ textFields : [UITextField]) -> String? {
+        var message: String?
+        for i in textFields {
+            if i.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" {
+                message =  "Please fill in all fields."
+            }
+        }
+        return message
+    }
+    
+    static func fetchUserInfo() -> User? {
+        var user: User?
+         guard let uid = Auth.auth().currentUser?.uid else {
+             //for some reason uid = nil
+             return nil
+         }
+         Database.database().reference().child("users").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
+                 if let dictionary = snapshot.value as? [String: AnyObject] {
+                      user = User(dictionary: dictionary)
+                     DispatchQueue.main.async {
+                         let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                         appDelegate.currentUser = user
+                         print("called from utilities")
+                 }
+             }
+             
+         }, withCancel: nil)
+        return user
+     
+     }
+    
     
     static func styleTextField(_ textfield:UITextField) {
         
@@ -85,4 +117,27 @@ class Utilities {
         return passwordTest.evaluate(with: password)
     }
     
+}
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+ public func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+ public func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
 }

@@ -98,7 +98,7 @@ extension SubCategoryListVC: UITableViewDelegate, UITableViewDataSource {
       
         let newVC = storyboard?.instantiateViewController(withIdentifier: "AdsListTableViewController") as! AdsListTableViewController
             let test = memes.filter({($0.adsCategory?.contains(item))!})
-//
+            
 //        memes.forEach { (ads) in
 //            if (ads.adsCategory == item) {
 //                matched.append(ads)

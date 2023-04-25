@@ -9,7 +9,8 @@
 import UIKit
 import TLPhotoPicker
 import Photos
-
+import MapKit
+import CoreLocation
 
 class AddPostTableViewController: UITableViewController, TLPhotosPickerViewControllerDelegate, UITextFieldDelegate {
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -18,7 +19,7 @@ class AddPostTableViewController: UITableViewController, TLPhotosPickerViewContr
     var selectedAssets = [TLPHAsset]()
     var imageArray = [UIImage]()
     var imageCount: Int = 6
-    let descriptionLimit = 10
+    let descriptionLimit = 60
 
     var labels = ["①", "②", "③", "④", "⑤", "⑥"]
     
@@ -33,6 +34,7 @@ class AddPostTableViewController: UITableViewController, TLPhotosPickerViewContr
     @IBOutlet weak var conditionTextField: UITextField!
     @IBOutlet weak var categoryTextField: UITextField!
     @IBOutlet weak var countingLabel: UILabel!
+    @IBOutlet weak var locationTextField: UITextField!
     @IBOutlet weak var descriptionTextView: UITextView!
     @IBOutlet weak var price: UITextField!
     
@@ -49,6 +51,7 @@ class AddPostTableViewController: UITableViewController, TLPhotosPickerViewContr
 //        userDefault.set(nil, forKey: "selectedCategory")
         self.countingLabel.text = "\(descriptionLimit)"
         self.categoryTextField.addTarget(self, action: #selector(self.openListPickerVC(_:)), for: UIControl.Event.editingDidBegin)
+        self.locationTextField.addTarget(self, action: #selector(self.openLocationView), for: UIControl.Event.editingDidBegin)
         self.descriptionTextView.delegate = self
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -76,6 +79,7 @@ class AddPostTableViewController: UITableViewController, TLPhotosPickerViewContr
     }
     @objc func openListPickerVC(_ sender: UIButton) {
         print("categoryPressed")
+        categoryTextField.resignFirstResponder()
         let vc : CategoryListViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CategoryListViewController") as! CategoryListViewController
         
         vc.callback = { newValue in
@@ -83,6 +87,17 @@ class AddPostTableViewController: UITableViewController, TLPhotosPickerViewContr
         }
         self.present(vc, animated: true, completion: nil)
     }
+    @objc func openLocationView() {
+        locationTextField.resignFirstResponder()
+        let vc: LocationSearchVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LocationSearchVC") as! LocationSearchVC
+        vc.callback = { newValue in
+            self.locationTextField.text = newValue
+        }
+
+        self.present(vc, animated: true, completion: nil)
+    }
+    
+
     private func drawTextView () {
         descriptionTextView.text = "Description"
         descriptionTextView.textColor = .lightGray
@@ -92,15 +107,7 @@ class AddPostTableViewController: UITableViewController, TLPhotosPickerViewContr
         descriptionTextView.clipsToBounds = true
     }
 
-    func checkEmptyField (_ textFields : [UITextField]) -> String? {
-        var message: String?
-        for i in textFields {
-            if i.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" {
-                message =  "Please fill in all fields."
-            }
-        }
-        return message
-    }
+
     
     func addImages () {
         
@@ -150,7 +157,12 @@ class AddPostTableViewController: UITableViewController, TLPhotosPickerViewContr
 
     //MARK: - PostURLSession
     @objc func makeViaAPIRequest (imagesPath: [String]) {
-        let newAds = Ads(adsTitle: titleTextField.text!, adsDes: descriptionTextView.text, adsDate: "22-02-2020", userId: currentUser.id!, adsPrice: price.text! + " $", adsCondition: conditionTextField.text!, adsCategory: categoryTextField.text!, adsImages: imagesPath)
+        let today = Date()
+        let formatter1 = DateFormatter()
+        formatter1.dateStyle = .medium
+        let createdDate = formatter1.string(from: today)
+        
+        let newAds = Ads(adsTitle: titleTextField.text!, adsDes: descriptionTextView.text, adsDate: createdDate, userId: currentUser.id!, adsPrice: price.text! + " $", adsCondition: conditionTextField.text!, adsCategory: categoryTextField.text!, adsImages: imagesPath, latitude: 52.7286158 , longitude: 6.4901002, location: locationTextField.text!)
         
         let postRequest = APIRequest(endpoint: "Ads")
         postRequest.save(newAds, completion: { result in
@@ -199,7 +211,7 @@ class AddPostTableViewController: UITableViewController, TLPhotosPickerViewContr
     
     @objc func pressDoneBtn () {
         //check if fields is empty..
-        let emptyFields = checkEmptyField([titleTextField, conditionTextField, categoryTextField, price])
+        let emptyFields = Utilities.checkEmptyField([titleTextField, conditionTextField, categoryTextField, price, locationTextField])
         if emptyFields != nil {
             showAlert(title: "Error", message: emptyFields!)
         } else {

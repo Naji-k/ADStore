@@ -22,6 +22,9 @@ class CategoryViewController: UIViewController {
 //        get { return _currentUser }
 //        set { _currentUser = newValue}
 //    }
+    let slider = ["bmw", "bmw", "bmw", "bmw"]
+    var frame = CGRect(x: 0, y: 0, width: 0, height: 0)
+
     var memes: [Category] {
         return appDelegate.getCategoryData() // access data
     }
@@ -34,7 +37,7 @@ class CategoryViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        fetchUserInfo()
+        Utilities.fetchUserInfo()
 /*
     category localy
         items.append(CategoryLocal(id: 0, catName: "Vehicles", catImage: "icon", subCat:[SubCategory(subName: "Rent", subImage: "icon", id: 0), SubCategory(subName: "Sale", subImage: "icon", id: 1), SubCategory(subName: "parts", subImage: "icon", id: 1)]))
@@ -50,31 +53,8 @@ class CategoryViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationItem.title = currentUser?.userFName
     }
 
-//    @objc func logOut() {
-//    }
-    /*
-    func fetchUserInfo() {
-        guard let uid = Auth.auth().currentUser?.uid else {
-            //for some reason uid = nil
-            return
-        }
-        Database.database().reference().child("users").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
-                if let dictionary = snapshot.value as? [String: AnyObject] {
-                    let user = User(dictionary: dictionary)
-                    self.currentUser = user
-                    DispatchQueue.main.async {
-                        self.appDelegate.currentUser = user
-                        print("delegate", self.appDelegate.currentUser)
-                        self.userDef.set(user, forKey: "user")
-                }
-            }
-            
-        }, withCancel: nil)
-    }
-    */
     func fetchCategory () {
         
         let urlRequest = URLRequest(url: URL(string: url)!)
@@ -103,6 +83,7 @@ class CategoryViewController: UIViewController {
         task.resume()
     }
 }
+//MARK: -  Category delegate and datasource
 extension CategoryViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -120,7 +101,7 @@ extension CategoryViewController: UICollectionViewDelegate, UICollectionViewData
         let item = memes[indexPath.item]
         cell.label.text = item.name
         cell.imageView.image = UIImage(named: item.image!)
-        
+        cell.shadowDecorate()
         return cell
     }
     
@@ -134,5 +115,57 @@ extension CategoryViewController: UICollectionViewDelegate, UICollectionViewData
         itemVC.items = item
         navigationController?.pushViewController(itemVC, animated: true)
     }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: view.bounds.width, height: 200)
+    }
+    
+//    MARK: Custom Header: Slider
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        
+        let headerView = self.collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "CategoryHeader", for: indexPath) as! CategoryHeader
+        
+        headerView.frame = CGRect(x: 0 , y: 0, width: self.collectionView.frame.width, height: 200)
+        
+        headerView.scrollView.frame = CGRect(x: 0, y: 0, width: self.collectionView.frame.width, height: headerView.scrollView.frame.height)
+        headerView.configure()
+                
+        for i in 0..<slider.count {
+            
+            frame.origin.x = headerView.scrollView.frame.size.width * CGFloat(i)
+            frame.size = headerView.scrollView.frame.size
+            let imageView = UIImageView(frame: frame)
+            
+            imageView.contentMode = .scaleAspectFit
+            imageView.image = UIImage(named: slider[i])
+            headerView.scrollView.addSubview(imageView)
+            
+        }
+        headerView.scrollView.contentSize = CGSize(width:self.collectionView.frame.width * CGFloat(slider.count), height:headerView.scrollView.frame.height)
+        
+        headerView.pageController.currentPage = 0
+        headerView.pageController.numberOfPages = (slider.count)
+        
+        
+        return headerView
+        
+    }
 }
+extension UICollectionViewCell {
+    func shadowDecorate() {
+        let radius: CGFloat = 10
+        contentView.layer.cornerRadius = radius
+        contentView.layer.borderWidth = 1
+        contentView.layer.borderColor = UIColor.clear.cgColor
+//        contentView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        contentView.layer.masksToBounds = true
+    
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOffset = CGSize(width: 0, height: 1.0)
+        layer.shadowRadius = 2
+        layer.shadowOpacity = 0.5
+        layer.masksToBounds = false
+        layer.shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: radius).cgPath
+        layer.cornerRadius = radius
 
+    }
+}

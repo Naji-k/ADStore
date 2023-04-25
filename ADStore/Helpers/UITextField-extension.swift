@@ -17,7 +17,7 @@ enum Direction {
 }
     func addUnderline() {   //add underline to textField
         let layer = CALayer()
-        layer.backgroundColor = UIColor.init(red: 48/255, green: 173/255, blue: 99/255, alpha: 1).cgColor
+        layer.backgroundColor = UIColor(named: "Color.Tint.Green")?.cgColor
         layer.frame = CGRect(x: 0.0, y: self.frame.size.height - 1.0, width: self.frame.size.width, height: 1.0)
         self.clipsToBounds = true
         self.borderStyle = .none
