@@ -22,8 +22,8 @@ class SubCategoryListVC: UIViewController {
     }
 //    var matched = [Ads]()
     
-//    var url = "http://localhost:3000/Ads"
-    var url = "http://192.168.1.208:3000/Ads"
+    var url = "http://192.168.1.18:4000/ads"
+//    var url = "http://192.168.1.18/~NajiKanounji/ADSStore/Category.json"
     
     
     override func viewDidLoad() {

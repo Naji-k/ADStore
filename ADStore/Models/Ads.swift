@@ -53,8 +53,8 @@ public struct Ads: Codable {
         location = try values.decodeIfPresent(String.self, forKey: .location)
         
     }
-    init(adsTitle: String, adsDes: String, adsDate: String, userId: String, adsPrice: String, adsCondition: String, adsCategory: String, adsImages: [String], latitude: Double, longitude: Double, location: String) {
-        
+    init(id: Int,adsTitle: String, adsDes: String, adsDate: String, userId: String, adsPrice: String, adsCondition: String, adsCategory: String, adsImages: [String], latitude: Double, longitude: Double, location: String) {
+        self.id = id
         self.adsTitle = adsTitle
         self.adsDes = adsDes
         self.adsDate = adsDate
@@ -68,18 +68,6 @@ public struct Ads: Codable {
         self.location = location
         
     }
-//      public init(adsTitle: String, adsDes: String, adsDate: String, adsPrice: String, adsCondition: String, adsCategory: String, adsImages: String) {
-//
-//            self.adsTitle = adsTitle
-//            self.adsDes = adsDes
-//            self.adsDate = adsDate
-//    //        self.t user: User?
-//            self.adsPrice = adsPrice
-//            self.adsCondition = adsCondition
-//            self.adsCategory = adsCategory
-//            self.adsImages = adsImages
-//            
-//        }
 }
 
 class User: NSObject {

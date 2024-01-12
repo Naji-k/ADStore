@@ -10,6 +10,7 @@ import UIKit
 import Firebase
 
 class Utilities {
+    //checker for empty TextFields (you can specify which one is empty or just return a general msg
    static func checkEmptyField (_ textFields : [UITextField]) -> String? {
         var message: String?
         for i in textFields {
@@ -40,6 +41,18 @@ class Utilities {
         return user
      
      }
+    
+    static func fetchUserIDInfo(userID: String, completion: @escaping(User?) -> Void) {
+        var user: User?
+        print("fetch userID ", userID)
+         Database.database().reference().child("users").child(userID).observeSingleEvent(of: .value, with: { (snapshot) in
+                 if let dictionary = snapshot.value as? [String: AnyObject] {
+                      user = User(dictionary: dictionary)
+                     
+             }
+             completion(user)
+         }, withCancel: nil)
+    }
     
     
     static func styleTextField(_ textfield:UITextField) {

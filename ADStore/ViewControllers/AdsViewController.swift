@@ -47,8 +47,6 @@ class AdsViewController: UIViewController {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         self.view!.addGestureRecognizer(tap)
 
-        
-        
         setupKeyboardObservers()
         
     }
@@ -62,11 +60,15 @@ class AdsViewController: UIViewController {
             likeBtn.tintColor = .lightGray
         }
         navigationItem.rightBarButtonItem = likeBtn
-        self.adsUser = Utilities.fetchUserInfo()
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.tableView.reloadData()
+        if let adsUserID = item?.userId  {
+            Utilities.fetchUserIDInfo(userID: adsUserID) { user in
+                self.adsUser = user
+            }
+        }
     }
     @objc func favoriteBtnPressed() {
 
@@ -276,15 +278,6 @@ extension AdsViewController: UITableViewDataSource, UITableViewDelegate {
             cell5.descTextView.tag = indexPath.row
             cell5.descTextView.delegate = self
             
-           /* """
-            Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda. naji naji naji I am trying to expand
-            Ask sd hard nsd the show d
-            Add bass
-            Add had
-            Add jade
-            Add jade
-            """ */
-            
             return cell5
         case 5:
             let cell6 = tableView.dequeueReusableCell(withIdentifier: "AdsUserTableViewCell") as! AdsUserTableViewCell
@@ -323,12 +316,13 @@ extension AdsViewController: UITableViewDataSource, UITableViewDelegate {
 //MARK: - click on user delegate..
 extension AdsViewController: UserLinksDelegate {
     func didTapOnUser(url: String) {
-        print(url)
-        let newVC = storyboard?.instantiateViewController(withIdentifier: "AdsListTableViewController") as! AdsListTableViewController
-        let items = memes.filter({$0.userId == adsUser?.id })
-        newVC.items = items
-        newVC.navigationItem.title = adsUser?.userFName
-        navigationController?.pushViewController(newVC, animated: true)
+        print("item.userid= ", item?.userId)
+        print("adsUser ", adsUser?.userFName)
+//        let newVC = storyboard?.instantiateViewController(withIdentifier: "AdsListTableViewController") as! AdsListTableViewController
+//        let items = memes.filter({$0.userId == adsUser?.id })
+//        newVC.items = items
+//        newVC.navigationItem.title = adsUser?.userFName
+//        navigationController?.pushViewController(newVC, animated: true)
 
     }
     
@@ -391,7 +385,9 @@ extension AdsViewController {
     fileprivate func sendMessageWithProperties(_ properties: [String: AnyObject]) {
         let ref = Database.database().reference().child("message")
         let childRef = ref.childByAutoId()
-        let toId = adsUser!.id!
+        guard let toId = adsUser?.id else {
+            return
+        }
         let fromId = Auth.auth().currentUser!.uid
         let timestamp = Int(Date().timeIntervalSince1970)
         var values: [String: AnyObject] = ["toId": toId as AnyObject, "fromId": fromId as AnyObject, "timestamp": timestamp as AnyObject]

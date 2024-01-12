@@ -28,6 +28,8 @@
 		2B3C53B025E4309100B1F283 /* ChatMessageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3C53AF25E4309100B1F283 /* ChatMessageCollectionViewCell.swift */; };
 		2B460D00250D6AE60064569A /* SubCategoryListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B460CFF250D6AE60064569A /* SubCategoryListVC.swift */; };
 		2B460D02250D6C9F0064569A /* SubCategoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B460D01250D6C9F0064569A /* SubCategoryTableViewCell.swift */; };
+		2B4AA6022B5197F6004FD240 /* FirebaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B4AA6012B5197F6004FD240 /* FirebaseHelper.swift */; };
+		2B4AA6042B519CEE004FD240 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2B4AA6032B519CEE004FD240 /* GoogleService-Info.plist */; };
 		2B4E456524FD12A500CCC5D4 /* Ads.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B4E456424FD12A500CCC5D4 /* Ads.swift */; };
 		2B4E456724FD278300CCC5D4 /* RootClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B4E456624FD278300CCC5D4 /* RootClass.swift */; };
 		2B4E456A24FD296A00CCC5D4 /* CategoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B4E456924FD296A00CCC5D4 /* CategoryCollectionViewCell.swift */; };
@@ -48,7 +50,6 @@
 		2B7D571225194CB900DE13DE /* AdsUserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7D571125194CB900DE13DE /* AdsUserTableViewCell.swift */; };
 		2B7D571425194CD600DE13DE /* AdsLocationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7D571325194CD600DE13DE /* AdsLocationTableViewCell.swift */; };
 		2B7D571625194D0000DE13DE /* AdsDescTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7D571525194D0000DE13DE /* AdsDescTableViewCell.swift */; };
-		2B82EDE525CC6C36003724C4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2B82EDE425CC6C36003724C4 /* GoogleService-Info.plist */; };
 		2B84884B2541DAEB0087D975 /* RestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B84884A2541DAEB0087D975 /* RestManager.swift */; };
 		2B894AD72535C0CA00EEA29F /* CategoryListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B894AD62535C0CA00EEA29F /* CategoryListViewController.swift */; };
 		2B894AD92535C1BE00EEA29F /* CategoryListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B894AD82535C1BE00EEA29F /* CategoryListTableViewCell.swift */; };
@@ -127,6 +128,8 @@
 		2B3C53AF25E4309100B1F283 /* ChatMessageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessageCollectionViewCell.swift; sourceTree = "<group>"; };
 		2B460CFF250D6AE60064569A /* SubCategoryListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubCategoryListVC.swift; sourceTree = "<group>"; };
 		2B460D01250D6C9F0064569A /* SubCategoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubCategoryTableViewCell.swift; sourceTree = "<group>"; };
+		2B4AA6012B5197F6004FD240 /* FirebaseHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseHelper.swift; sourceTree = "<group>"; };
+		2B4AA6032B519CEE004FD240 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2B4E456424FD12A500CCC5D4 /* Ads.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ads.swift; sourceTree = "<group>"; };
 		2B4E456624FD278300CCC5D4 /* RootClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootClass.swift; sourceTree = "<group>"; };
 		2B4E456924FD296A00CCC5D4 /* CategoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -147,7 +150,6 @@
 		2B7D571125194CB900DE13DE /* AdsUserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsUserTableViewCell.swift; sourceTree = "<group>"; };
 		2B7D571325194CD600DE13DE /* AdsLocationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsLocationTableViewCell.swift; sourceTree = "<group>"; };
 		2B7D571525194D0000DE13DE /* AdsDescTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsDescTableViewCell.swift; sourceTree = "<group>"; };
-		2B82EDE425CC6C36003724C4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2B84884A2541DAEB0087D975 /* RestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestManager.swift; sourceTree = "<group>"; };
 		2B894AD62535C0CA00EEA29F /* CategoryListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListViewController.swift; sourceTree = "<group>"; };
 		2B894AD82535C1BE00EEA29F /* CategoryListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListTableViewCell.swift; sourceTree = "<group>"; };
@@ -245,7 +247,7 @@
 				2B39B52924EDCFA000D300B3 /* Storyboards */,
 				2B39B4FE24EDCA8800D300B3 /* Assets.xcassets */,
 				2B39B50024EDCA8800D300B3 /* LaunchScreen.storyboard */,
-				2B82EDE425CC6C36003724C4 /* GoogleService-Info.plist */,
+				2B4AA6032B519CEE004FD240 /* GoogleService-Info.plist */,
 				2B39B50324EDCA8800D300B3 /* Info.plist */,
 			);
 			path = ADStore;
@@ -412,6 +414,7 @@
 				2BBB42112541F64700060DE5 /* APIRequest.swift */,
 				2B7057FC254B7B2900C0890E /* Switcher.swift */,
 				2BB929A125B5F1E20011CB1B /* UITextField-extension.swift */,
+				2B4AA6012B5197F6004FD240 /* FirebaseHelper.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -497,7 +500,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1020;
-				LastUpgradeCheck = 1020;
+				LastUpgradeCheck = 1420;
 				ORGANIZATIONNAME = "Naji Kanounji";
 				TargetAttributes = {
 					2B39B4F324EDCA8700D300B3 = {
@@ -545,10 +548,10 @@
 			files = (
 				2B7057FF254B80F700C0890E /* LogIn.storyboard in Resources */,
 				2B39B50224EDCA8800D300B3 /* LaunchScreen.storyboard in Resources */,
+				2B4AA6042B519CEE004FD240 /* GoogleService-Info.plist in Resources */,
 				2B39B4FF24EDCA8800D300B3 /* Assets.xcassets in Resources */,
 				2B39B53224EDD57900D300B3 /* Favorites.storyboard in Resources */,
 				2B39B4FD24EDCA8700D300B3 /* Main.storyboard in Resources */,
-				2B82EDE525CC6C36003724C4 /* GoogleService-Info.plist in Resources */,
 				2B39B52B24EDD07600D300B3 /* Messages.storyboard in Resources */,
 				2B39B53624EDD5E600D300B3 /* Profile.storyboard in Resources */,
 				2B39B52824EDCF8200D300B3 /* Home.storyboard in Resources */,
@@ -719,6 +722,7 @@
 				2B84884B2541DAEB0087D975 /* RestManager.swift in Sources */,
 				2BBB42102541E0C900060DE5 /* RestRouter.swift in Sources */,
 				2B3C53AE25E4297B00B1F283 /* ChatLogVC.swift in Sources */,
+				2B4AA6022B5197F6004FD240 /* FirebaseHelper.swift in Sources */,
 				2BD04725251659B600550A8B /* AdsListTableViewCell.swift in Sources */,
 				2B39B4F824EDCA8700D300B3 /* AppDelegate.swift in Sources */,
 				2BBB42122541F64700060DE5 /* APIRequest.swift in Sources */,
@@ -815,6 +819,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -876,6 +881,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;

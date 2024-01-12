@@ -23,16 +23,16 @@ class ProfileTableViewController: UITableViewController {
     @IBOutlet weak var logOutCell: UITableViewCell!
     @IBOutlet weak var notificationSettingLebel: UILabel!
     
-    var user: User?
-//        self.appDelegate.currentUser ?? Utilities.fetchUserInfo()!
-//    }
+    var user: User? {
+        self.appDelegate.currentUser ?? Utilities.fetchUserInfo()!
+    }
     var memes: [Ads] {
         return appDelegate.getAdsData() // access data
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        user = self.appDelegate.currentUser
+//        user = self.appDelegate.currentUser
         sendFeedBackCell.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: .greatestFiniteMagnitude)
         rateUsCell.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: .greatestFiniteMagnitude)
         logOutCell.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: .greatestFiniteMagnitude)
@@ -40,8 +40,8 @@ class ProfileTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        userNameLabel.text = user!.userFName
-        emailLabel.text = user!.userEmail
+        userNameLabel.text = user?.userFName
+        emailLabel.text = user?.userEmail
         profilePic.NKPlaceholderImage(image: UIImage(named: "person.circle.fill"), imageView: profilePic, imgUrl: user?.profileImageUrl) { (image) in
             self.profilePic.image = image
         }

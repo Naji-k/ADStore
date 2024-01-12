@@ -55,8 +55,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        self.currentUser = Utilities.fetchUserInfo()
         
         self.window?.tintColor = UIColor(named: "Color.Tint.Green")
+
+        //customize NavBarColor
         UINavigationBar.appearance().barTintColor = UIColor(named: "Color.Main")
         UINavigationBar.appearance().tintColor = .white
+        if #available(iOS 15, *) {
+            let appearance = UINavigationBarAppearance()
+            appearance.backgroundColor = UIColor(named: "Color.Main")
+            appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+            UINavigationBar.appearance().standardAppearance = appearance
+            UINavigationBar.appearance().barTintColor = UIColor(named: "Color.Tint.Green")
+            UINavigationBar.appearance().scrollEdgeAppearance = appearance
+        }
+
 
         return true
     }

@@ -12,16 +12,9 @@ import Firebase
 class CategoryViewController: UIViewController {
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
 
-//    var url = "http://localhost:4000/category"
-    var url = "http://192.168.1.208:4000/category"
-//    var jsonItems: [Category] = []
+    var url = "http://192.168.1.18:3000/ADStore"
+//    var url = "http://192.168.1.18/~NajiKanounji/ADSStore/Category.json"
 
-    
-//    private var _currentUser: User?
-//    var currentUser: User? {
-//        get { return _currentUser }
-//        set { _currentUser = newValue}
-//    }
     let slider = ["bmw", "bmw", "bmw", "bmw"]
     var frame = CGRect(x: 0, y: 0, width: 0, height: 0)
 
@@ -38,13 +31,6 @@ class CategoryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         Utilities.fetchUserInfo()
-/*
-    category localy
-        items.append(CategoryLocal(id: 0, catName: "Vehicles", catImage: "icon", subCat:[SubCategory(subName: "Rent", subImage: "icon", id: 0), SubCategory(subName: "Sale", subImage: "icon", id: 1), SubCategory(subName: "parts", subImage: "icon", id: 1)]))
-        items.append(CategoryLocal(id: 1, catName: "Properties", catImage: "icon", subCat: [SubCategory(subName: "Rent", subImage: "icon", id: 0)]))
-        items.append(CategoryLocal(id: 2, catName: "Mobile Phones & Accessories", catImage: "icon", subCat: [SubCategory(subName: "Rent", subImage: "icon", id: 0)]))
-        items.append(CategoryLocal(id: 3, catName: "Fashion & Beauty", catImage: "icon", subCat: [SubCategory(subName: "Rent", subImage: "icon", id: 0)]))
- */
         
         fetchCategory()
         
@@ -61,22 +47,21 @@ class CategoryViewController: UIViewController {
         let task = URLSession.shared.dataTask(with: urlRequest) {(data, response, error) in
         guard let data = data, let response = response as? HTTPURLResponse,
             response.statusCode == 200 else {
-                print("No data or statusCode not OK")
+            print("No data or statusCode not OK")
                 return
             }
 
         let decoder = JSONDecoder()
             do {
-                let post = try decoder.decode([Category].self, from: data)
+                let post = try decoder.decode(CategoryList.self, from: data)
                 print("data\(data.count)")
-//                self.jsonItems = post
                 DispatchQueue.main.async {
-                    self.appDelegate.passCategoryData(post)
+                    self.appDelegate.passCategoryData(post.category)
                     self.collectionView.reloadData()
+                    print("json count: \(self.memes.count)")
                 }
-                print("json count: \(self.memes.count)")
             } catch _ as NSError {
-                print("error")
+                print("error " ,error?.localizedDescription)
                 return
             }
         }

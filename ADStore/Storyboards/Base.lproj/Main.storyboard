@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="qvu-bb-sI8">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="qvu-bb-sI8">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -16,8 +17,8 @@
                     <tabBar key="tabBar" autoresizesSubviews="NO" contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="JFc-UU-TGr" customClass="AppTabBar" customModule="ADStore" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="jPE-HR-VZ6"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
                         <outlet property="tabbar" destination="JFc-UU-TGr" id="H7b-be-raM"/>
@@ -79,7 +80,7 @@
                     <tabBarItem key="tabBarItem" title="" id="3p7-Ro-o5p"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="osS-Da-zqj">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <rect key="frame" x="0.0" y="48" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -98,12 +99,12 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="KdA-YV-eK6">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <sections>
                             <tableViewSection headerTitle="" footerTitle="" id="Hsc-kv-Vw0">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="TableViewCell" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="90" id="5fl-tn-VhM">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="90"/>
+                                        <rect key="frame" x="0.0" y="50" width="414" height="90"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="5fl-tn-VhM" id="dnX-Vd-Zln">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="90"/>
@@ -111,7 +112,7 @@
                                             <subviews>
                                                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="OeT-yg-UXs">
                                                     <rect key="frame" x="0.0" y="0.0" width="414" height="90"/>
-                                                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                     <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="5" minimumInteritemSpacing="5" id="na8-aE-YoB">
                                                         <size key="itemSize" width="128" height="128"/>
                                                         <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -173,7 +174,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="TableView2ndCell" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="TableView2ndCell" rowHeight="596" id="tCS-Zh-HTJ" customClass="TableView2ndCell" customModule="ADStore" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="118" width="414" height="596"/>
+                                        <rect key="frame" x="0.0" y="140" width="414" height="596"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="tCS-Zh-HTJ" id="ZuE-55-9oh">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="596"/>
@@ -274,7 +275,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dTK-VG-dwE">
-                                <rect key="frame" x="0.0" y="144" width="414" height="748"/>
+                                <rect key="frame" x="0.0" y="148" width="414" height="744"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search location" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uas-nn-bad">
                                         <rect key="frame" x="16" y="16" width="398" height="45"/>
@@ -310,11 +311,11 @@
                                         <textInputTraits key="textInputTraits"/>
                                     </searchBar>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="fWB-XZ-w4z">
-                                        <rect key="frame" x="8" y="157" width="398" height="553"/>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <rect key="frame" x="8" y="157" width="398" height="549"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="LocationSearchTableCell" rowHeight="69" id="eZG-RL-IwF" customClass="LocationSearchTableCell" customModule="ADStore" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="28" width="398" height="69"/>
+                                                <rect key="frame" x="0.0" y="50" width="398" height="69"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="eZG-RL-IwF" id="M6Z-hJ-Jqt">
                                                     <rect key="frame" x="0.0" y="0.0" width="398" height="69"/>
@@ -328,7 +329,7 @@
                                         </connections>
                                     </tableView>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstItem="uas-nn-bad" firstAttribute="leading" secondItem="dTK-VG-dwE" secondAttribute="leadingMargin" constant="8" id="8KY-Tw-x1R"/>
                                     <constraint firstAttribute="bottomMargin" secondItem="fWB-XZ-w4z" secondAttribute="bottom" id="CtQ-ax-xD5"/>
@@ -352,6 +353,7 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="OeJ-lc-wKB"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="dTK-VG-dwE" firstAttribute="bottom" secondItem="OeJ-lc-wKB" secondAttribute="bottom" constant="30" id="MoF-CR-ZDG"/>
@@ -360,7 +362,6 @@
                             <constraint firstItem="dTK-VG-dwE" firstAttribute="centerX" secondItem="yzw-Sp-MXf" secondAttribute="centerX" id="fAf-lJ-FHP"/>
                             <constraint firstItem="OeJ-lc-wKB" firstAttribute="trailing" secondItem="dTK-VG-dwE" secondAttribute="trailing" id="gvo-Hr-T2Z"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="OeJ-lc-wKB"/>
                     </view>
                     <connections>
                         <outlet property="contentView" destination="dTK-VG-dwE" id="3CG-Fx-S0H"/>
@@ -382,11 +383,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="XHy-SC-2HN">
-                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <rect key="frame" x="0.0" y="48" width="414" height="814"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CategoryListTableViewCell" rowHeight="60" id="2Si-xV-lOZ" customClass="CategoryListTableViewCell" customModule="ADStore" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="60"/>
+                                        <rect key="frame" x="0.0" y="50" width="414" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="2Si-xV-lOZ" id="j2N-GG-L8M">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
@@ -428,14 +429,14 @@
                                 </connections>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="o5e-Xy-tpe"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="XHy-SC-2HN" firstAttribute="top" secondItem="o5e-Xy-tpe" secondAttribute="top" id="D2Z-j6-JWk"/>
                             <constraint firstItem="XHy-SC-2HN" firstAttribute="leading" secondItem="o5e-Xy-tpe" secondAttribute="leading" id="Gle-Pa-rWj"/>
                             <constraint firstItem="o5e-Xy-tpe" firstAttribute="trailing" secondItem="XHy-SC-2HN" secondAttribute="trailing" id="K1W-0Z-ua6"/>
                             <constraint firstItem="o5e-Xy-tpe" firstAttribute="bottom" secondItem="XHy-SC-2HN" secondAttribute="bottom" id="lNO-1L-Ykn"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="o5e-Xy-tpe"/>
                     </view>
                     <connections>
                         <outlet property="tableView" destination="XHy-SC-2HN" id="h33-zX-xm6"/>
@@ -451,7 +452,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="zGT-w2-NTG" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" backIndicatorImage="add" id="jqL-uA-cOB">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <rect key="frame" x="0.0" y="48" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -461,12 +462,20 @@
             <point key="canvasLocation" x="-1711.5942028985507" y="1048.6607142857142"/>
         </scene>
     </scenes>
+    <designables>
+        <designable name="JFc-UU-TGr">
+            <size key="intrinsicContentSize" width="-1" height="83"/>
+        </designable>
+    </designables>
     <resources>
         <image name="add" width="512" height="512"/>
         <image name="add camera" width="25" height="25"/>
-        <image name="location.fill" width="17" height="17"/>
+        <image name="location.fill" width="13" height="13"/>
         <namedColor name="RedColor">
             <color red="0.94901960784313721" green="0.19607843137254902" blue="0.0078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>

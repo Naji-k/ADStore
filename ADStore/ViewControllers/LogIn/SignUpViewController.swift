@@ -29,8 +29,15 @@ class SignUpViewController: UIViewController {
     }
     override func viewDidLayoutSubviews() {
         setUpElements()
-        
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        self.view!.addGestureRecognizer(tap)
     }
+    
+    @objc func dismissKeyboard() {
+        //Hides keyboard
+         view.endEditing(true)
+    }
+    
     func showError(_ message:String) {
         
         errorLabel.text = message
@@ -91,7 +98,7 @@ class SignUpViewController: UIViewController {
         let userReference = ref.child("users").child(uid)
         userReference.updateChildValues(values) { (error, ref) in
             if let error = error {
-                print(error.localizedDescription)
+                print("registerUserInfoToDataBase error")
                 self.showError(error.localizedDescription)
                 return
             }

@@ -23,7 +23,7 @@ class Switcher {
                     let user = User(dictionary: dictionary)
                     let appDelegate = UIApplication.shared.delegate as! AppDelegate
                     appDelegate.currentUser = user
-                    print("from Switcher....: ", user)
+                    print("user from Switcher....: ", user)
                 }
                 
             }, withCancel: nil)

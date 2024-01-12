@@ -45,6 +45,11 @@ class EditProfileViewController: UIViewController {
         }
         
     }
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        self.appDelegate.currentUser =  Utilities.fetchUserInfo()
+        
+    }
     @objc func dismissKeyboard() {
         //Hides keyboard
          view.endEditing(true)
@@ -86,6 +91,7 @@ class EditProfileViewController: UIViewController {
         picker.allowsEditing = true
         present(picker, animated: true, completion: nil)
     }
+
     fileprivate func uploadImageToFirestore(imageView: UIImageView) {
         let imageName = UUID().uuidString
         let storageRef = Storage.storage().reference().child("profile_images").child("\(imageName).jpg")
@@ -148,7 +154,6 @@ class EditProfileViewController: UIViewController {
             }
             let user = User(dictionary: values)
         }
-        
         self.dismiss(animated: true) {
             
         }
@@ -157,7 +162,12 @@ class EditProfileViewController: UIViewController {
     fileprivate func updateUserInfoOnFirebase() {
         switch profilePicStatus {
         case .changed:
-            uploadImageToFirestore(imageView: profilePic)
+            FirebaseHelper.uploadImageToFirebaseStorage(image: profilePic.image, child: "user-profileImage") { imagePath in
+                if let path = imagePath {
+                    let userValues = ["userFName": self.nameLabel.text as AnyObject, "profileImageUrl": path as AnyObject] as [String : AnyObject]
+                    self.updateUserIntoDatabaseWithUID(self.user.id!, values: userValues)
+                }
+            }
         case .nothing:
             let userValues = ["userFName": self.nameLabel.text as AnyObject] as [String : AnyObject]
             self.updateUserIntoDatabaseWithUID(self.user.id!, values: userValues)

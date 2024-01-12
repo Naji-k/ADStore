@@ -39,7 +39,7 @@ class CategoryListViewController: UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
-        callback?(selected ?? "")
+//        callback?(selected ?? "")
     }
 
 }
@@ -74,6 +74,8 @@ extension CategoryListViewController: UITableViewDelegate, UITableViewDataSource
         newVC.needCallBack = true
         newVC.callback = { newValue in
             self.selected = newValue
+            self.callback?(newValue)
+            print("callBack from CategoryListVC= ,and selected = ", newValue, self.selected)
         }
         self.present(newVC, animated: true, completion: nil)
         

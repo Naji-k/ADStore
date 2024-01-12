@@ -19,7 +19,7 @@ struct APIRequest {
     
     init(endpoint: String) {
 //        let resourceString = "http://127.0.0.1:3000/\(endpoint)"
-        let resourceString = "http://192.168.1.208:3000/\(endpoint)"
+        let resourceString = "http://192.168.1.18:4000/\(endpoint)"
         guard let resourceURL = URL(string: resourceString) else { fatalError() }
         self.resourceURL = resourceURL
     }

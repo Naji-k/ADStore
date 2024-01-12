@@ -40,9 +40,34 @@ struct RootClass : Codable {
     
 }
 
+//last Version just to load category and subcategory without ads
+struct CategoryList: Codable {
+    let category: [Category]
 
+    enum CodingKeys: String, CodingKey {
+        case category = "Category"
+    }
+}
 
+// MARK: - Category
+struct Category: Codable {
+    let id: Int?
+    let name, image: String?
+    let subCategory: [SubCategory]?
+}
 
+struct SubCategory: Codable {
+    let id: Int?
+    let subName: String?
+    let subImage: String?
+    enum CodingKeys: String, CodingKey {
+        case id = "id"
+        case subImage = "image"
+        case subName = "name"
+    }
+}
+/*
+ full version with Ads (for now it is still not working)..
 struct Category : Codable {
     
     let id: Int?
@@ -71,13 +96,13 @@ struct SubCategory: Codable {
     let id: Int?
     let subName: String?
     let subImage: String?
-    let ads: [Ads]?
+//    let ads: [Ads]?
     
     enum CodingKeys: String, CodingKey {
         case id = "id"
         case subImage = "image"
         case subName = "name"
-        case ads = "ads"
+//        case ads = "ads"
     }
     
     init(from decoder: Decoder) throws {
@@ -85,8 +110,8 @@ struct SubCategory: Codable {
         id = try values.decodeIfPresent(Int.self, forKey: .id)
         subName = try values.decodeIfPresent(String.self, forKey: .subName)
         subImage = try values.decodeIfPresent(String.self, forKey: .subImage)
-        ads = try values.decodeIfPresent([Ads].self, forKey: .ads)
+//        ads = try values.decodeIfPresent([Ads].self, forKey: .ads)
     }
 }
 
-
+*/

@@ -89,7 +89,6 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
     }
     @objc private func menuButtonAction(sender: UIButton) {
         guard let newVC = self.storyboard?.instantiateViewController(withIdentifier: "TableViewController") else {return}
-        //        let newVC = self.storyboard?.instantiateViewController(withIdentifier: "TableViewController") as! TableViewController
         let navController = UINavigationController(rootViewController: newVC)
         navController.modalPresentationStyle = .overCurrentContext
         navController.modalTransitionStyle = .coverVertical
