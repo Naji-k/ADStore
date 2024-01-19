@@ -23,6 +23,9 @@ class ChatLogVC: UIViewController, UITextFieldDelegate {
             } else {
                 navigationItem.title = user?.userFName
             }
+            print("userID= ",user?.id)
+            print("currentUserId= ", currentUserId)
+
             observeMessages()
         }
     }
@@ -85,8 +88,40 @@ class ChatLogVC: UIViewController, UITextFieldDelegate {
         }
     }
     
-    @IBAction func sendBtnPressed(_ sender: Any) {
+    fileprivate func sendMessageWithProperties(_ properties: [String: AnyObject]) {
+        let ref = Database.database().reference().child("message")
+        let childRef = ref.childByAutoId()
+        let toId = user!.id!
+        let fromId = Auth.auth().currentUser!.uid
+        let timestamp = Int(Date().timeIntervalSince1970)
+        var values: [String: AnyObject] = ["toId": toId as AnyObject, "fromId": fromId as AnyObject, "timestamp": timestamp as AnyObject]
         
+        //append properties dictionary into values somehow?
+        //key $0, value $1
+        properties.forEach({values[$0] = $1})
+        
+        childRef.updateChildValues(values) { (error, ref) in
+            if error != nil {
+                print(error ?? "")
+                return
+            }
+            self.textField.text = nil
+            guard let messageId = childRef.key else { return }
+            
+            let userMessagesRef = Database.database().reference().child("user-messages").child(fromId).child(toId)
+            userMessagesRef.updateChildValues([messageId: 1])
+            let recipientUserMessagesRef = Database.database().reference().child("user-messages").child(toId).child(fromId)
+            recipientUserMessagesRef.updateChildValues([messageId: 1])
+        }
+    }
+    
+    @IBAction func sendBtnPressed(_ sender: Any) {
+        //sent message to user
+        textField.resignFirstResponder()
+        print(textField.text)
+
+        let properties = ["text": textField.text!]
+        sendMessageWithProperties(properties as [String: AnyObject])
     }
     @IBAction func addImageBtn(_ sender: Any) {
         

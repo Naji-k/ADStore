@@ -25,8 +25,8 @@ extension CategoryHeader: UIScrollViewDelegate {
     }
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let pageWidth = scrollView.bounds.width
-        let pagFraction = scrollView.contentOffset.x / pageWidth
-        pageController.currentPage = Int(round(pagFraction))
+        let pageFraction = scrollView.contentOffset.x / pageWidth
+        pageController.currentPage = Int(round(pageFraction))
 
     }
 }
