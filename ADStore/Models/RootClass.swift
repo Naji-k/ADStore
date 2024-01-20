@@ -41,13 +41,13 @@ struct RootClass : Codable {
 }
 
 //last Version just to load category and subcategory without ads
-struct CategoryList: Codable {
-    let category: [Category]
-
-    enum CodingKeys: String, CodingKey {
-        case category = "Category"
-    }
-}
+//struct CategoryList: Codable {
+//    let category: [Category]
+//
+//    enum CodingKeys: String, CodingKey {
+//        case category = "Category"
+//    }
+//}
 
 // MARK: - Category
 struct Category: Codable {

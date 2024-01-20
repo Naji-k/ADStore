@@ -19,7 +19,7 @@ class AddPostTableViewController: UITableViewController, TLPhotosPickerViewContr
     var selectedAssets = [TLPHAsset]()
     var imageArray = [UIImage]()
     var imageCount: Int = 6
-    let descriptionLimit = 60
+    let descriptionLimit = 120
     
     var labels = ["①", "②", "③", "④", "⑤", "⑥"]
     
@@ -150,14 +150,13 @@ class AddPostTableViewController: UITableViewController, TLPhotosPickerViewContr
         case 0:
             print("clicked")
         default:
-            print("else")
             view.endEditing(true)
         }
     }
     
     
     //MARK: - PostURLSession
-    @objc func makeViaAPIRequest (imagesPath: [String]) {
+    private func makeViaAPIRequest (imagesPath: [String] ,completion: @escaping (Bool, APIError?) -> Void) {
         let today = Date()
         let randomID = Int.random(in: 1...10000)
         let formatter1 = DateFormatter()
@@ -167,24 +166,20 @@ class AddPostTableViewController: UITableViewController, TLPhotosPickerViewContr
         let newAds = Ads(id: randomID, adsTitle: titleTextField.text!, adsDes: descriptionTextView.text, adsDate: createdDate, userId: currentUser.id!, adsPrice: price.text! + " $", adsCondition: conditionTextField.text!, adsCategory: categoryTextField.text!, adsImages: imagesPath, latitude: 52.7286158 , longitude: 6.4901002, location: locationTextField.text!)
         
         let postRequest = APIRequest(endpoint: "ads")
-        postRequest.save(newAds, completion: { result in
+        postRequest.genericPostRequest(body: newAds, response: Ads.self) { result in
+        
+//        postRequest.save(newAds, completion: { result in
             switch result {
             case .success(let newAds):
+                completion(true, nil)
                 print("\(newAds)was been send")
             case.failure(let error):
+                completion(false, error)
                 print("\(error.localizedDescription) occurred")
             }
-        })
+        }
     }
     
-    func showAlert(title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-            
-            //            self.dismiss(animated: true, completion: nil)
-        }))
-        self.present(alert, animated: true, completion: nil)
-    }
     
     @objc func pressDoneBtn () {
         //check if fields is empty..
@@ -192,8 +187,7 @@ class AddPostTableViewController: UITableViewController, TLPhotosPickerViewContr
         if emptyFields != nil {
             showAlert(title: "Error", message: emptyFields!)
         } else {
-            uploadToServer()
-            
+            PostNewAds()
         }
     }
     
@@ -203,18 +197,21 @@ class AddPostTableViewController: UITableViewController, TLPhotosPickerViewContr
         present(alert, animated: true, completion: nil)
     }
     
-    private func uploadToServer() {
-        
+    private func PostNewAds() {
         var uploadedImagePaths = [String]()
         guard !imageArray.isEmpty else {
-            self.makeViaAPIRequest(imagesPath: [""])
+            //adding ads without image
+            self.makeViaAPIRequest(imagesPath: [""]) { success, error in
+                DispatchQueue.main.async {
+                    self.handleResponse(success: success, error: error)
+                }
+            }
             return
         }
         showLoadingAlert()
         let group = DispatchGroup()
         for image in 1..<imageArray.count {
             group.enter()
-            //            uploadImage(image) { imagePath in //this to upload image to server
             FirebaseHelper.uploadImageToFirebaseStorage(image: imageArray[image], child: "ads-images") { imagePath in
                 if let path = imagePath {
                     uploadedImagePaths.append(path)
@@ -223,19 +220,41 @@ class AddPostTableViewController: UITableViewController, TLPhotosPickerViewContr
             }
         }
         group.notify(queue: .main) {
-            self.makeViaAPIRequest(imagesPath: uploadedImagePaths)
+            self.dismissLoadingAlert {
+                self.makeViaAPIRequest(imagesPath: uploadedImagePaths) { success, error in
+                    self.handleResponse(success: success, error: error)
+                }
+            }
         }
-        print(uploadedImagePaths.count)
-        dismiss(animated: true, completion: {
-            let messageAlert = UIAlertController(title: "Success", message: "your Ads added successfully", preferredStyle: .alert)
-            messageAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
-                self.dismiss(animated: true, completion: nil)
-                
-            }))
-            self.present(messageAlert, animated: true, completion: nil)
-        })
     }
     
+    private func handleResponse(success: Bool, error: APIError?) {
+        let title = success ? "Success" : "Failed!"
+        let  message = success ? "Your Ads added successfully" : (error.debugDescription)
+            
+        showAlert(title: title, message: message)
+    }
+    
+    private func showAlert(title: String, message: String) {
+        if presentedViewController == nil {
+            let messageAlert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            messageAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+                self.dismiss(animated: true, completion: nil)
+            }))
+            present(messageAlert, animated: true, completion: nil)
+        }
+    }
+    
+    //check if there alert(loading images...) or not
+    private func dismissLoadingAlert(completion: @escaping () -> Void) {
+        if let loadingAlert = presentedViewController as? UIAlertController {
+            loadingAlert.dismiss(animated: true, completion: completion)
+        } else {
+            completion()
+        }
+    }
+    
+    //upload images for local host
     private func uploadImage(_ image: UIImage, completion: @escaping(String?) -> Void) {
         guard let imageData = image.jpegData(compressionQuality: 0.7) else {
             completion(nil)

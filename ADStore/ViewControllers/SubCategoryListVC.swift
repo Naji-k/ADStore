@@ -22,13 +22,13 @@ class SubCategoryListVC: UIViewController {
     }
 //    var matched = [Ads]()
     
-    var url = "http://192.168.1.18:4000/ads"
+    var url = "http://192.168.1.18:3000/ads"
 //    var url = "http://192.168.1.18/~NajiKanounji/ADSStore/Category.json"
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        needCallBack ? print("callBack") : fetchAds()
+        needCallBack ? print("callBack") : fetchAds("ads")
                 
         // Do any additional setup after loading the view.
     }
@@ -42,31 +42,20 @@ class SubCategoryListVC: UIViewController {
             callback?(selected ?? "" )
         }
         
-//        print(callback)
     }
     
-    func fetchAds() {
-        let urlRequest = URLRequest(url: URL(string: url)!)
-        let task = URLSession.shared.dataTask(with: urlRequest) {(data, response, error) in
-            guard let data = data, let response = response as? HTTPURLResponse,
-                response.statusCode == 200 else {
-                    print("No data or statusCode not OK")
-                    return
-            }
-            let decoder = JSONDecoder()
-            do {
-                let post = try decoder.decode([Ads].self, from: data)
-                print("data\(data.count)")
-                DispatchQueue.main.async {
-                    self.appDelegate.passAdsData(post)
-                }
-                print("Ads count: \(self.memes.count)")
-            } catch _ as NSError {
-                print("error")
-                return
+    func fetchAds(_ endPoint: String) {
+        let request = APIRequest(endpoint: endPoint)
+        request.genericGetRequest(response: [Ads].self) { result in
+            switch result {
+            case .success(let ads):
+                print(ads.count)
+                self.appDelegate.passAdsData(ads)
+
+            case .failure(let error):
+                print(error)
             }
         }
-        task.resume()
     }
     
 }

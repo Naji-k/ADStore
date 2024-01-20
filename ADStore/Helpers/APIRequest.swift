@@ -5,7 +5,7 @@
 //  Created by Naji Kanounji on 10/22/20.
 //  Copyright © 2020 Naji Kanounji. All rights reserved.
 //
-
+//  helper for generic requests (get && post)
 import Foundation
 
 enum APIError: Error {
@@ -18,33 +18,67 @@ struct APIRequest {
     let resourceURL: URL
     
     init(endpoint: String) {
-//        let resourceString = "http://127.0.0.1:3000/\(endpoint)"
-        let resourceString = "http://192.168.1.18:4000/\(endpoint)"
-        guard let resourceURL = URL(string: resourceString) else { fatalError() }
+        let baseURL = "http://192.168.1.18:3000/\(endpoint)"
+        guard let resourceURL = URL(string: baseURL) else { fatalError() }
         self.resourceURL = resourceURL
     }
     
-    func save(_ ads: Ads, completion: @escaping (Result<Ads, APIError>) -> Void) {
-        do {
-            var urlRequest = URLRequest(url: resourceURL)
-            urlRequest.httpMethod = "POST"
-            urlRequest.addValue("application/json", forHTTPHeaderField: "Content-type")
-            urlRequest.httpBody = try JSONEncoder().encode(ads)
-            
-            let dataTask = URLSession.shared.dataTask(with: urlRequest) { data, response, _ in
-                guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 201, let jsonData = data else {
+    
+    //Generic task request function
+    //return URLSessionTask so you can cancel it, to avoid multi task request while the internet is bad
+    //using @discarableResult (to avoid error, unused return value)
+    func genericGetRequest<ResponseType: Decodable>(response: ResponseType.Type, completion: @escaping(Result<ResponseType, APIError>) -> Void) {
+        
+        let task = URLSession.shared.dataTask(with: resourceURL) { data, response, error in
+            guard let data = data else {
+                DispatchQueue.main.async {
                     completion(.failure(.responseProblem))
-                    return
                 }
-                do {
-                    let adsData = try JSONDecoder().decode(Ads.self, from: jsonData)
-                    completion(.success(adsData))
-                } catch {
+                return
+            }
+            let decoder = JSONDecoder()
+            do {
+                let responseObject = try decoder.decode(ResponseType.self, from: data)
+                DispatchQueue.main.async {
+                    completion(.success(responseObject))
+                }
+            } catch {
+                DispatchQueue.main.async {
+//                    if let string = String(data: data, encoding: .utf8) { print(string)}
                     completion(.failure(.decodingProblem))
                 }
-                
             }
-            dataTask.resume()
+        }
+        task.resume()
+    }
+    
+    func genericPostRequest<RequestType: Encodable, ResponseType: Decodable>( body: RequestType, response: ResponseType.Type, completion:@escaping(Result<ResponseType, APIError>) -> Void) {
+        
+        do {
+            var request = URLRequest(url: resourceURL)
+            request.httpMethod = "POST"
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.httpBody = try JSONEncoder().encode(body)
+            let task = URLSession.shared.dataTask(with: request) { data, response, error in
+                guard let data = data else {
+                    DispatchQueue.main.async {
+                        completion(.failure(.responseProblem))
+                    }
+                    return
+                }
+                let decoder = JSONDecoder()
+                do {
+                    let responseObject = try decoder.decode(ResponseType.self, from: data)
+                    DispatchQueue.main.async {
+                        completion(.success(responseObject))
+                    }
+                } catch {
+                    DispatchQueue.main.async {
+                        completion(.failure(.decodingProblem))
+                    }
+                }
+            }
+            task.resume()
         } catch {
             completion(.failure(.encodingProblem))
         }

@@ -469,7 +469,7 @@
     </designables>
     <resources>
         <image name="add" width="512" height="512"/>
-        <image name="add camera" width="25" height="25"/>
+        <image name="add camera" width="24" height="24"/>
         <image name="location.fill" width="13" height="13"/>
         <namedColor name="RedColor">
             <color red="0.94901960784313721" green="0.19607843137254902" blue="0.0078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

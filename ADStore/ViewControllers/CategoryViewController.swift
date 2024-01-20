@@ -12,11 +12,12 @@ import Firebase
 class CategoryViewController: UIViewController {
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
 
-    var url = "http://192.168.1.18:3000/ADStore"
-//    var url = "http://192.168.1.18/~NajiKanounji/ADSStore/Category.json"
+    var url = "http://192.168.1.18:3000/Category"
 
-    let slider = ["bmw", "bmw", "bmw", "bmw"]
+    let slider = ["place-ads-here", "place-ads-here", "place-ads-here", "place-ads-here"]
     var frame = CGRect(x: 0, y: 0, width: 0, height: 0)
+    var sliderTimer: Timer?
+
 
     var memes: [Category] {
         return appDelegate.getCategoryData() // access data
@@ -32,7 +33,9 @@ class CategoryViewController: UIViewController {
         super.viewDidLoad()
         Utilities.fetchUserInfo()
         
-        fetchCategory()
+//        fetchCategory()
+        startSliderTimer()
+        fetchCategory(endpoints: "Category")
         
         //tested logout button
 //        navigationItem.leftBarButtonItem = UIBarButtonItem.init(title: "Log out", style: .plain, target: self, action: #selector(logOut))
@@ -40,32 +43,24 @@ class CategoryViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        sliderTimer?.invalidate()
+    }
 
-    func fetchCategory () {
-        
-        let urlRequest = URLRequest(url: URL(string: url)!)
-        let task = URLSession.shared.dataTask(with: urlRequest) {(data, response, error) in
-        guard let data = data, let response = response as? HTTPURLResponse,
-            response.statusCode == 200 else {
-            print("No data or statusCode not OK")
-                return
-            }
-
-        let decoder = JSONDecoder()
-            do {
-                let post = try decoder.decode(CategoryList.self, from: data)
-                print("data\(data.count)")
-                DispatchQueue.main.async {
-                    self.appDelegate.passCategoryData(post.category)
-                    self.collectionView.reloadData()
-                    print("json count: \(self.memes.count)")
-                }
-            } catch _ as NSError {
-                print("error " ,error?.localizedDescription)
-                return
+    func fetchCategory(endpoints: String) {
+        let getRequest = APIRequest(endpoint: endpoints)
+        getRequest.genericGetRequest( response: [Category].self) { result in
+            switch result {
+            case.success(let res):
+                print("category count ", res.count)
+                self.appDelegate.passCategoryData(res)
+                self.collectionView.reloadData()
+            case .failure(let error):
+                print("error ", error)
             }
         }
-        task.resume()
     }
 }
 //MARK: -  Category delegate and datasource
@@ -104,7 +99,7 @@ extension CategoryViewController: UICollectionViewDelegate, UICollectionViewData
         return CGSize(width: view.bounds.width, height: 200)
     }
     
-//    MARK: Custom Header: Slider
+//    MARK: - Custom Header: Slider
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         
         let headerView = self.collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "CategoryHeader", for: indexPath) as! CategoryHeader
@@ -134,6 +129,33 @@ extension CategoryViewController: UICollectionViewDelegate, UICollectionViewData
         return headerView
         
     }
+    
+    func startSliderTimer() {
+        sliderTimer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(scrollToNextItem), userInfo: nil, repeats: true)
+    }
+
+    
+    @objc func scrollToNextItem() {
+        guard let headerView = collectionView.supplementaryView(forElementKind: UICollectionView.elementKindSectionHeader, at: IndexPath(item: 0, section: 0)) as? CategoryHeader else {
+            return
+        }
+
+        let contentWidth = headerView.scrollView.contentSize.width
+        let currentOffset = headerView.scrollView.contentOffset.x
+        let singleItemWidth = headerView.scrollView.frame.width
+        let nextOffset = currentOffset + singleItemWidth
+
+        if nextOffset < contentWidth {
+            headerView.scrollView.setContentOffset(CGPoint(x: nextOffset, y: 0), animated: true)
+            let nextPage = Int(nextOffset / singleItemWidth)
+            headerView.pageController.currentPage = nextPage
+        } else {
+            // If it's the last item, scroll back to the first item
+            headerView.scrollView.setContentOffset(.zero, animated: true)
+            headerView.pageController.currentPage = 0
+        }
+    }
+
 }
 extension UICollectionViewCell {
     func shadowDecorate() {

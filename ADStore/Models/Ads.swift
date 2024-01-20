@@ -9,6 +9,9 @@
 import Foundation
 import UIKit
 
+struct AdsList: Codable {
+    let ads: [Ads]
+}
 public struct Ads: Codable {
     var id: Int?
     let adsTitle: String?
@@ -24,6 +27,7 @@ public struct Ads: Codable {
     let location: String?
     
     enum CodingKeys: String, CodingKey {
+        case id = "id"
         case adsTitle = "adsTitle"
         case adsDes = "adsDes"
         case adsDate = "adsDate"
@@ -32,13 +36,13 @@ public struct Ads: Codable {
         case adsCondition = "adsCondition"
         case adsCategory = "adsCategory"
         case adsImages = "adsImages"
-        case id = "id"
         case latitude = "latitude"
         case longitude = "longitude"
         case location = "location"
     }
     public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
+        id = try values.decodeIfPresent(Int.self, forKey: .id)
         adsCondition = try values.decodeIfPresent(String.self, forKey: .adsCondition)
         adsDate = try values.decodeIfPresent(String.self, forKey: .adsDate)
         adsDes = try values.decodeIfPresent(String.self, forKey: .adsDes)
@@ -46,7 +50,6 @@ public struct Ads: Codable {
         adsPrice = try values.decodeIfPresent(String.self, forKey: .adsPrice)
         adsTitle = try values.decodeIfPresent(String.self, forKey: .adsTitle)
         adsCategory = try values.decodeIfPresent(String.self, forKey: .adsCategory)
-        id = try values.decodeIfPresent(Int.self, forKey: .id)
         userId = try values.decodeIfPresent(String.self, forKey: .userId)
         latitude = try values.decodeIfPresent(Double.self, forKey: .latitude)
         longitude = try values.decodeIfPresent(Double.self, forKey: .longitude)
