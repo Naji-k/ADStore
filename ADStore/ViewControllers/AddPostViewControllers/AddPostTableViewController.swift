@@ -20,6 +20,7 @@ class AddPostTableViewController: UITableViewController, TLPhotosPickerViewContr
     var imageArray = [UIImage]()
     var imageCount: Int = 6
     let descriptionLimit = 120
+    var adsLocation: SelectedLocation?
     
     var labels = ["①", "②", "③", "④", "⑤", "⑥"]
     
@@ -66,7 +67,6 @@ class AddPostTableViewController: UITableViewController, TLPhotosPickerViewContr
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
         
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         self.navigationItem.leftBarButtonItem = UIBarButtonItem.init(title: "Cancel", style: .plain, target: self, action: #selector(cancel))
         self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(title: "Done", style: .plain, target: self, action: #selector(pressDoneBtn))
         
@@ -88,11 +88,13 @@ class AddPostTableViewController: UITableViewController, TLPhotosPickerViewContr
         }
         self.present(vc, animated: true, completion: nil)
     }
+//    MARK: - find location
     @objc func openLocationView() {
         locationTextField.resignFirstResponder()
         let vc: LocationSearchVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LocationSearchVC") as! LocationSearchVC
-        vc.callback = { newValue in
-            self.locationTextField.text = newValue
+        vc.callback = { location in
+            self.locationTextField.text = location.name
+            self.adsLocation = location
         }
         
         self.present(vc, animated: true, completion: nil)
@@ -149,6 +151,7 @@ class AddPostTableViewController: UITableViewController, TLPhotosPickerViewContr
         switch indexPath.row {
         case 0:
             print("clicked")
+            break
         default:
             view.endEditing(true)
         }
@@ -163,12 +166,10 @@ class AddPostTableViewController: UITableViewController, TLPhotosPickerViewContr
         formatter1.dateStyle = .medium
         let createdDate = formatter1.string(from: today)
         
-        let newAds = Ads(id: randomID, adsTitle: titleTextField.text!, adsDes: descriptionTextView.text, adsDate: createdDate, userId: currentUser.id!, adsPrice: price.text! + " $", adsCondition: conditionTextField.text!, adsCategory: categoryTextField.text!, adsImages: imagesPath, latitude: 52.7286158 , longitude: 6.4901002, location: locationTextField.text!)
+        let newAds = Ads(id: randomID, adsTitle: titleTextField.text!, adsDes: descriptionTextView.text, adsDate: createdDate, userId: currentUser.id!, adsPrice: price.text! + " $", adsCondition: conditionTextField.text!, adsCategory: categoryTextField.text!, adsImages: imagesPath, latitude: adsLocation!.lat , longitude: adsLocation!.long, location: locationTextField.text!)
         
         let postRequest = APIRequest(endpoint: "ads")
         postRequest.genericPostRequest(body: newAds, response: Ads.self) { result in
-        
-//        postRequest.save(newAds, completion: { result in
             switch result {
             case .success(let newAds):
                 completion(true, nil)
@@ -185,17 +186,12 @@ class AddPostTableViewController: UITableViewController, TLPhotosPickerViewContr
         //check if fields is empty..
         let emptyFields = Utilities.checkEmptyField([titleTextField, conditionTextField, categoryTextField, price, locationTextField])
         if emptyFields != nil {
-            showAlert(title: "Error", message: emptyFields!)
+            presentAlert(message: emptyFields!, title: "Error!", dismissVC: false)
         } else {
             PostNewAds()
         }
     }
     
-    private func showLoadingAlert() {
-        let alert = UIAlertController(title: "Loading", message: "Please wait...", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-        present(alert, animated: true, completion: nil)
-    }
     
     private func PostNewAds() {
         var uploadedImagePaths = [String]()
@@ -208,7 +204,7 @@ class AddPostTableViewController: UITableViewController, TLPhotosPickerViewContr
             }
             return
         }
-        showLoadingAlert()
+        presentAlert(message: "Please wait...", title: "Loading", dismissVC: false)
         let group = DispatchGroup()
         for image in 1..<imageArray.count {
             group.enter()
@@ -230,21 +226,15 @@ class AddPostTableViewController: UITableViewController, TLPhotosPickerViewContr
     
     private func handleResponse(success: Bool, error: APIError?) {
         let title = success ? "Success" : "Failed!"
-        let  message = success ? "Your Ads added successfully" : (error.debugDescription)
-            
-        showAlert(title: title, message: message)
-    }
-    
-    private func showAlert(title: String, message: String) {
-        if presentedViewController == nil {
-            let messageAlert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-            messageAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
-                self.dismiss(animated: true, completion: nil)
-            }))
-            present(messageAlert, animated: true, completion: nil)
+        var message = "Your Ads added successfully"
+        if !success {
+            if let error = error {
+                message = String(describing: error)
+            }
         }
+        presentAlert(message: message, title: title, dismissVC: true)
     }
-    
+        
     //check if there alert(loading images...) or not
     private func dismissLoadingAlert(completion: @escaping () -> Void) {
         if let loadingAlert = presentedViewController as? UIAlertController {
@@ -252,29 +242,6 @@ class AddPostTableViewController: UITableViewController, TLPhotosPickerViewContr
         } else {
             completion()
         }
-    }
-    
-    //upload images for local host
-    private func uploadImage(_ image: UIImage, completion: @escaping(String?) -> Void) {
-        guard let imageData = image.jpegData(compressionQuality: 0.7) else {
-            completion(nil)
-            return
-        }
-        var request = URLRequest(url: URL(string: "http://192.168.1.18/~NajiKanounji/host/image.php")!)
-        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-        request.httpMethod = "POST"
-        request.httpBody = imageData
-        
-        URLSession.shared.dataTask(with: request) { data, response, error in
-            guard let data = data, error == nil else {
-                print("Network error: \(error?.localizedDescription ?? "unknown error")")
-                completion(nil)
-                return
-            }
-            let responseString = String(data: data, encoding: .utf8)
-            completion(responseString) // Update this logic based on how your server responds
-        }.resume()
-        
     }
 }
 // MARK: - Collection view data source

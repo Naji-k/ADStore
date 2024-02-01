@@ -12,19 +12,21 @@ import Firebase
 class CategoryViewController: UIViewController {
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
 
-    var url = "http://192.168.1.18:3000/Category"
 
     let slider = ["place-ads-here", "place-ads-here", "place-ads-here", "place-ads-here"]
     var frame = CGRect(x: 0, y: 0, width: 0, height: 0)
     var sliderTimer: Timer?
 
-
+    private let refreshController = UIRefreshControl()
     var memes: [Category] {
         return appDelegate.getCategoryData() // access data
     }
     
     var currentUser: User? {
         self.appDelegate.currentUser
+    }
+    var ads: [Ads] {
+        return appDelegate.getAdsData()
     }
 
     @IBOutlet weak var collectionView: UICollectionView!
@@ -33,12 +35,13 @@ class CategoryViewController: UIViewController {
         super.viewDidLoad()
         Utilities.fetchUserInfo()
         
-//        fetchCategory()
         startSliderTimer()
         fetchCategory(endpoints: "Category")
-        
-        //tested logout button
-//        navigationItem.leftBarButtonItem = UIBarButtonItem.init(title: "Log out", style: .plain, target: self, action: #selector(logOut))
+
+        collectionView.addSubview(refreshController)
+        refreshController.endRefreshing()
+        refreshController.addTarget(self, action: #selector(pullToRefresh(_:)), for: .valueChanged)
+        collectionView.alwaysBounceVertical = true
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -47,6 +50,14 @@ class CategoryViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         sliderTimer?.invalidate()
+    }
+    
+    @objc private func pullToRefresh(_ sender: UIRefreshControl) {
+        fetchCategory(endpoints: "Category")
+        print("end refreshing")
+        DispatchQueue.main.async {
+            sender.endRefreshing()
+        }
     }
 
     func fetchCategory(endpoints: String) {
@@ -108,8 +119,10 @@ extension CategoryViewController: UICollectionViewDelegate, UICollectionViewData
         
         headerView.scrollView.frame = CGRect(x: 0, y: 0, width: self.collectionView.frame.width, height: headerView.scrollView.frame.height)
         headerView.configure()
-                
+        
+        
         for i in 0..<slider.count {
+//        for i in 0..<ads.count {
             
             frame.origin.x = headerView.scrollView.frame.size.width * CGFloat(i)
             frame.size = headerView.scrollView.frame.size
@@ -118,6 +131,11 @@ extension CategoryViewController: UICollectionViewDelegate, UICollectionViewData
             imageView.contentMode = .scaleAspectFit
             imageView.image = UIImage(named: slider[i])
             headerView.scrollView.addSubview(imageView)
+            headerView.headerTapAction = { [weak self] index in
+                guard let strongSelf = self else { return }
+//                strongSelf.navigateToAdsViewController(withMeme: strongSelf.slider[index])
+                print(strongSelf.slider[index])
+            }
             
         }
         headerView.scrollView.contentSize = CGSize(width:self.collectionView.frame.width * CGFloat(slider.count), height:headerView.scrollView.frame.height)
@@ -129,6 +147,12 @@ extension CategoryViewController: UICollectionViewDelegate, UICollectionViewData
         return headerView
         
     }
+    func navigateToAdsViewController(withMeme meme: Ads) {
+        let adsVC = AdsViewController() // Initialize your AdsViewController
+        adsVC.item = meme // Pass the selected meme or any relevant data
+        self.navigationController?.pushViewController(adsVC, animated: true)
+    }
+
     
     func startSliderTimer() {
         sliderTimer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(scrollToNextItem), userInfo: nil, repeats: true)

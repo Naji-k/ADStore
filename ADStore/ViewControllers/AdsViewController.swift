@@ -33,8 +33,6 @@ class AdsViewController: UIViewController {
     var item: Ads?
     var frame = CGRect(x: 0, y: 0, width: 0, height: 0)
     
-    let lat = 52.7286158
-    let lng = 6.4901002
     
     //multiple expanding text views
     var activeTextView: UITextView?
@@ -88,15 +86,6 @@ class AdsViewController: UIViewController {
         
     }
     
-//    fileprivate func fetchUserInfo() {
-//        guard let uid = item?.userId else { return }
-//        Database.database().reference().child("users").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
-//            if let dictionary = snapshot.value as? [String: AnyObject] {
-//                let user = User(dictionary: dictionary)
-//                self.adsUser = user
-//            }
-//        }, withCancel: nil)
-//    }
     
     func openMapButtonAction(latitude: Double,longitude: Double ) {
         
@@ -147,7 +136,11 @@ class AdsViewController: UIViewController {
     
     
     @IBAction func mapBtnPressed(_ sender: Any) {
-        openMapButtonAction(latitude: lat, longitude: lng)
+        guard let long = item?.longitude, let lat = item?.latitude else {
+            presentAlert(message: "there is no available location", title: "Error", dismissVC: false)
+            return
+        }
+        openMapButtonAction(latitude: lat, longitude: long)
         
     }
     func setupKeyboardObservers() {

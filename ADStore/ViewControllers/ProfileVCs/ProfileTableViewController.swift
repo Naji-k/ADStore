@@ -24,7 +24,7 @@ class ProfileTableViewController: UITableViewController {
     @IBOutlet weak var notificationSettingLebel: UILabel!
     
     var user: User? {
-        self.appDelegate.currentUser ?? Utilities.fetchUserInfo()!
+        self.appDelegate.currentUser ?? Utilities.fetchUserInfo()
     }
     var memes: [Ads] {
         return appDelegate.getAdsData() // access data

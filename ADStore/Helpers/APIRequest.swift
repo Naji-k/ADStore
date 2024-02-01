@@ -18,15 +18,15 @@ struct APIRequest {
     let resourceURL: URL
     
     init(endpoint: String) {
-        let baseURL = "http://192.168.1.18:3000/\(endpoint)"
+//        let baseURL = "http://192.168.1.18:3000/\(endpoint)"
+        let baseURL = "https://damp-caverns-76806-65a45c062c19.herokuapp.com/\(endpoint)"
         guard let resourceURL = URL(string: baseURL) else { fatalError() }
         self.resourceURL = resourceURL
     }
     
     
     //Generic task request function
-    //return URLSessionTask so you can cancel it, to avoid multi task request while the internet is bad
-    //using @discarableResult (to avoid error, unused return value)
+    
     func genericGetRequest<ResponseType: Decodable>(response: ResponseType.Type, completion: @escaping(Result<ResponseType, APIError>) -> Void) {
         
         let task = URLSession.shared.dataTask(with: resourceURL) { data, response, error in
@@ -60,7 +60,7 @@ struct APIRequest {
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
             request.httpBody = try JSONEncoder().encode(body)
             let task = URLSession.shared.dataTask(with: request) { data, response, error in
-                guard let data = data else {
+                guard let data = data , let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 201 else {
                     DispatchQueue.main.async {
                         completion(.failure(.responseProblem))
                     }

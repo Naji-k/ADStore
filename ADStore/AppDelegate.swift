@@ -34,18 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func passAdsData (_ data: [Ads]) {
         self.adsData = data
     }
-//    fileprivate func fetchUserInfo() {
-//        guard let uid = Auth.auth().currentUser?.uid else {
-//            return
-//        }
-//        Database.database().reference().child("users").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
-//            if let dictionary = snapshot.value as? [String: AnyObject] {
-//                let user = User(dictionary: dictionary)
-//
-//                self.currentUser = user
-//            }
-//        }, withCancel: nil)
-//    }
+
     var likedDataKeys: NSMutableArray = []
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.

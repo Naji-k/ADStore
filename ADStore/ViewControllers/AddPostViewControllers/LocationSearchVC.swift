@@ -16,8 +16,8 @@ class LocationSearchVC: UIViewController, MKLocalSearchCompleterDelegate, UISear
     @IBOutlet weak var currentLocationBtn: UIButton!
     @IBOutlet weak var contentView: UIView!
     
-    var callback : ((String)->())?
-    var selected: String? = nil
+    var callback : ((SelectedLocation)->())?
+    var selected: SelectedLocation? = nil
     var searchCompleter = MKLocalSearchCompleter()
     var searchResults = [MKLocalSearchCompletion]()
     let locationManager = CLLocationManager()
@@ -34,7 +34,9 @@ class LocationSearchVC: UIViewController, MKLocalSearchCompleterDelegate, UISear
     }
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        callback?(selected ?? "")
+        if let selected = selected {
+            callback?(selected)
+        }
     }
     @objc func dismissKeyboard() {
         //Hides keyboard
@@ -83,10 +85,11 @@ extension LocationSearchVC: UITableViewDelegate, UITableViewDataSource {
             guard let name = response?.mapItems[0].name else { return }
             guard let coordinate = response?.mapItems[0].placemark.coordinate else { return }
             
-            self.selected = name
+//            self.selected = name
             
             let lat = coordinate.latitude
             let lon = coordinate.longitude
+            self.selected = SelectedLocation(name: name, long: lon, lat: lat)
             
         }
         self.dismiss(animated: true, completion: nil)
@@ -122,7 +125,7 @@ extension LocationSearchVC: CLLocationManagerDelegate {
         
         fetchCityAndCountry(from: currentlocation) { city, country, error in
             guard let city = city, let country = country, error == nil else { return }
-            self.selected = "\(city) , \(country)"
+//            self.selected = "\(city) , \(country)"
             self.locationManager.stopUpdatingLocation()
         }
         self.dismiss(animated: true, completion: nil)

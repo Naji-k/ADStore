@@ -24,7 +24,6 @@ class LogInViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         //To auto hide keyboard when surrounding is pressed
-        errorLabel.alpha = 0
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         self.view!.addGestureRecognizer(tap)
 
@@ -93,7 +92,7 @@ class LogInViewController: UIViewController {
     
     func setUpElements() {
         // Hide the error label
-        errorLabel.alpha = 1
+        errorLabel.alpha = 0
         
         // Style the elements
         emailTextField.addUnderline()

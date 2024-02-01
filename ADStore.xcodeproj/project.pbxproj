@@ -36,6 +36,7 @@
 		2B522CF825DC41B300DECC1B /* DoNotWantVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B522CF725DC41B300DECC1B /* DoNotWantVC.swift */; };
 		2B522CFA25DC4C3C00DECC1B /* TooManyNotificationTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B522CF925DC4C3C00DECC1B /* TooManyNotificationTableVC.swift */; };
 		2B52F65225DC3A0E004DA9A2 /* DeleteAccountTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B52F65125DC3A0E004DA9A2 /* DeleteAccountTableVC.swift */; };
+		2B5609752B6082A5007E67B9 /* ViewController-Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B5609742B6082A5007E67B9 /* ViewController-Helper.swift */; };
 		2B5F25E7251C9C0400D6AEAD /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B5F25E6251C9C0400D6AEAD /* MapKit.framework */; };
 		2B69684A25D4658A0030F71B /* SendFeedbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B69684925D4658A0030F71B /* SendFeedbackViewController.swift */; };
 		2B7057FD254B7B2900C0890E /* Switcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7057FC254B7B2900C0890E /* Switcher.swift */; };
@@ -50,6 +51,7 @@
 		2B7D571225194CB900DE13DE /* AdsUserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7D571125194CB900DE13DE /* AdsUserTableViewCell.swift */; };
 		2B7D571425194CD600DE13DE /* AdsLocationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7D571325194CD600DE13DE /* AdsLocationTableViewCell.swift */; };
 		2B7D571625194D0000DE13DE /* AdsDescTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7D571525194D0000DE13DE /* AdsDescTableViewCell.swift */; };
+		2B82504A2B6BFEF7009FBB58 /* SelectedLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8250492B6BFEF7009FBB58 /* SelectedLocation.swift */; };
 		2B894AD72535C0CA00EEA29F /* CategoryListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B894AD62535C0CA00EEA29F /* CategoryListViewController.swift */; };
 		2B894AD92535C1BE00EEA29F /* CategoryListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B894AD82535C1BE00EEA29F /* CategoryListTableViewCell.swift */; };
 		2B9AEB2225350D9B00556E47 /* TableView2ndCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B9AEB2125350D9B00556E47 /* TableView2ndCell.swift */; };
@@ -134,6 +136,7 @@
 		2B522CF725DC41B300DECC1B /* DoNotWantVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoNotWantVC.swift; sourceTree = "<group>"; };
 		2B522CF925DC4C3C00DECC1B /* TooManyNotificationTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TooManyNotificationTableVC.swift; sourceTree = "<group>"; };
 		2B52F65125DC3A0E004DA9A2 /* DeleteAccountTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountTableVC.swift; sourceTree = "<group>"; };
+		2B5609742B6082A5007E67B9 /* ViewController-Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ViewController-Helper.swift"; sourceTree = "<group>"; };
 		2B5F25E6251C9C0400D6AEAD /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		2B69684925D4658A0030F71B /* SendFeedbackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendFeedbackViewController.swift; sourceTree = "<group>"; };
 		2B7057FC254B7B2900C0890E /* Switcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Switcher.swift; sourceTree = "<group>"; };
@@ -148,6 +151,7 @@
 		2B7D571125194CB900DE13DE /* AdsUserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsUserTableViewCell.swift; sourceTree = "<group>"; };
 		2B7D571325194CD600DE13DE /* AdsLocationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsLocationTableViewCell.swift; sourceTree = "<group>"; };
 		2B7D571525194D0000DE13DE /* AdsDescTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsDescTableViewCell.swift; sourceTree = "<group>"; };
+		2B8250492B6BFEF7009FBB58 /* SelectedLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedLocation.swift; sourceTree = "<group>"; };
 		2B894AD62535C0CA00EEA29F /* CategoryListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListViewController.swift; sourceTree = "<group>"; };
 		2B894AD82535C1BE00EEA29F /* CategoryListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListTableViewCell.swift; sourceTree = "<group>"; };
 		2B9AEB2125350D9B00556E47 /* TableView2ndCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableView2ndCell.swift; sourceTree = "<group>"; };
@@ -306,6 +310,7 @@
 				2B4E456424FD12A500CCC5D4 /* Ads.swift */,
 				2B4E456624FD278300CCC5D4 /* RootClass.swift */,
 				2BD00FEB25E403890040360D /* Message.swift */,
+				2B8250492B6BFEF7009FBB58 /* SelectedLocation.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -409,6 +414,7 @@
 				2B7057FC254B7B2900C0890E /* Switcher.swift */,
 				2BB929A125B5F1E20011CB1B /* UITextField-extension.swift */,
 				2B4AA6012B5197F6004FD240 /* FirebaseHelper.swift */,
+				2B5609742B6082A5007E67B9 /* ViewController-Helper.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -686,6 +692,7 @@
 				2BB929A225B5F1E20011CB1B /* UITextField-extension.swift in Sources */,
 				2B894AD72535C0CA00EEA29F /* CategoryListViewController.swift in Sources */,
 				2B39B53824EDD6BE00D300B3 /* EditProfileViewController.swift in Sources */,
+				2B82504A2B6BFEF7009FBB58 /* SelectedLocation.swift in Sources */,
 				2BA3BC9225F122BD00E561DA /* CategoryHeader.swift in Sources */,
 				2B39B53024EDD17500D300B3 /* TabBarViewController.swift in Sources */,
 				2BD0471F251639D300550A8B /* AdsCollectionViewController.swift in Sources */,
@@ -726,6 +733,7 @@
 				2B138F7925F1BF6800EF43E9 /* LocationSearchTableCell.swift in Sources */,
 				2BC7646925327A38008A4F85 /* AddPostTableViewController.swift in Sources */,
 				2B705804254BA49500C0890E /* SignUpViewController.swift in Sources */,
+				2B5609752B6082A5007E67B9 /* ViewController-Helper.swift in Sources */,
 				2BDC054025BE39D700F1794A /* UIImage-Helper.swift in Sources */,
 				2B7680F425DEBBAB00452D76 /* NotificationTableVC.swift in Sources */,
 				2B7D571425194CD600DE13DE /* AdsLocationTableViewCell.swift in Sources */,

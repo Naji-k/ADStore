@@ -60,11 +60,12 @@ class Switcher {
             rootVC = UIStoryboard(name: "LogIn", bundle: .none).instantiateViewController(withIdentifier: "LogInViewController") as! LogInViewController
         }
         
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        appDelegate.window?.rootViewController = rootVC
+        if let appDelegate = UIApplication.shared.windows.first {
+            
+        appDelegate.rootViewController = rootVC
+            UIView.transition(with: appDelegate, duration: 0.5, options: [.transitionFlipFromLeft], animations: nil, completion: nil)
 
-                
-        
+        }
     }
     
 }
