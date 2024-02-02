@@ -19,6 +19,7 @@ struct APIRequest {
     
     init(endpoint: String) {
 //        let baseURL = "http://192.168.1.18:3000/\(endpoint)"
+    
         let baseURL = "https://damp-caverns-76806-65a45c062c19.herokuapp.com/\(endpoint)"
         guard let resourceURL = URL(string: baseURL) else { fatalError() }
         self.resourceURL = resourceURL

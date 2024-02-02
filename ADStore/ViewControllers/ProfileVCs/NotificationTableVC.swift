@@ -17,8 +17,8 @@ class NotificationTableVC: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        Utilities.customButtonColors(saveBtn, enableColor: UIColor(named: "Color.Tint.Green")!, disableColor: .lightGray, cornerRadius: 25.0, borderWidth: 1, tintColor: .white)
         saveBtn.isEnabled = false
-        Utilities.customButtonColors(saveBtn, enableColor: UIColor(named: "TintGreenColor")!, disableColor: .lightGray, cornerRadius: 25.0, borderWidth: 1, tintColor: .white)
         
     }
 

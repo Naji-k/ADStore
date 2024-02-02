@@ -166,7 +166,7 @@ class AddPostTableViewController: UITableViewController, TLPhotosPickerViewContr
         formatter1.dateStyle = .medium
         let createdDate = formatter1.string(from: today)
         
-        let newAds = Ads(id: randomID, adsTitle: titleTextField.text!, adsDes: descriptionTextView.text, adsDate: createdDate, userId: currentUser.id!, adsPrice: price.text! + " $", adsCondition: conditionTextField.text!, adsCategory: categoryTextField.text!, adsImages: imagesPath, latitude: adsLocation!.lat , longitude: adsLocation!.long, location: locationTextField.text!)
+        let newAds = Ads(id: String(randomID), adsTitle: titleTextField.text!, adsDes: descriptionTextView.text, adsDate: createdDate, userId: currentUser.id!, adsPrice: price.text! + " $", adsCondition: conditionTextField.text!, adsCategory: categoryTextField.text!, adsImages: imagesPath, latitude: adsLocation!.lat , longitude: adsLocation!.long, location: locationTextField.text!)
         
         let postRequest = APIRequest(endpoint: "ads")
         postRequest.genericPostRequest(body: newAds, response: Ads.self) { result in

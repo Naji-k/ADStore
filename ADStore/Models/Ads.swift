@@ -13,7 +13,7 @@ struct AdsList: Codable {
     let ads: [Ads]
 }
 public struct Ads: Codable {
-    var id: Int?
+    var id: String?
     let adsTitle: String?
     let adsDes: String?
     let adsDate: String?
@@ -42,7 +42,7 @@ public struct Ads: Codable {
     }
     public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        id = try values.decodeIfPresent(Int.self, forKey: .id)
+        id = try values.decodeIfPresent(String.self, forKey: .id)
         adsCondition = try values.decodeIfPresent(String.self, forKey: .adsCondition)
         adsDate = try values.decodeIfPresent(String.self, forKey: .adsDate)
         adsDes = try values.decodeIfPresent(String.self, forKey: .adsDes)
@@ -56,7 +56,7 @@ public struct Ads: Codable {
         location = try values.decodeIfPresent(String.self, forKey: .location)
         
     }
-    init(id: Int,adsTitle: String, adsDes: String, adsDate: String, userId: String, adsPrice: String, adsCondition: String, adsCategory: String, adsImages: [String], latitude: Double, longitude: Double, location: String) {
+    init(id: String,adsTitle: String, adsDes: String, adsDate: String, userId: String, adsPrice: String, adsCondition: String, adsCategory: String, adsImages: [String], latitude: Double, longitude: Double, location: String) {
         self.id = id
         self.adsTitle = adsTitle
         self.adsDes = adsDes

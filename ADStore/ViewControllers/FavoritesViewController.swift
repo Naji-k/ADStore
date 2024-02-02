@@ -32,7 +32,7 @@ class FavoritesViewController: UIViewController {
         
         if likedDataKeys.count != 0 {
             for i in likedDataKeys {
-                let ss = memes.filter({$0.id == i as? Int})
+                let ss = memes.filter({$0.id! == i as! String})
                 items.append(contentsOf: ss)
                 
             }

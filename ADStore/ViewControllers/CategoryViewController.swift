@@ -35,7 +35,6 @@ class CategoryViewController: UIViewController {
         super.viewDidLoad()
         Utilities.fetchUserInfo()
         
-        startSliderTimer()
         fetchCategory(endpoints: "Category")
 
         collectionView.addSubview(refreshController)
@@ -43,8 +42,10 @@ class CategoryViewController: UIViewController {
         refreshController.addTarget(self, action: #selector(pullToRefresh(_:)), for: .valueChanged)
         collectionView.alwaysBounceVertical = true
     }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        startSliderTimer()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
