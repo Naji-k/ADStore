@@ -44,8 +44,8 @@ extension AdsListTableViewController: UITableViewDelegate, UITableViewDataSource
         let cell = tableView.dequeueReusableCell(withIdentifier: "AdsListTableViewCell") as! AdsListTableViewCell
         
         let item = items[indexPath.row]
-        if let adsImagePath = item.adsImages?.randomElement() {
-            cell.adsImage.NKPlaceholderImage(image: UIImage(named: "bmw"), imageView: cell.adsImage, imgUrl: adsImagePath) { (image) in
+        if let adsImagePath = item.adsImages?.last {
+            cell.adsImage.NKPlaceholderImage(image: UIImage(named: "place-holder"), imageView: cell.adsImage, imgUrl: adsImagePath) { (image) in
                 cell.adsImage.image = image
             }
         }

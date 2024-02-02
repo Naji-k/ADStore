@@ -228,7 +228,7 @@ extension AdsViewController: UITableViewDataSource, UITableViewDelegate {
                 let imageView = UIImageView(frame: frame)
                 imageView.contentMode = .scaleAspectFit
                 
-                imageView.NKPlaceholderImage(image: UIImage(named: "bmw"), imageView: imageView, imgUrl: (item?.adsImages?[i])!) { (image) in
+                imageView.NKPlaceholderImage(image: UIImage(named: "place-holder"), imageView: imageView, imgUrl: (item?.adsImages?[i])!) { (image) in
                     imageView.image = image
                     
                 }
@@ -309,12 +309,10 @@ extension AdsViewController: UITableViewDataSource, UITableViewDelegate {
 //MARK: - click on user delegate..
 extension AdsViewController: UserLinksDelegate {
     func didTapOnUser(url: String) {
-        print("item.userid= ", item?.userId)
-        print("adsUser ", adsUser?.userFName)
         let newVC = storyboard?.instantiateViewController(withIdentifier: "AdsListTableViewController") as! AdsListTableViewController
         let items = memes.filter({$0.userId == adsUser?.id })
         newVC.items = items
-        newVC.navigationItem.title = adsUser?.userFName
+        newVC.navigationItem.title = "\(adsUser?.userFName ?? "User")'s Ads"
         navigationController?.pushViewController(newVC, animated: true)
 
     }
