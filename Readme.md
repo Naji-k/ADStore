@@ -6,17 +6,18 @@
 Hey there! I'm glad you're checking out ADStore. It's more than just an app; it's a place to buy and sell all kinds of things from your iPhone. I've put my heart into designing and coding this app, so I hope you'll love it as much as I do.
 
 
-## Video Demon
+## Video Demo
 
-![Demo](https://github.com/Naji-k/ADStore/blob/main/screenshots/movie.gif)
+![Demo](https://github.com/Naji-k/ADStore/blob/master/Screenshots/movie.gif)
 
 ## Screenshots
 
-![Main Screen]()
-![Ads View]()
-![Chat]()
-![Setting]()
-![New Ads]()
+![Main Screen](https://github.com/Naji-k/ADStore/blob/master/Screenshots/HomeSmall.png)
+![Ads View](https://github.com/Naji-k/ADStore/blob/master/Screenshots/AdsViewSmall.png)
+![Chat](https://github.com/Naji-k/ADStore/blob/master/Screenshots/ChatSmall.png)
+![New Ads](https://github.com/Naji-k/ADStore/blob/master/Screenshots/NewAdsSmall.png)
+![Setting](https://github.com/Naji-k/ADStore/blob/master/Screenshots/SettingSmall.png)
+
 
 ## Core Features
 
