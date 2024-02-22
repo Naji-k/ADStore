@@ -28,8 +28,7 @@ class LocationSearchVC: UIViewController, MKLocalSearchCompleterDelegate, UISear
         searchBar?.delegate = self
 
         searchBar.placeholder = "Search for places"
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-//        self.view.addGestureRecognizer(tap)
+
 
     }
     override func viewDidDisappear(_ animated: Bool) {
@@ -84,9 +83,7 @@ extension LocationSearchVC: UITableViewDelegate, UITableViewDataSource {
             
             guard let name = response?.mapItems[0].name else { return }
             guard let coordinate = response?.mapItems[0].placemark.coordinate else { return }
-            
-//            self.selected = name
-            
+                        
             let lat = coordinate.latitude
             let lon = coordinate.longitude
             self.selected = SelectedLocation(name: name, long: lon, lat: lat)

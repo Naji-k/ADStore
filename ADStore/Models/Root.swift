@@ -9,14 +9,10 @@
 import Foundation
 
 
-struct RootClass : Codable {
+struct Root : Codable {
     
     var category : [Category]?
-    
-    enum CodingKeys: String, CodingKey {
-        case category = "Category"
-    }
-    
+        
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         category = try values.decodeIfPresent([Category].self, forKey: .category)
@@ -36,6 +32,7 @@ struct SubCategory: Codable {
     let id: Int?
     let subName: String?
     let subImage: String?
+    
     enum CodingKeys: String, CodingKey {
         case id = "id"
         case subImage = "image"

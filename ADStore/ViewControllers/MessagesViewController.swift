@@ -18,12 +18,14 @@ class MessagesViewController: UIViewController {
     var messagesDictionary = [String: Message]()
     
     var currentUser: User {
-        return appDelegate.currentUser ?? Utilities.fetchUserInfo()!
+        return appDelegate.currentUser!// ?? Utilities.fetchUserInfo()!
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         setupNavBarWithUser(currentUser)
-        // Do any additional setup after loading the view.
+        print("currentUSERid= ", currentUser.id)
+        
     }
     
     func setupNavBarWithUser (_ user: User) {
@@ -38,11 +40,11 @@ class MessagesViewController: UIViewController {
         
         let ref = Database.database().reference().child("user-messages").child(uid)
         ref.observe(.childAdded, with: { (snapshot) in
+            print("snapshot ", snapshot)
             let userId = snapshot.key
             Database.database().reference().child("user-messages").child(uid).child(userId).observe(.childAdded, with: { (snapshot) in
                 
                 let messageId = snapshot.key
-                
                 self.fetchMessageWithMessageId(messageId)
                 
             }, withCancel: nil)

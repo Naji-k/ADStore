@@ -17,7 +17,6 @@ class AdsListTableViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Do any additional setup after loading the view.
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -29,7 +28,6 @@ class AdsListTableViewController: UIViewController {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction!) in
             
-//            self.dismiss(animated: true, completion: nil)
         }))
         self.present(alert, animated: true, completion: nil)
     }
@@ -49,10 +47,6 @@ extension AdsListTableViewController: UITableViewDelegate, UITableViewDataSource
                 cell.adsImage.image = image
             }
         }
-//            cell.adsImage.loadImageUsingCacheWithUrlString(adsImagePath)
-//        } else {
-//            cell.adsImage.image = UIImage(named: "adpost")
-//        }
         cell.title.text = item.adsTitle
         cell.price.text = item.adsPrice
         cell.date.text = item.adsDate
@@ -66,7 +60,6 @@ extension AdsListTableViewController: UITableViewDelegate, UITableViewDataSource
         
         vc.item = item
         
-//        self.present(vc, animated: true, completion: nil)
         navigationController?.pushViewController(vc, animated: true)
     }
     

@@ -14,7 +14,6 @@ class SignUpViewController: UIViewController {
 
     @IBOutlet weak var firstNameTextField: UITextField!
     @IBOutlet weak var lastNameTextField: UITextField!
-    
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var passwordConfirmTextField: UITextField!
@@ -22,15 +21,28 @@ class SignUpViewController: UIViewController {
     @IBOutlet weak var signUp: UIButton!
     @IBOutlet weak var errorLabel: UILabel!
     
+    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        firstNameTextField.delegate = self
+        lastNameTextField.delegate = self
+        emailTextField.delegate = self
+        passwordTextField.delegate = self
+        passwordConfirmTextField.delegate = self
+        
+        self.setupActivityIndicator(activityIndicator: activityIndicator)
+
+        self.view.addSubview(activityIndicator)
         // Do any additional setup after loading the view.
     }
+    
     override func viewDidLayoutSubviews() {
         setUpElements()
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        self.view!.addGestureRecognizer(tap)
+        //Hide keyboard when tap on view
+//        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+//        self.view!.addGestureRecognizer(tap)
     }
     
     @objc func dismissKeyboard() {
@@ -58,16 +70,13 @@ class SignUpViewController: UIViewController {
         
     }
     @IBAction func signUpTapped(_ sender: Any) {
-        //test
-//        self.transitionToHome()
         let emptyFields = validateFields()
         
         if emptyFields != nil {
             
-            // There's something wrong with the fields, show error message
             showError(emptyFields!)
         } else {
-            
+            activityIndicator.startAnimating()
             // Create cleaned versions of the data
             let firstName = firstNameTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
             let lastName = lastNameTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -81,6 +90,7 @@ class SignUpViewController: UIViewController {
                 if err != nil {
                     // There was an error creating the user
                     self.showError(err!.localizedDescription)
+                    self.activityIndicator.stopAnimating()
                     return
                 } else {
                     guard let uid = result?.user.uid else { return }
@@ -103,7 +113,7 @@ class SignUpViewController: UIViewController {
                 return
             }
             _ = User(dictionary: values)
-            
+            self.activityIndicator.stopAnimating()
             self.transitionToHome()
         }
     }
@@ -138,5 +148,12 @@ class SignUpViewController: UIViewController {
     func transitionToHome() {
         UserDefaults.standard.set(true, forKey: "status")
         Switcher.updateRootVC()
+    }
+}
+
+extension SignUpViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }

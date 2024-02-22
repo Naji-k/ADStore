@@ -98,16 +98,15 @@ class EditProfileViewController: UIViewController {
         if let profileImage = imageView.image, let uploadData = profileImage.jpegData(compressionQuality: 0.1) {
             storageRef.putData(uploadData, metadata: nil, completion: { (_, err) in
                 if let error = err {
-                    print(error)
+                    self.presentAlert(message: error.localizedDescription, title: "Error!", dismissVC: false)
                     return
                 }
                 storageRef.downloadURL { (url, error) in
                     if let error = error {
-                        print(error)
+                        self.presentAlert(message: error.localizedDescription, title: "Error!", dismissVC: false)
                         return
                     }
                     guard let url = url?.absoluteString else { return }
-                    print(url)
                     
                     let userValues = ["userFName": self.nameLabel.text as AnyObject, "profileImageUrl": url as AnyObject] as [String : AnyObject]
                     self.updateUserIntoDatabaseWithUID(self.user.id!, values: userValues)
@@ -127,14 +126,13 @@ class EditProfileViewController: UIViewController {
         
         userReference.setValue(userValues) { (error, ref) in
             if let error = error {
-                print(error)
+                self.presentAlert(message: "\(error)", title: "Error!", dismissVC: false)
                 return
             } else {
-//                let user = User(dictionary: userValues)
-//                self.appDelegate.currentUser = user
+
                 storageRef.delete { (error) in
                     if let error = error {
-                        print(error)
+                        self.presentAlert(message: "\(error)", title: "Error!", dismissVC: false)
                     } else {
                         self.dismiss(animated: true, completion: nil)
                         
@@ -149,7 +147,7 @@ class EditProfileViewController: UIViewController {
         let userReference = ref.child("users").child(uid)
         userReference.updateChildValues(values) { (error, ref) in
             if let error = error {
-                print(error)
+                self.presentAlert(message: "\(error)", title: "Error!", dismissVC: false)
                 return
             }
             let user = User(dictionary: values)

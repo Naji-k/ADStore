@@ -38,7 +38,6 @@ class Switcher {
         } else {
             fetchUserInfo()
             rootVC = UIStoryboard.init(name: "Main", bundle:.main).instantiateViewController(withIdentifier: "TabBarViewController") as! TabBarViewController
-
         }
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         appDelegate.window?.rootViewController = rootVC
@@ -49,10 +48,8 @@ class Switcher {
         let status = UserDefaults.standard.bool(forKey: "status")
         var rootVC : UIViewController?
         
-
-            print("logIn status: \(status)")
+        print("logIn status: \(status)")
         
-
         if(status == true){
             fetchUserInfo()
             rootVC = UIStoryboard.init(name: "Main", bundle:.main).instantiateViewController(withIdentifier: "TabBarViewController") as! TabBarViewController

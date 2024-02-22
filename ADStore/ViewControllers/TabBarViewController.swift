@@ -17,36 +17,6 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
         super.viewDidLoad()
         
         self.delegate = self
-        // Do any additional setup after loading the view.
-        /**
-         let controller1 = CategoryViewController()
-         controller1.tabBarItem = UITabBarItem(tabBarSystemItem: .featured, tag: 1)
-         let nav1 = UINavigationController(rootViewController: controller1)
-         
-         let controller2 = FavoritesViewController()
-         controller2.tabBarItem = UITabBarItem(tabBarSystemItem: .favorites, tag: 2)
-         let nav2 = UINavigationController(rootViewController: controller2)
-         
-         let controller3 = AddPostViewController()
-         controller3.tabBarItem = UITabBarItem(tabBarSystemItem: .downloads, tag: 3)
-         controller3.modalPresentationStyle = .overFullScreen
-         let nav3 = UINavigationController(rootViewController: controller3)
-         
-         let controller4 = MessagesViewController()
-         controller4.tabBarItem = UITabBarItem(tabBarSystemItem: .history, tag: 4)
-         let nav4 = UINavigationController(rootViewController: controller4)
-         
-         let controller5 = ProfileViewController()
-         controller5.tabBarItem = UITabBarItem(tabBarSystemItem: .more, tag: 5)
-         let nav5 = UINavigationController(rootViewController: controller5)
-         
-         
-         //         let tabBarController = UITabBarController()
-         //         tabBarController.viewControllers = [controller1, controller2, controller3, controller4, controller5]
-         
-         
-         viewControllers = [nav1, nav2, nav3]
-         //         **/
         DispatchQueue.main.async {
         }
         self.setupMiddleButton()
@@ -68,17 +38,8 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
         menuButton.frame.origin.y = tabbar.bounds.height/2 - menuButton.frame.height / 1.5
         menuButton.frame.origin.x = tabbar.bounds.width/2 - menuButton.frame.width / 2
         
-        //        if screenHeight > 736 {
-        //            menuButton.frame.origin.y = view.bounds.height - tabbar.frame.size.height -  menuButton.frame.height
-        //        } else {
-        //            menuButton.frame.origin.y = view.bounds.height - tabbar.frame.size.height -  menuButton.frame.height / 2
-        //
-        //        }
-        //
-        //        menuButton.frame.origin.x = view.bounds.width/2 - menuButton.frame.size.width/2
         menuButton.frame = menuButton.frame
         
-      //  menuButton.backgroundColor = UIColor(named: "TintGreenColor")
         menuButton.layer.cornerRadius = menuButton.frame.height/2
         tabbar.insertSubview(menuButton, at: 0)
         menuButton.setImage(UIImage(named: "add-90"), for: .normal)
@@ -95,14 +56,6 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
         self.present(navController, animated: true, completion: nil)
         
     }
-    // disable when click on tabBar Button to reload it 
-//    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
-//        if tabBarController.selectedIndex == 1 {
-//            return viewController != tabBarController.selectedViewController
-//        } else {
-//        return true
-//        }
-//    }
     
 }
 
@@ -161,15 +114,4 @@ class AppTabBar: UITabBar {
         return nil
     }
 }
-
-//extension UITabBar {
-//    override open func sizeThatFits(_ size: CGSize) -> CGSize {
-//        var sizeThatFits = super.sizeThatFits(size)
-//        sizeThatFits.height = 50
-//        return sizeThatFits
-//    }
-//}
-
-//}
-
 

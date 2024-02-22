@@ -42,10 +42,6 @@ class TooManyNotificationTableVC: UITableViewController {
         default:
             return
         }
-//        self.titleLabel.text = "Facing issues with the app?"
-//        self.detailLabel.text = "Feel free to report any issues that you'r facing with the ADStore app. We'll do our best to fix them!"
-//        self.firstOptionLabel.text = "Report issues with the app"
-
     }
 
     // MARK: - Table view data source

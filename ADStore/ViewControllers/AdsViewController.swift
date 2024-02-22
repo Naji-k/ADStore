@@ -12,7 +12,7 @@ import CoreLocation
 import Firebase
 
 class AdsViewController: UIViewController {
-//    var isAdsFav = UserDefaults.standard.bool(forKey: "isAdsFav")
+
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
 
     var likedDataKeys: NSMutableArray {
@@ -41,7 +41,6 @@ class AdsViewController: UIViewController {
         super.viewDidLoad()
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = UITableView.automaticDimension
-        // Do any additional setup after loading the view.
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         self.view!.addGestureRecognizer(tap)
 
@@ -71,9 +70,7 @@ class AdsViewController: UIViewController {
     @objc func favoriteBtnPressed() {
 
         if likedDataKeys.contains(item!.id!) {   //liked
-//            let index = likedDataKeys.index(of: item!)
             likedDataKeys.remove(item!.id!)
-//            item!.checked.toggle()
             print("dislike")
             navigationItem.rightBarButtonItem?.tintColor = .lightGray
 
@@ -161,8 +158,6 @@ class AdsViewController: UIViewController {
                 self.view.frame.origin.y -= keyboardSize.height
             }
             let contentInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: keyboardSize.height , right: 0.0)
-            //            scrollView.contentInset = contentInsets
-            //            scrollView.scrollIndicatorInsets = contentInsets
             
             UIView.animate(withDuration: keyboardDuration!, animations: {
                 self.view.layoutIfNeeded()
@@ -182,9 +177,6 @@ class AdsViewController: UIViewController {
                 self.view.layoutIfNeeded()
             })
             let contentInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0)
-            // reset back the content inset to zero after keyboard is gone
-            //            scrollView.contentInset = contentInsets
-            //            scrollView.scrollIndicatorInsets = contentInsets
             
         }
     }
@@ -212,16 +204,7 @@ extension AdsViewController: UITableViewDataSource, UITableViewDelegate {
             let cell1 = tableView.dequeueReusableCell(withIdentifier: "AdsImagesTableViewCell") as! AdsImagesTableViewCell
             
             cell1.scrollView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: cell1.scrollView.frame.height)
-            //local Images..
-            //            for i in 0..<images.count {
-            //                frame.origin.x = cell1.scrollView.frame.size.width * CGFloat(i)
-            //                frame.size = cell1.scrollView.frame.size
-            //                let imageView = UIImageView(frame: frame)
-            //                imageView.image = UIImage(named: images[i])
-            //                cell1.scrollView.addSubview(imageView)
-            //
-            //            }
-            //on host images..
+
             for i in 0..<(item?.adsImages?.count)! {
                 frame.origin.x = cell1.scrollView.frame.size.width * CGFloat(i)
                 frame.size = cell1.scrollView.frame.size
@@ -253,7 +236,6 @@ extension AdsViewController: UITableViewDataSource, UITableViewDelegate {
             return cell2
         case 2: //location
             let cell3 = tableView.dequeueReusableCell(withIdentifier: "AdsLocationTableViewCell") as! AdsLocationTableViewCell
-//            cell3.showLocation2(location: CLLocation(latitude: lat, longitude: lng))
             cell3.loc(address: item?.location ?? "")
             
             return cell3
@@ -389,7 +371,7 @@ extension AdsViewController {
         
         childRef.updateChildValues(values) { (error, ref) in
             if error != nil {
-                print(error ?? "")
+                self.presentAlert(message: error?.localizedDescription ?? "", title: "Error", dismissVC: false)
                 return
             }
             self.msgTextField.text = nil

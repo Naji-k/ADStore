@@ -22,7 +22,7 @@ class DoNotWantVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         textView.delegate = self
-        // Do any additional setup after loading the view.
+
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Next", style: .plain, target: self, action: #selector(goToNext))
         
     }

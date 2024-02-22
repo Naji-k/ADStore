@@ -31,7 +31,7 @@
 		2B4AA6022B5197F6004FD240 /* FirebaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B4AA6012B5197F6004FD240 /* FirebaseHelper.swift */; };
 		2B4AA6042B519CEE004FD240 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2B4AA6032B519CEE004FD240 /* GoogleService-Info.plist */; };
 		2B4E456524FD12A500CCC5D4 /* Ads.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B4E456424FD12A500CCC5D4 /* Ads.swift */; };
-		2B4E456724FD278300CCC5D4 /* RootClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B4E456624FD278300CCC5D4 /* RootClass.swift */; };
+		2B4E456724FD278300CCC5D4 /* Root.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B4E456624FD278300CCC5D4 /* Root.swift */; };
 		2B4E456A24FD296A00CCC5D4 /* CategoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B4E456924FD296A00CCC5D4 /* CategoryCollectionViewCell.swift */; };
 		2B522CF825DC41B300DECC1B /* DoNotWantVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B522CF725DC41B300DECC1B /* DoNotWantVC.swift */; };
 		2B522CFA25DC4C3C00DECC1B /* TooManyNotificationTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B522CF925DC4C3C00DECC1B /* TooManyNotificationTableVC.swift */; };
@@ -131,7 +131,7 @@
 		2B4AA6012B5197F6004FD240 /* FirebaseHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseHelper.swift; sourceTree = "<group>"; };
 		2B4AA6032B519CEE004FD240 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2B4E456424FD12A500CCC5D4 /* Ads.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ads.swift; sourceTree = "<group>"; };
-		2B4E456624FD278300CCC5D4 /* RootClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootClass.swift; sourceTree = "<group>"; };
+		2B4E456624FD278300CCC5D4 /* Root.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Root.swift; sourceTree = "<group>"; };
 		2B4E456924FD296A00CCC5D4 /* CategoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCollectionViewCell.swift; sourceTree = "<group>"; };
 		2B522CF725DC41B300DECC1B /* DoNotWantVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoNotWantVC.swift; sourceTree = "<group>"; };
 		2B522CF925DC4C3C00DECC1B /* TooManyNotificationTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TooManyNotificationTableVC.swift; sourceTree = "<group>"; };
@@ -308,7 +308,7 @@
 			isa = PBXGroup;
 			children = (
 				2B4E456424FD12A500CCC5D4 /* Ads.swift */,
-				2B4E456624FD278300CCC5D4 /* RootClass.swift */,
+				2B4E456624FD278300CCC5D4 /* Root.swift */,
 				2BD00FEB25E403890040360D /* Message.swift */,
 				2B8250492B6BFEF7009FBB58 /* SelectedLocation.swift */,
 			);
@@ -725,7 +725,7 @@
 				2BD04725251659B600550A8B /* AdsListTableViewCell.swift in Sources */,
 				2B39B4F824EDCA8700D300B3 /* AppDelegate.swift in Sources */,
 				2BBB42122541F64700060DE5 /* APIRequest.swift in Sources */,
-				2B4E456724FD278300CCC5D4 /* RootClass.swift in Sources */,
+				2B4E456724FD278300CCC5D4 /* Root.swift in Sources */,
 				2B69684A25D4658A0030F71B /* SendFeedbackViewController.swift in Sources */,
 				2B460D00250D6AE60064569A /* SubCategoryListVC.swift in Sources */,
 				2BD047272516C33D00550A8B /* AdsViewController.swift in Sources */,

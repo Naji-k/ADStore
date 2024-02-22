@@ -56,6 +56,20 @@ extension UIViewController {
            }
        }
     
+    //activityIndicator when loading data
+    func setupActivityIndicator(activityIndicator: UIActivityIndicatorView) {
+        if #available(iOS 13.0, *) {
+            activityIndicator.style = .large
+        } else {
+            activityIndicator.style = .whiteLarge
+        }
+        activityIndicator.color = .gray
+        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true
+
+        self.view.addSubview(activityIndicator)
+    }
+    
 //    func setupNavigationBarAppearance() {
 //        let appearance = UINavigationBarAppearance()
 //

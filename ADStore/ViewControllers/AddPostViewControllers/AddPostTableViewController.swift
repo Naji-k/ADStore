@@ -25,7 +25,7 @@ class AddPostTableViewController: UITableViewController, TLPhotosPickerViewContr
     var labels = ["①", "②", "③", "④", "⑤", "⑥"]
     
     var currentUser: User {
-        self.appDelegate.currentUser!
+        self.appDelegate.currentUser ?? Utilities.fetchUserInfo()!
     }
     
     @IBOutlet weak var collectionView: UICollectionView!
@@ -49,7 +49,6 @@ class AddPostTableViewController: UITableViewController, TLPhotosPickerViewContr
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //        userDefault.set(nil, forKey: "selectedCategory")
         self.countingLabel.text = "\(descriptionLimit)"
         self.categoryTextField.addTarget(self, action: #selector(self.openListPickerVC(_:)), for: UIControl.Event.editingDidBegin)
         self.locationTextField.addTarget(self, action: #selector(self.openLocationView), for: UIControl.Event.editingDidBegin)
@@ -88,7 +87,7 @@ class AddPostTableViewController: UITableViewController, TLPhotosPickerViewContr
         }
         self.present(vc, animated: true, completion: nil)
     }
-//    MARK: - find location
+    //    MARK: - find location
     @objc func openLocationView() {
         locationTextField.resignFirstResponder()
         let vc: LocationSearchVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LocationSearchVC") as! LocationSearchVC
@@ -234,7 +233,7 @@ class AddPostTableViewController: UITableViewController, TLPhotosPickerViewContr
         }
         presentAlert(message: message, title: title, dismissVC: true)
     }
-        
+    
     //check if there alert(loading images...) or not
     private func dismissLoadingAlert(completion: @escaping () -> Void) {
         if let loadingAlert = presentedViewController as? UIAlertController {
@@ -251,11 +250,11 @@ extension AddPostTableViewController: UICollectionViewDataSource, UICollectionVi
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if imageArray.count == 0 {
             return imageCount
-          } else {
-              return imageArray.count
-          }
-     }
-     
+        } else {
+            return imageArray.count
+        }
+    }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AddPostCollectionViewCell", for: indexPath) as! AddPostCollectionViewCell
         //1st Cell AddCamera image
@@ -276,7 +275,7 @@ extension AddPostTableViewController: UICollectionViewDataSource, UICollectionVi
         }
         return cell
     }
-     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch indexPath.row {
         case 0:
             addImages()
@@ -284,16 +283,15 @@ extension AddPostTableViewController: UICollectionViewDataSource, UICollectionVi
             print("\(indexPath.item)")
             
         }
-     }
-     
-     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-         let screenSize = UIScreen.main.bounds
-         let itemWidth = (screenSize.width - 46) / 3
-//         let itemHeight = (collectionView.frame.height - 10) / 2
-         //        return CGSize(width: 100, height: 100)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let screenSize = UIScreen.main.bounds
+        let itemWidth = (screenSize.width - 46) / 3
+        
         return CGSize(width: itemWidth, height: collectionView.frame.height)
-         
-     }
+        
+    }
     
 }
 //    MARK: - TLPhotosPickerDelegate
@@ -302,22 +300,14 @@ extension AddPostTableViewController: TLPhotosPickerLogDelegate {
     func shouldDismissPhotoPicker(withTLPHAssets: [TLPHAsset]) -> Bool {
         // use selected order, fullresolution image
         self.selectedAssets = withTLPHAssets
-
+        
         self.imageArray = getImageArray(assets: selectedAssets)
         self.imageArray.insert(UIImage(named: "add camera")!, at: 0)
         //Update UI
         DispatchQueue.main.async(execute: {
             self.collectionView.reloadData()
         })
-//        DispatchQueue.main.async(execute: {
-//            if let index = IndexPath(row: 0, section: 0) as? IndexPath {
-//                if let cell = self.tableView.dequeueReusableCell(withIdentifier: "AddPostAddImagesTableViewCell", for: index) as? AddPostAddImagesTableViewCell {
-//                    self.tableView.reloadData()
-//                    cell.collectionReloadData()
-//
-//                }
-//            }
-//        })
+        
         return true
         
     }

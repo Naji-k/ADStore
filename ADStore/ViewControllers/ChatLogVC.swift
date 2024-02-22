@@ -23,8 +23,6 @@ class ChatLogVC: UIViewController, UITextFieldDelegate {
             } else {
                 navigationItem.title = user?.userFName
             }
-            print("userID= ",user?.id)
-            print("currentUserId= ", currentUserId)
 
             observeMessages()
         }

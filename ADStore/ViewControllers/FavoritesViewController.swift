@@ -38,7 +38,7 @@ class FavoritesViewController: UIViewController {
             }
             let newVC = UIStoryboard.init(name: "Home", bundle: .none).instantiateViewController(withIdentifier: "AdsListTableViewController") as! AdsListTableViewController
             newVC.items = items
-            //            newVC.modalPresentationStyle = .fullScreen
+            
             newVC.navigationItem.setHidesBackButton(true, animated: true)
             navigationController?.pushViewController(newVC, animated: true)
             

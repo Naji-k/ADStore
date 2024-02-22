@@ -52,15 +52,11 @@ class ProfileTableViewController: UITableViewController {
     @IBAction func editProfileBtnPressed(_ sender: Any) {
         let navController = self.storyboard?.instantiateViewController(withIdentifier: "EditProfileViewController") as! EditProfileViewController
 
-//        let navController = UINavigationController(rootViewController: newVC)
-//         navController.modalPresentationStyle = .overCurrentContext
+
          navController.modalTransitionStyle = .coverVertical
          self.present(navController, animated: true, completion: nil)
     }
-//    func getUserData() {
-//
-//    }
-//
+
     func rateApp() {
         guard let url = URL(string: "itms-apps://itunes.apple.com/app/") else {
             return
@@ -113,7 +109,6 @@ class ProfileTableViewController: UITableViewController {
         case .init(row: 1, section: 1):
             print("connected")
         case .init(row: 2, section: 1):
-//            print("permissions")
             UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
         case .init(row: 3, section: 1):
             print("account setting")
@@ -132,11 +127,15 @@ class ProfileTableViewController: UITableViewController {
             self.present(vc, animated: true, completion: nil)
             
         case .init(row: 1, section: 3):
-//            print("rate us on the app store")
             rateApp()
         case .init(row: 2, section: 3):
-            UserDefaults.standard.set(false, forKey: "status")
-            Switcher.updateRootVC()
+            do {
+              try Auth.auth().signOut()
+                UserDefaults.standard.set(false, forKey: "status")
+                Switcher.updateRootVC()
+            } catch let signOutError as NSError {
+                self.presentAlert(message: "Error signing out: \(signOutError)", title: "Error!", dismissVC: false)
+            }
         default:
             print("default")
         }

@@ -23,23 +23,14 @@ class CategoryListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
-    }
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        print("didAppear")
-        if selected?.isEmpty ?? false  {
-            dismiss(animated: true, completion: nil)
-        } else {
-            
-        }
-        
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if selected?.isEmpty ?? false  {
+            dismiss(animated: true, completion: nil)
+        }
         
-//        callback?(selected ?? "")
     }
 
 }
@@ -58,11 +49,6 @@ extension CategoryListViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let selected = memes[indexPath.row].name ?? ""
-//        self.selected = selected
-//        self.dismiss(animated: true, completion: nil)
-        //should go to subCategory list
-//       let itemVC = storyboard?.instantiateViewController(withIdentifier: "SubCategoryListVC") as! SubCategoryListVC
         
         let newVC = UIStoryboard.init(name: "Home", bundle: .none).instantiateViewController(withIdentifier: "SubCategoryListVC") as! SubCategoryListVC
         

@@ -22,7 +22,7 @@ class ChangePasswordVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         errorLabel.alpha = 0
-        // Do any additional setup after loading the view.
+
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -78,7 +78,7 @@ class ChangePasswordVC: UIViewController {
                 }
             }
         }
-//        self.dismiss(animated: true, completion: nil)
+
     }
     func showAlert(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)

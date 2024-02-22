@@ -17,24 +17,27 @@ class LogInViewController: UIViewController {
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var errorLabel: UILabel!
-    
+    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+
     var showHideButton: UIButton? = UIButton(type: .custom)
     
     @IBOutlet weak var loginButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
-        //To auto hide keyboard when surrounding is pressed
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        self.view!.addGestureRecognizer(tap)
+        
+        self.setupActivityIndicator(activityIndicator: activityIndicator)
 
-//        registerForKeyboardNotifications()
+
+        //To auto hide keyboard when surrounding is pressed
+//        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+//        view.addGestureRecognizer(tap)
+
         setupKeyboardObservers()
-        // Do any additional setup after loading the view.
     }
+    
 
     override func viewDidLayoutSubviews() {
         setUpElements()
-//        emailTextField.addUnderline()
         
     }
     
@@ -177,8 +180,6 @@ class LogInViewController: UIViewController {
 
     @IBAction func logInBtnPressed(_ sender: Any) {
         handleLogin()
-//        UserDefaults.standard.set(true, forKey: "status")
-//        Switcher.updateRootVC()
 
     }
     
@@ -188,6 +189,8 @@ class LogInViewController: UIViewController {
     }
     
     func handleLogin() {
+        activityIndicator.startAnimating()
+        //THE APP SHOULD APPEAR ActiveIndicator
         let email = emailTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
         let password = passwordTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
         
@@ -196,15 +199,18 @@ class LogInViewController: UIViewController {
                 // Couldn't sign in
                 self.showError(error.localizedDescription)
             } else {
-                //                let vc = self.storyboard?.instantiateViewController(withIdentifier: "ChatLogViewController") as! ChatLogViewController
-//                self.messageController?.fetchUserAndSetupNavBarTitle()
-                //                self.dismiss(animated: true, completion: nil)
-                
-                //using Switcher
+                self.activityIndicator.stopAnimating()
                 UserDefaults.standard.set(true, forKey: "status")
                 Switcher.updateRootVC()
                 
             }
         }
+    }
+}
+
+extension LogInViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }

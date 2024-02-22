@@ -39,9 +39,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         FirebaseApp.configure()
-//        Switcher.updateRootVC()
         Switcher.checkIfUserLogIn()
-//        self.currentUser = Utilities.fetchUserInfo()
         
         self.window?.tintColor = UIColor(named: "Color.Tint.Green")
 

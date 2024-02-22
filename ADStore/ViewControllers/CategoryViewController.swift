@@ -12,7 +12,7 @@ import Firebase
 class CategoryViewController: UIViewController {
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
 
-
+    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     let slider = ["place-ads-here", "place-ads-here", "place-ads-here", "place-ads-here"]
     var frame = CGRect(x: 0, y: 0, width: 0, height: 0)
     var sliderTimer: Timer?
@@ -35,6 +35,7 @@ class CategoryViewController: UIViewController {
         super.viewDidLoad()
         Utilities.fetchUserInfo()
         
+        self.setupActivityIndicator(activityIndicator: activityIndicator)
         fetchCategory(endpoints: "Category")
 
         collectionView.addSubview(refreshController)
@@ -55,22 +56,22 @@ class CategoryViewController: UIViewController {
     
     @objc private func pullToRefresh(_ sender: UIRefreshControl) {
         fetchCategory(endpoints: "Category")
-        print("end refreshing")
         DispatchQueue.main.async {
             sender.endRefreshing()
         }
     }
 
     func fetchCategory(endpoints: String) {
+        self.activityIndicator.startAnimating()
         let getRequest = APIRequest(endpoint: endpoints)
         getRequest.genericGetRequest( response: [Category].self) { result in
             switch result {
             case.success(let res):
-                print("category count ", res.count)
                 self.appDelegate.passCategoryData(res)
                 self.collectionView.reloadData()
+                self.activityIndicator.stopAnimating()
             case .failure(let error):
-                print("error ", error)
+                self.presentAlert(message: "\(error)", title: "failed!", dismissVC: false)
             }
         }
     }
@@ -123,7 +124,6 @@ extension CategoryViewController: UICollectionViewDelegate, UICollectionViewData
         
         
         for i in 0..<slider.count {
-//        for i in 0..<ads.count {
             
             frame.origin.x = headerView.scrollView.frame.size.width * CGFloat(i)
             frame.size = headerView.scrollView.frame.size

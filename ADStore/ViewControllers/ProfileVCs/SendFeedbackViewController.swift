@@ -74,7 +74,8 @@ extension SendFeedbackViewController: MFMailComposeViewControllerDelegate {
             present(mail, animated: true)
         } else {
             // show failure alert
-            print("error sending mail")
+            self.presentAlert(message: "error sending mail", title: "failed!", dismissVC: false)
+
         }
     }
     

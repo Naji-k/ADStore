@@ -17,25 +17,15 @@ class SubCategoryListVC: UIViewController {
     var selected: String?
 
     var memes: [Ads] {
-        
         return appDelegate.getAdsData() // access data
     }
-//    var matched = [Ads]()
-    
-    var url = "http://192.168.1.18:3000/ads"
-//    var url = "http://192.168.1.18/~NajiKanounji/ADSStore/Category.json"
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         needCallBack ? print("callBack") : fetchAds("ads")
                 
-        // Do any additional setup after loading the view.
     }
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-    }
+
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         if needCallBack == true {
@@ -53,7 +43,7 @@ class SubCategoryListVC: UIViewController {
                 self.appDelegate.passAdsData(ads)
 
             case .failure(let error):
-                print(error)
+                self.presentAlert(message: "\(error)", title: "Error!", dismissVC: false)
             }
         }
     }
@@ -78,23 +68,15 @@ extension SubCategoryListVC: UITableViewDelegate, UITableViewDataSource {
             return
         }
         if needCallBack == true {
-            
-//        let selected = items[indexPath.row].subName ?? ""
             self.selected = item
             self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
-//            self.dismiss(animated: true, completion: nil)
         } else {
       
         let newVC = storyboard?.instantiateViewController(withIdentifier: "AdsListTableViewController") as! AdsListTableViewController
             let test = memes.filter({($0.adsCategory?.contains(item))!})
             
-//        memes.forEach { (ads) in
-//            if (ads.adsCategory == item) {
-//                matched.append(ads)
-//            }
-//        }
             newVC.items = test
-        navigationController?.pushViewController(newVC, animated: true)
+            navigationController?.pushViewController(newVC, animated: true)
         
         }
     }

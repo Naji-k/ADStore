@@ -37,21 +37,4 @@ class Message: NSObject {
         return fromId == Auth.auth().currentUser?.uid ? toId : fromId
     }
 }
-/*
-extension Message: MessageType {
-    var sender: SenderType {
-        return Sender(id: fromId!, displayName: fromId!)
-    }
-    var messageId: String {
-        return UUID().uuidString
-    }
-    
-    var sentDate: Date {
-        return Date()
-    }
-    
-    var kind: MessageKind {
-        return .text(text ?? "")
-    }
-}
-*/
+
